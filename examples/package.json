@@ -1,0 +1,6 @@
+{
+  "name": "static-review-fixture",
+  "private": true,
+  "description": "Synthetic manifest for inventory testing; nothing is installed",
+  "dependencies": {"example-library": "^1.2.3"}
+}
