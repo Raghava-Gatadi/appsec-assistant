@@ -1,0 +1,1635 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "AppSec Assistant",
+          "version": "0.1.0",
+          "rules": [
+            {
+              "id": "CFG001",
+              "name": "CFG001",
+              "shortDescription": {
+                "text": "Debug configuration enabled"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/489.html",
+              "help": {
+                "text": "Disable debug output and detailed error pages in production configuration. Check environment overrides and whether this file is used by a deployed application."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-489"
+                ]
+              }
+            },
+            {
+              "id": "CFG002",
+              "name": "CFG002",
+              "shortDescription": {
+                "text": "Secure cookie flag disabled"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/614.html",
+              "help": {
+                "text": "Enable Secure on authentication/session cookies and serve the application over HTTPS. Confirm the cookie's sensitivity and effective production settings."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-614"
+                ]
+              }
+            },
+            {
+              "id": "JS002",
+              "name": "JS002",
+              "shortDescription": {
+                "text": "Potential shell execution"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/78.html",
+              "help": {
+                "text": "Use execFile/spawn with shell disabled, a fixed executable and validated arguments. Confirm this is Node child_process execution, then trace command input; similarly named APIs may be unrelated."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-78"
+                ]
+              }
+            },
+            {
+              "id": "JS003",
+              "name": "JS003",
+              "shortDescription": {
+                "text": "Raw HTML insertion"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/79.html",
+              "help": {
+                "text": "Use textContent for text. Sanitize supported HTML with a maintained sanitizer and consider Trusted Types. Determine whether the inserted value is untrusted and whether a context-appropriate sanitizer is applied."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-79"
+                ]
+              }
+            },
+            {
+              "id": "JS005",
+              "name": "JS005",
+              "shortDescription": {
+                "text": "Potential SQL string construction"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/89.html",
+              "help": {
+                "text": "Use parameterized queries with values passed separately; allowlist dynamic identifiers. This heuristic examines a local call window. Confirm the database API, query construction and input trust."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-89"
+                ]
+              }
+            },
+            {
+              "id": "PY001",
+              "name": "PY001",
+              "shortDescription": {
+                "text": "Dynamic SQL statement"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/89.html",
+              "help": {
+                "text": "Use driver placeholders and pass values separately. Allowlist any dynamic table or column identifiers. Confirm this is a database API and determine whether any part of the statement is externally controlled."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-89"
+                ]
+              }
+            },
+            {
+              "id": "PY002",
+              "name": "PY002",
+              "shortDescription": {
+                "text": "Shell command construction"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/78.html",
+              "help": {
+                "text": "Use an argument list with shell=False, a fixed executable and validated arguments. Avoid invoking a shell. Trace each value into the command; fixed commands and trusted maintenance scripts may be acceptable."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-78"
+                ]
+              }
+            },
+            {
+              "id": "PY006",
+              "name": "PY006",
+              "shortDescription": {
+                "text": "TLS certificate verification disabled"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/295.html",
+              "help": {
+                "text": "Enable certificate and hostname verification; configure a trusted CA bundle when needed. Confirm the setting is reachable in production and review the connection's trust requirements."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-295"
+                ]
+              }
+            },
+            {
+              "id": "PY011",
+              "name": "PY011",
+              "shortDescription": {
+                "text": "Dynamic template source"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/1336.html",
+              "help": {
+                "text": "Keep template source fixed and pass untrusted content only as template data. Determine whether the value is template source or an ordinary template variable."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-1336"
+                ]
+              }
+            },
+            {
+              "id": "PY013",
+              "name": "PY013",
+              "shortDescription": {
+                "text": "Input influences an outbound URL"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/918.html",
+              "help": {
+                "text": "Allowlist destinations and schemes, validate resolved addresses and redirects, and enforce network egress restrictions. Confirm external control and check whether access to internal services or credentials is possible."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-918"
+                ]
+              }
+            },
+            {
+              "id": "SEC001",
+              "name": "SEC001",
+              "shortDescription": {
+                "text": "Possible hardcoded credential"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/798.html",
+              "help": {
+                "text": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use. The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-798"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "columnKind": "unicodeCodePoints",
+      "results": [
+        {
+          "ruleId": "PY001",
+          "ruleIndex": 5,
+          "level": "error",
+          "message": {
+            "text": "A database-like API receives a dynamically built statement; parameter binding needs review. Remediation: Use driver placeholders and pass values separately. Allowlist any dynamic table or column identifiers."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "demo.py"
+                },
+                "region": {
+                  "startLine": 11,
+                  "startColumn": 12
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "6c2aae87be1797c149ea6fa48f0c25cdd760ab7d3f360249ddd8dd563fde1131"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Confirm this is a database API and determine whether any part of the statement is externally controlled.",
+            "classification": "likely-vulnerability",
+            "function": "search_accounts"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 9,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 9,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to name"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 10,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to statement"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 11,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "PY011",
+          "ruleIndex": 8,
+          "level": "error",
+          "message": {
+            "text": "Dynamically supplied text is compiled as template source. Remediation: Keep template source fixed and pass untrusted content only as template data."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "demo.py"
+                },
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 12
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "951bc7075ff25144154cbdc6632f05521608b557ad32cc805a984ae6e60aa16d"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Determine whether the value is template source or an ordinary template variable.",
+            "classification": "likely-vulnerability",
+            "function": "preview"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 16,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 16,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to template"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 17,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "PY006",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "Certificate verification is explicitly disabled. Remediation: Enable certificate and hostname verification; configure a trusted CA bundle when needed."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "demo.py"
+                },
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 12
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "d14066158634a1ce5cc065b7848ad30fc79746e84b6ac6c1fdcff8b33cb7d62e"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Confirm the setting is reachable in production and review the connection's trust requirements.",
+            "classification": "likely-vulnerability",
+            "function": "fetch_document"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 22,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 22,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to url"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 23,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "PY013",
+          "ruleIndex": 9,
+          "level": "error",
+          "message": {
+            "text": "Input contributes to an outbound request URL. Remediation: Allowlist destinations and schemes, validate resolved addresses and redirects, and enforce network egress restrictions."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "demo.py"
+                },
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 12
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "d86d96f71bd0c9de84cbfffd61d6de58a0cf57168394a56233d3532b478ba471"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Confirm external control and check whether access to internal services or credentials is possible.",
+            "classification": "review-hotspot",
+            "function": "fetch_document"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 22,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 22,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to url"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 23,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC001",
+          "ruleIndex": 10,
+          "level": "error",
+          "message": {
+            "text": "A credential-like setting contains a literal; its value is withheld. Remediation: Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".env.example"
+                },
+                "region": {
+                  "startLine": 4,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "a69999fcbffe5c9f5928fc5c285a19c2c1a91ec20be01780dd581e7679dac3ba"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "medium",
+            "engine": "secret-pattern",
+            "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+            "classification": "review-hotspot",
+            "function": "<module or unresolved>"
+          }
+        },
+        {
+          "ruleId": "PY002",
+          "ruleIndex": 6,
+          "level": "error",
+          "message": {
+            "text": "A command is passed through a shell. Input flow reaches this operation. Remediation: Use an argument list with shell=False, a fixed executable and validated arguments. Avoid invoking a shell."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "demo.py"
+                },
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 12
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "81eec15584503cc82351f4361f7f6abc022df829270bdeb12cefc600d38eec05"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "medium",
+            "engine": "python-ast",
+            "review": "Trace each value into the command; fixed commands and trusted maintenance scripts may be acceptable.",
+            "classification": "review-hotspot",
+            "function": "run_maintenance"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 26,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Parameter command (trust unknown)"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "demo.py"
+                          },
+                          "region": {
+                            "startLine": 28,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "JS002",
+          "ruleIndex": 2,
+          "level": "error",
+          "message": {
+            "text": "A child_process shell execution function is called. Remediation: Use execFile/spawn with shell disabled, a fixed executable and validated arguments."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "frontend.tsx"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 3
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "2a80d936cf298b3183a4dae983d95533910f82ba0b8b17888e1f10e107a49cc3"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "medium",
+            "engine": "text-pattern",
+            "review": "Confirm this is Node child_process execution, then trace command input; similarly named APIs may be unrelated.",
+            "classification": "review-hotspot",
+            "function": "executeMaintenance"
+          }
+        },
+        {
+          "ruleId": "JS005",
+          "ruleIndex": 4,
+          "level": "error",
+          "message": {
+            "text": "A database-like call appears to build SQL using interpolation or concatenation. Remediation: Use parameterized queries with values passed separately; allowlist dynamic identifiers."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "frontend.tsx"
+                },
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 5
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "287bd48c646403ad66f75fed45c1e24bc7bd99f26a68c91fb70d7b0ed823e881"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "low",
+            "engine": "text-pattern",
+            "review": "This heuristic examines a local call window. Confirm the database API, query construction and input trust.",
+            "classification": "review-hotspot",
+            "function": "<module or unresolved>"
+          }
+        },
+        {
+          "ruleId": "CFG001",
+          "ruleIndex": 0,
+          "level": "warning",
+          "message": {
+            "text": "A configuration flag selects an insecure production default. Remediation: Disable debug output and detailed error pages in production configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".env.example"
+                },
+                "region": {
+                  "startLine": 2,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "943bdcc8156df55ad64c544eb1653cc618e87885dd4b4c18bf3115678859e480"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "medium",
+            "confidence": "medium",
+            "engine": "config-pattern",
+            "review": "Check environment overrides and whether this file is used by a deployed application.",
+            "classification": "review-hotspot",
+            "function": "<module or unresolved>"
+          }
+        },
+        {
+          "ruleId": "CFG002",
+          "ruleIndex": 1,
+          "level": "warning",
+          "message": {
+            "text": "A configuration flag selects an insecure production default. Remediation: Enable Secure on authentication/session cookies and serve the application over HTTPS."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".env.example"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "4be3833bcf6de211a6167bb0516fb55ccc433d99383030ade8f03859fa0aa8f0"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "medium",
+            "confidence": "medium",
+            "engine": "config-pattern",
+            "review": "Confirm the cookie's sensitivity and effective production settings.",
+            "classification": "review-hotspot",
+            "function": "<module or unresolved>"
+          }
+        },
+        {
+          "ruleId": "JS003",
+          "ruleIndex": 3,
+          "level": "warning",
+          "message": {
+            "text": "A DOM API inserts raw HTML; trace and review the assigned value. Remediation: Use textContent for text. Sanitize supported HTML with a maintained sanitizer and consider Trusted Types."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "frontend.tsx"
+                },
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "e286fb7d80a18547133e4b50e611b741033ab1d19d205be5a04d83efc098f38d"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "medium",
+            "confidence": "low",
+            "engine": "text-pattern",
+            "review": "Determine whether the inserted value is untrusted and whether a context-appropriate sanitizer is applied.",
+            "classification": "review-hotspot",
+            "function": "renderPreview"
+          }
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "toolExecutionNotifications": []
+        }
+      ],
+      "properties": {
+        "coverage": {
+          "configuration/secrets": 2,
+          "csharp": 1,
+          "java": 1,
+          "python": 1,
+          "go": 1,
+          "php": 1,
+          "ruby": 1,
+          "javascript/typescript": 1
+        },
+        "limitations": [
+          "Findings are review candidates, not proof of exploitability. No findings does not mean the application is secure.",
+          "Python analysis is bounded and intraprocedural. It does not resolve calls across functions or files, or prove sanitizers correct.",
+          "JavaScript/TypeScript and configuration checks use lexical heuristics, not a full parser or data-flow engine.",
+          "PHP, Java, C#, Go and Ruby receive navigation hotspots only. Callable identity, reachability and function scope may be unresolved.",
+          "Unsupported languages receive limited secret checks only. Generated and dependency directories are excluded by default.",
+          "No live CVE lookup, dependency resolution, runtime testing, authorization verification or automatic exploitation is performed."
+        ],
+        "policy": {
+          "min_severity": "low",
+          "min_confidence": "low",
+          "excludes": [
+            ".git",
+            ".hg",
+            ".mypy_cache",
+            ".next",
+            ".pytest_cache",
+            ".svn",
+            ".tox",
+            ".venv",
+            "__pycache__",
+            "build",
+            "coverage",
+            "dist",
+            "env",
+            "node_modules",
+            "venv"
+          ],
+          "baseline_fingerprints": 0,
+          "suppression_rules": 0,
+          "max_file_bytes": 2000000,
+          "max_total_bytes": 100000000,
+          "max_files": 10000,
+          "max_python_nodes": 100000
+        },
+        "filteredFindings": 0,
+        "manualReview": [
+          "Authorization: verify object ownership, tenant isolation and role checks on every sensitive operation.",
+          "Authentication: review account recovery, MFA, session rotation, token expiry and revocation.",
+          "Business logic: review payment amounts, state transitions, concurrency and abuse limits.",
+          "Web controls: review CSRF, CORS, cookie settings, security headers and output encoding by context.",
+          "Files and network: verify upload limits, destination allowlists, path containment and egress policy.",
+          "Dependencies: use a maintained advisory scanner against resolved lockfiles; inventory here is not a CVE audit.",
+          "Deployment: review production configuration, IAM permissions, secret rotation and audit logging."
+        ],
+        "codeMap": [
+          {
+            "path": "Accounts.cs",
+            "line": 3,
+            "end_line": 3,
+            "name": "[HttpGet",
+            "category": "entry point",
+            "function": "<module>",
+            "kind": "review-hotspot",
+            "language": "csharp",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "lexical"
+          },
+          {
+            "path": "Accounts.cs",
+            "line": 4,
+            "end_line": 6,
+            "name": "Search",
+            "category": "function",
+            "function": "Search",
+            "kind": "note",
+            "language": "csharp",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          },
+          {
+            "path": "Accounts.cs",
+            "line": 5,
+            "end_line": 5,
+            "name": ".Execute",
+            "category": "database query",
+            "function": "Search",
+            "kind": "review-hotspot",
+            "language": "csharp",
+            "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+            "engine": "lexical"
+          },
+          {
+            "path": "Accounts.java",
+            "line": 3,
+            "end_line": 3,
+            "name": "@GetMapping",
+            "category": "entry point",
+            "function": "<module>",
+            "kind": "review-hotspot",
+            "language": "java",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "lexical"
+          },
+          {
+            "path": "Accounts.java",
+            "line": 4,
+            "end_line": 6,
+            "name": "search",
+            "category": "function",
+            "function": "search",
+            "kind": "note",
+            "language": "java",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          },
+          {
+            "path": "Accounts.java",
+            "line": 5,
+            "end_line": 5,
+            "name": ".executeQuery",
+            "category": "database query",
+            "function": "search",
+            "kind": "review-hotspot",
+            "language": "java",
+            "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+            "engine": "lexical"
+          },
+          {
+            "path": "demo.py",
+            "line": 8,
+            "end_line": 11,
+            "name": "search_accounts",
+            "category": "function",
+            "function": "search_accounts",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 7,
+            "end_line": 7,
+            "name": "app.get",
+            "category": "entry point",
+            "function": "search_accounts",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 9,
+            "end_line": 9,
+            "name": "flask.request.args",
+            "category": "input",
+            "function": "search_accounts",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 11,
+            "end_line": 11,
+            "name": "db.execute",
+            "category": "database query",
+            "function": "search_accounts",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 15,
+            "end_line": 17,
+            "name": "preview",
+            "category": "function",
+            "function": "preview",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 14,
+            "end_line": 14,
+            "name": "app.post",
+            "category": "entry point",
+            "function": "preview",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 16,
+            "end_line": 16,
+            "name": "flask.request.form",
+            "category": "input",
+            "function": "preview",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 17,
+            "end_line": 17,
+            "name": "flask.render_template_string",
+            "category": "template/HTML output",
+            "function": "preview",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Distinguish template source from data and check contextual output escaping.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 21,
+            "end_line": 23,
+            "name": "fetch_document",
+            "category": "function",
+            "function": "fetch_document",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 20,
+            "end_line": 20,
+            "name": "app.get",
+            "category": "entry point",
+            "function": "fetch_document",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 22,
+            "end_line": 22,
+            "name": "flask.request.args",
+            "category": "input",
+            "function": "fetch_document",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 23,
+            "end_line": 23,
+            "name": "requests.get",
+            "category": "outbound request",
+            "function": "fetch_document",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Check destination trust, redirects, resolved addresses and network egress policy.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 26,
+            "end_line": 28,
+            "name": "run_maintenance",
+            "category": "function",
+            "function": "run_maintenance",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 28,
+            "end_line": 28,
+            "name": "subprocess.run",
+            "category": "command execution",
+            "function": "run_maintenance",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Check who controls the program, command text and arguments; prefer fixed programs with structured arguments.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 31,
+            "end_line": 33,
+            "name": "safe_lookup",
+            "category": "function",
+            "function": "safe_lookup",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "demo.py",
+            "line": 33,
+            "end_line": 33,
+            "name": "db.execute",
+            "category": "database query",
+            "function": "safe_lookup",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+            "engine": "python-ast"
+          },
+          {
+            "path": "files.go",
+            "line": 4,
+            "end_line": 6,
+            "name": "readDocument",
+            "category": "function",
+            "function": "readDocument",
+            "kind": "note",
+            "language": "go",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          },
+          {
+            "path": "files.go",
+            "line": 5,
+            "end_line": 5,
+            "name": "os.ReadFile",
+            "category": "filesystem access",
+            "function": "readDocument",
+            "kind": "review-hotspot",
+            "language": "go",
+            "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
+            "engine": "lexical"
+          },
+          {
+            "path": "files.php",
+            "line": 3,
+            "end_line": 6,
+            "name": "readDocument",
+            "category": "function",
+            "function": "readDocument",
+            "kind": "note",
+            "language": "php",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          },
+          {
+            "path": "files.php",
+            "line": 4,
+            "end_line": 4,
+            "name": "$_GET",
+            "category": "input",
+            "function": "readDocument",
+            "kind": "review-hotspot",
+            "language": "php",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "lexical"
+          },
+          {
+            "path": "files.php",
+            "line": 5,
+            "end_line": 5,
+            "name": "file_get_contents",
+            "category": "filesystem access",
+            "function": "readDocument",
+            "kind": "review-hotspot",
+            "language": "php",
+            "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
+            "engine": "lexical"
+          },
+          {
+            "path": "files.rb",
+            "line": 2,
+            "end_line": 2,
+            "name": "read_document",
+            "category": "function",
+            "function": "read_document",
+            "kind": "note",
+            "language": "ruby",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          },
+          {
+            "path": "files.rb",
+            "line": 3,
+            "end_line": 3,
+            "name": "File.read",
+            "category": "filesystem access",
+            "function": "<module or unresolved>",
+            "kind": "review-hotspot",
+            "language": "ruby",
+            "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
+            "engine": "lexical"
+          },
+          {
+            "path": "frontend.tsx",
+            "line": 4,
+            "end_line": 6,
+            "name": "renderPreview",
+            "category": "function",
+            "function": "renderPreview",
+            "kind": "note",
+            "language": "javascript/typescript",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          },
+          {
+            "path": "frontend.tsx",
+            "line": 5,
+            "end_line": 5,
+            "name": "innerHTML =",
+            "category": "template/HTML output",
+            "function": "renderPreview",
+            "kind": "review-hotspot",
+            "language": "javascript/typescript",
+            "review": "Distinguish template source from data and check contextual output escaping.",
+            "engine": "lexical"
+          },
+          {
+            "path": "frontend.tsx",
+            "line": 8,
+            "end_line": 10,
+            "name": "executeMaintenance",
+            "category": "function",
+            "function": "executeMaintenance",
+            "kind": "note",
+            "language": "javascript/typescript",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          },
+          {
+            "path": "frontend.tsx",
+            "line": 12,
+            "end_line": 12,
+            "name": "app.get",
+            "category": "entry point",
+            "function": "<module>",
+            "kind": "review-hotspot",
+            "language": "javascript/typescript",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "lexical"
+          },
+          {
+            "path": "frontend.tsx",
+            "line": 13,
+            "end_line": 13,
+            "name": ".query",
+            "category": "database query",
+            "function": "<module or unresolved>",
+            "kind": "review-hotspot",
+            "language": "javascript/typescript",
+            "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+            "engine": "lexical"
+          },
+          {
+            "path": "frontend.tsx",
+            "line": 16,
+            "end_line": 18,
+            "name": "safeLabel",
+            "category": "function",
+            "function": "safeLabel",
+            "kind": "note",
+            "language": "javascript/typescript",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "lexical"
+          }
+        ],
+        "reviewQueue": [
+          {
+            "path": "demo.py",
+            "function": "search_accounts",
+            "line": 7,
+            "categories": [
+              "database query",
+              "entry point",
+              "input"
+            ],
+            "findings": [
+              "PY001"
+            ],
+            "priority": 40,
+            "reason": "Review rule findings: PY001"
+          },
+          {
+            "path": "demo.py",
+            "function": "preview",
+            "line": 14,
+            "categories": [
+              "entry point",
+              "input",
+              "template/HTML output"
+            ],
+            "findings": [
+              "PY011"
+            ],
+            "priority": 40,
+            "reason": "Review rule findings: PY011"
+          },
+          {
+            "path": "demo.py",
+            "function": "fetch_document",
+            "line": 20,
+            "categories": [
+              "entry point",
+              "input",
+              "outbound request"
+            ],
+            "findings": [
+              "PY006",
+              "PY013"
+            ],
+            "priority": 40,
+            "reason": "Review rule findings: PY006, PY013"
+          },
+          {
+            "path": "demo.py",
+            "function": "run_maintenance",
+            "line": 28,
+            "categories": [
+              "command execution"
+            ],
+            "findings": [
+              "PY002"
+            ],
+            "priority": 34,
+            "reason": "Review rule findings: PY002"
+          },
+          {
+            "path": "frontend.tsx",
+            "function": "<module or unresolved>",
+            "line": 13,
+            "categories": [
+              "database query"
+            ],
+            "findings": [
+              "JS005"
+            ],
+            "priority": 33,
+            "reason": "Review rule findings: JS005"
+          },
+          {
+            "path": ".env.example",
+            "function": "<module or unresolved>",
+            "line": 4,
+            "categories": [],
+            "findings": [
+              "SEC001",
+              "CFG001",
+              "CFG002"
+            ],
+            "priority": 32,
+            "reason": "Review rule findings: CFG001, CFG002, SEC001"
+          },
+          {
+            "path": "frontend.tsx",
+            "function": "executeMaintenance",
+            "line": 9,
+            "categories": [],
+            "findings": [
+              "JS002"
+            ],
+            "priority": 32,
+            "reason": "Review rule findings: JS002"
+          },
+          {
+            "path": "frontend.tsx",
+            "function": "renderPreview",
+            "line": 5,
+            "categories": [
+              "template/HTML output"
+            ],
+            "findings": [
+              "JS003"
+            ],
+            "priority": 23,
+            "reason": "Review rule findings: JS003"
+          },
+          {
+            "path": "files.php",
+            "function": "readDocument",
+            "line": 4,
+            "categories": [
+              "filesystem access",
+              "input"
+            ],
+            "findings": [],
+            "priority": 7,
+            "reason": "Input/entry point and sensitive operations share this scope; a data-flow connection is not established."
+          },
+          {
+            "path": "Accounts.cs",
+            "function": "<module>",
+            "line": 3,
+            "categories": [
+              "entry point"
+            ],
+            "findings": [],
+            "priority": 5,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "Accounts.java",
+            "function": "<module>",
+            "line": 3,
+            "categories": [
+              "entry point"
+            ],
+            "findings": [],
+            "priority": 5,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "frontend.tsx",
+            "function": "<module>",
+            "line": 12,
+            "categories": [
+              "entry point"
+            ],
+            "findings": [],
+            "priority": 5,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "Accounts.cs",
+            "function": "Search",
+            "line": 5,
+            "categories": [
+              "database query"
+            ],
+            "findings": [],
+            "priority": 2,
+            "reason": "Security-sensitive operations require a trust-boundary review."
+          },
+          {
+            "path": "Accounts.java",
+            "function": "search",
+            "line": 5,
+            "categories": [
+              "database query"
+            ],
+            "findings": [],
+            "priority": 2,
+            "reason": "Security-sensitive operations require a trust-boundary review."
+          },
+          {
+            "path": "demo.py",
+            "function": "safe_lookup",
+            "line": 33,
+            "categories": [
+              "database query"
+            ],
+            "findings": [],
+            "priority": 2,
+            "reason": "Security-sensitive operations require a trust-boundary review."
+          },
+          {
+            "path": "files.go",
+            "function": "readDocument",
+            "line": 5,
+            "categories": [
+              "filesystem access"
+            ],
+            "findings": [],
+            "priority": 2,
+            "reason": "Security-sensitive operations require a trust-boundary review."
+          },
+          {
+            "path": "files.rb",
+            "function": "<module or unresolved>",
+            "line": 3,
+            "categories": [
+              "filesystem access"
+            ],
+            "findings": [],
+            "priority": 2,
+            "reason": "Security-sensitive operations require a trust-boundary review."
+          }
+        ],
+        "fileInventory": [
+          {
+            "path": ".env.example",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "Accounts.cs",
+            "language": "csharp",
+            "analysis": "navigation + secrets"
+          },
+          {
+            "path": "Accounts.java",
+            "language": "java",
+            "analysis": "navigation + secrets"
+          },
+          {
+            "path": "demo.py",
+            "language": "python",
+            "analysis": "AST + local data flow"
+          },
+          {
+            "path": "files.go",
+            "language": "go",
+            "analysis": "navigation + secrets"
+          },
+          {
+            "path": "files.php",
+            "language": "php",
+            "analysis": "navigation + secrets"
+          },
+          {
+            "path": "files.rb",
+            "language": "ruby",
+            "analysis": "navigation + secrets"
+          },
+          {
+            "path": "frontend.tsx",
+            "language": "javascript/typescript",
+            "analysis": "lexical rules + navigation"
+          },
+          {
+            "path": "package.json",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          }
+        ]
+      }
+    }
+  ]
+}

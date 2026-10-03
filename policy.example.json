@@ -1,0 +1,10 @@
+{
+  "excludes": ["vendor/**", "generated/**", "**/*.min.js"],
+  "suppressions": [
+    {
+      "rule_id": "PY007",
+      "path": "tools/checksum.py",
+      "reason": "Reviewed: used only to compare non-security build artifacts. Reassess if this use changes."
+    }
+  ]
+}
