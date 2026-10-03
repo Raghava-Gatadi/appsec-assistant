@@ -1,0 +1,34 @@
+{
+  "scanner_commit": "ab2233611b6fdb1d4c3c2188dc862a8e055bf900",
+  "scanner_tag": "v0.1.0",
+  "dvwa_commit": "d45ba3c4e7efa7f023f25f58ab4af9912c887057",
+  "dvwa_dirty": false,
+  "python": "3.13.9",
+  "provided_report_sha256": "855650adf8c875484593d9a7be11e97709b8f1f7366ff3405e85fec263948385",
+  "provided_report_note": "User-supplied HTML; local absolute target removed in the committed copy. JSON/SARIF/HTML report.* were reproduced from the pinned scanner and clean DVWA checkout.",
+  "summary": {
+    "new": 17,
+    "existing": 0,
+    "suppressed": 0,
+    "by_severity": {
+      "critical": 0,
+      "high": 11,
+      "medium": 6,
+      "low": 0
+    },
+    "likely_vulnerabilities": 0,
+    "review_findings": 17,
+    "navigation_hotspots": 452,
+    "functions": 226,
+    "entry_points": 0
+  },
+  "complete": true,
+  "files_scanned": 194,
+  "files_skipped": 59,
+  "artifacts_sha256": {
+    "report.json": "5b142a6a7cd91294b2c62a7f27d314446650ba23ca17d288576a020e32a6e903",
+    "provided-report.html": "7e766a76994d6672675af3ad8446308b4fb4392046090112aee4578e91ce3c27",
+    "report.sarif": "b9cb6700a708e3e8cd7dbbeb67afb50aef18a325232dabe5488f68cf882a2c7f",
+    "report.html": "85342a584cecc1e46948dcd1fbfd557ae078ada4733e39822869d143942a124a"
+  }
+}
