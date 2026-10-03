@@ -4,8 +4,7 @@ from dataclasses import asdict, dataclass, field
 from hashlib import sha256
 from typing import Any
 
-SEVERITIES = {"low": 1, "medium": 2, "high": 3, "critical": 4}
-CONFIDENCES = {"low": 1, "medium": 2, "high": 3}
+from .priorities import SEVERITIES, finding_key, finding_rank, navigation_rank
 
 
 @dataclass(frozen=True)
@@ -50,6 +49,23 @@ class Finding:
     suppression_reason: str | None = None
     classification: str = "review-hotspot"
     function: str = "<module or unresolved>"
+    scope_start: int = 0
+
+
+@dataclass
+class FindingGroup:
+    primary: Finding
+    locations: list[Finding]
+
+    @property
+    def rank(self):
+        return finding_rank(self.primary)
+
+    def to_dict(self):
+        data = asdict(self.primary)
+        data.update({"rank": self.rank, "occurrence_count": len(self.locations),
+                     "locations": [asdict(f) for f in self.locations]})
+        return data
 
 
 class Collector:
@@ -117,6 +133,7 @@ class ScanResult:
     coverage: dict[str, int] = field(default_factory=dict)
     files_scanned: int = 0
     files_skipped: int = 0
+    test_files_excluded: int = 0
     complete: bool = True
     elapsed_seconds: float = 0
     filtered_findings: int = 0
@@ -132,55 +149,79 @@ class ScanResult:
         return [f for f in self.findings if f.status == "new"]
 
     @property
+    def finding_groups(self) -> list[FindingGroup]:
+        groups = {}
+        for f in self.findings:
+            # Different review states must never hide a new occurrence.
+            key = (f.path, f.function, f.scope_start, f.rule_id, f.status, f.suppression_reason)
+            groups.setdefault(key, []).append(f)
+        result = []
+        for occurrences in groups.values():
+            primary = min(occurrences, key=finding_key)
+            result.append(FindingGroup(primary, sorted(occurrences, key=lambda f: (f.line, f.column))))
+        return sorted(result, key=lambda g: finding_key(g.primary))
+
+    @property
     def review_queue(self) -> list[dict[str, Any]]:
-        groups: dict[tuple[str, str], dict[str, Any]] = {}
+        groups = {}
+        def group(path, function, start, line):
+            key = (path, function, start)
+            return groups.setdefault(key, {"path": path, "function": function, "scope_start": start,
+                                          "line": line, "categories": set(), "findings": [], "rank": 0})
         for item in self.code_map:
-            if item["category"] == "function":
+            if item["category"] in {"function", "mitigation"}:
                 continue
-            key = (item["path"], item["function"])
-            group = groups.setdefault(key, {"path": key[0], "function": key[1], "line": item["line"], "categories": set(), "findings": [], "priority": 0})
-            group["categories"].add(item["category"])
-            group["line"] = min(group["line"], item["line"])
+            g = group(item["path"], item["function"], item.get("scope_start", 0), item["line"])
+            g["categories"].add(item["category"])
+            g["line"] = min(g["line"], item["line"])
         for f in self.active:
-            key = (f.path, f.function)
-            group = groups.setdefault(key, {"path": key[0], "function": key[1], "line": f.line, "categories": set(), "findings": [], "priority": 0})
-            group["findings"].append(f.rule_id)
-            group["priority"] = max(group["priority"], SEVERITIES[f.severity] * 10 + CONFIDENCES[f.confidence])
-        for group in groups.values():
-            categories = group["categories"]
+            g = group(f.path, f.function, f.scope_start, f.line)
+            g["findings"].append(f.rule_id)
+            g["rank"] = max(g["rank"], finding_rank(f))
+        for g in groups.values():
+            categories = g["categories"]
             has_input = bool(categories & {"input", "entry point"})
             has_operation = bool(categories - {"input", "entry point"})
-            if group["findings"]:
-                group["reason"] = "Review rule findings: " + ", ".join(sorted(set(group["findings"])))
+            for category in categories:
+                g["rank"] = max(g["rank"], navigation_rank(category, has_input and has_operation))
+            if g["findings"]:
+                g["reason"] = "Review rule findings: " + ", ".join(sorted(set(g["findings"])))
             elif has_input and has_operation:
-                group["reason"] = "Input/entry point and sensitive operations share this scope; a data-flow connection is not established."
+                g["reason"] = "Input/entry point and sensitive operations share this scope; a data-flow connection is not established."
             elif has_operation:
-                group["reason"] = "Security-sensitive operations require a trust-boundary review."
+                g["reason"] = "Security-sensitive operations require a trust-boundary review."
             else:
-                group["reason"] = "Review input validation, authentication and authorization at this boundary."
-            group["priority"] += (5 if has_input else 0) + (2 if has_operation else 0)
-            group["categories"] = sorted(categories)
-        return sorted(groups.values(), key=lambda g: (-g["priority"], g["path"], g["line"]))[:20]
+                g["reason"] = "Review input validation, authentication and authorization at this boundary."
+            g["categories"] = sorted(categories)
+        return sorted(groups.values(), key=lambda g: (-g["rank"], g["path"], g["line"], g["function"]))
 
     def to_dict(self) -> dict[str, Any]:
         from . import __version__
         data = asdict(self)
+        queue = self.review_queue
+        groups = self.finding_groups
+        active = [g for g in groups if g.primary.status == "new"]
+        data["findings"] = [g.to_dict() for g in groups]
         data.update({
-            "schema_version": 1,
+            "schema_version": 2,
             "tool": {"name": "AppSec Assistant", "version": __version__},
             "summary": {
-                "new": len(self.active),
-                "existing": sum(f.status == "existing" for f in self.findings),
-                "suppressed": sum(f.status == "suppressed" for f in self.findings),
-                "by_severity": {s: sum(f.severity == s for f in self.active) for s in reversed(SEVERITIES)},
-                "likely_vulnerabilities": sum(f.classification == "likely-vulnerability" for f in self.active),
-                "review_findings": sum(f.classification == "review-hotspot" for f in self.active),
+                "new": len(active),
+                "occurrences": len(self.findings),
+                "new_occurrences": len(self.active),
+                "existing": sum(g.primary.status == "existing" for g in groups),
+                "suppressed": sum(g.primary.status == "suppressed" for g in groups),
+                "by_severity": {s: sum(g.primary.severity == s for g in active) for s in reversed(SEVERITIES)},
+                "likely_vulnerabilities": sum(g.primary.classification == "likely-vulnerability" for g in active),
+                "review_findings": sum(g.primary.classification == "review-hotspot" for g in active),
                 "navigation_hotspots": sum(m["kind"] == "review-hotspot" for m in self.code_map),
                 "functions": sum(m["category"] == "function" for m in self.code_map),
                 "entry_points": sum(m["category"] == "entry point" for m in self.code_map),
             },
             "limitations": LIMITATIONS,
             "manual_review": REVIEW_CHECKLIST,
-            "review_queue": self.review_queue,
+            "review_queue": queue,
+            "review_queue_total": len(queue),
+            "review_queue_omitted": max(0, len(queue) - 20),
         })
         return data

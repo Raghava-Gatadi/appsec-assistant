@@ -12,17 +12,21 @@ import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .models import CONFIDENCES, SEVERITIES, Collector, ScanResult
+from .models import Collector, ScanResult
+from .priorities import CONFIDENCES, SEVERITIES, finding_key
 from . import navigation, python_analyzer, text_analyzer
 
 DEFAULT_EXCLUDES = {".git", ".hg", ".svn", ".venv", "venv", "env", "node_modules", "__pycache__", ".mypy_cache", ".pytest_cache", ".next", "dist", "build", "coverage", ".tox"}
 JS_EXTENSIONS = {".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts"}
 TEXT_EXTENSIONS = {".json", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".conf", ".env", ".txt", ".sh", ".bash", ".zsh", ".java", ".cs", ".go", ".rb", ".php", ".rs", ".c", ".h", ".cpp", ".html", ".vue", ".svelte", ".pem", ".key", ".properties", ".xml"}
+TEST_DIRS = {"tests", "test", "__tests__", "spec"}
+TEMPLATE_SUFFIXES = {".dist", ".example", ".sample", ".template"}
 FINGERPRINT = re.compile(r"^[0-9a-f]{64}$")
 
 
 @dataclass
 class Options:
+    include_tests: bool = False
     excludes: list[str] = field(default_factory=list)
     max_file_bytes: int = 2_000_000
     max_total_bytes: int = 100_000_000
@@ -39,8 +43,26 @@ def matches(path: str, pattern: str) -> bool:
     return fnmatch.fnmatchcase(path, pattern) or (pattern.startswith("**/") and fnmatch.fnmatchcase(path, pattern[3:]))
 
 
-def language(path: str) -> str | None:
+def underlying_path(path: str) -> Path:
     p = Path(path)
+    while p.suffix.lower() in TEMPLATE_SUFFIXES:
+        p = p.with_suffix("")
+    return p
+
+
+def is_test_file(path: str) -> bool:
+    p = underlying_path(path)
+    return (bool(set(p.parts[:-1]) & TEST_DIRS)
+            or p.name == "conftest.py"
+            or any(fnmatch.fnmatchcase(p.name, pattern) for pattern in
+                   ("test_*.py", "*_test.py", "*_test.go", "*.test.js", "*.test.ts",
+                    "*.spec.js", "*.spec.ts", "*.test.jsx", "*.test.tsx", "*.spec.jsx", "*.spec.tsx")))
+
+
+def language(path: str) -> str | None:
+    p = underlying_path(path)
+    if p.name.lower() == "composer.lock":
+        return "configuration/secrets"
     if p.suffix.lower() in {".py", ".pyw"}:
         return "python"
     if p.suffix.lower() in JS_EXTENSIONS:
@@ -58,7 +80,7 @@ def _version(value):
 
 
 def dependency_inventory(source: str, path: str) -> list[dict]:
-    name = Path(path).name
+    name = underlying_path(path).name
     found = []
     def add(ecosystem, package, spec, group="runtime"):
         if isinstance(package, str) and re.fullmatch(r"[@A-Za-z0-9][A-Za-z0-9_./-]{0,180}", package):
@@ -73,6 +95,28 @@ def dependency_inventory(source: str, path: str) -> list[dict]:
                 raise ValueError("Dependency group must be an object")
             for package, spec in items.items():
                 add("npm", package, spec, key)
+    elif name == "composer.json":
+        obj = json.loads(source)
+        if not isinstance(obj, dict):
+            raise ValueError("Manifest must be an object")
+        for group in ("require", "require-dev"):
+            items = obj.get(group, {})
+            if not isinstance(items, dict):
+                raise ValueError("Dependency group must be an object")
+            for package, spec in items.items():
+                add("Composer", package, spec, group)
+    elif name == "composer.lock":
+        obj = json.loads(source)
+        if not isinstance(obj, dict):
+            raise ValueError("Lockfile must be an object")
+        for group in ("packages", "packages-dev"):
+            items = obj.get(group, [])
+            if not isinstance(items, list):
+                raise ValueError("Lockfile packages must be an array")
+            for item in items:
+                if not isinstance(item, dict) or not isinstance(item.get("name"), str) or not isinstance(item.get("version"), str):
+                    raise ValueError("Invalid locked package")
+                add("Composer", item["name"], item["version"], group)
     elif name == "pyproject.toml":
         obj = tomllib.loads(source)
         project = obj.get("project", {})
@@ -138,7 +182,9 @@ def analyze_text(source: str, path: str, result: ScanResult, options: Options):
         if finding.engine == "python-ast":
             line_text = out.lines[finding.line - 1]
             finding.column = len(line_text.encode("utf-8")[:finding.column - 1].decode("utf-8", errors="ignore")) + 1
-        finding.function = next((m["name"] for m in functions if m["line"] <= finding.line <= m["end_line"]), "<module or unresolved>")
+        scope = next((m for m in functions if m["line"] <= finding.line <= m["end_line"]), None)
+        finding.function = scope["name"] if scope and lang != "php" else f"<file: {path}>"
+        finding.scope_start = scope["line"] if scope and lang != "php" else 0
     result.code_map.extend(items)
     result.findings.extend(out.findings)
 
@@ -160,8 +206,12 @@ def finish(result: ScanResult, options: Options):
                 finding.suppression_reason = suppression["reason"]
                 break
         retained.append(finding)
-    result.findings = sorted(retained, key=lambda f: (-SEVERITIES[f.severity], -CONFIDENCES[f.confidence], f.path, f.line, f.rule_id))
+    result.findings = sorted(retained, key=finding_key)
+    if result.test_files_excluded:
+        result.diagnostic(".", f"{result.test_files_excluded} test files excluded; use --include-tests to analyze them")
     result.policy = {
+        "include_tests": options.include_tests, "test_directories": sorted(TEST_DIRS),
+        "ci_gate": "new; severity at fail-on threshold; likely-vulnerability or confidence >= medium",
         "min_severity": options.min_severity, "min_confidence": options.min_confidence,
         "excludes": sorted(DEFAULT_EXCLUDES) + options.excludes,
         "baseline_fingerprints": len(options.baseline), "suppression_rules": len(options.suppressions),
@@ -174,11 +224,14 @@ def finish(result: ScanResult, options: Options):
 def scan_stdin(source: str, name: str, options: Options):
     started = time.monotonic()
     result = ScanResult("standard input")
-    if len(source.encode("utf-8")) > min(options.max_file_bytes, options.max_total_bytes):
+    if not options.include_tests and is_test_file(name):
+        result.test_files_excluded += 1
+        result.files_skipped += 1
+    elif len(source.encode("utf-8")) > min(options.max_file_bytes, options.max_total_bytes):
         result.diagnostic(name, "Input exceeds the byte limit", True)
     else:
         analyze_text(source, name, result, options)
-    if not result.files_scanned:
+    if not result.files_scanned and not result.test_files_excluded:
         result.diagnostic(name, "No supported files were analyzed", True)
     result.elapsed_seconds = round(time.monotonic() - started, 3)
     return finish(result, options)
@@ -208,6 +261,10 @@ def scan(target: Path, options: Options):
         if examined > options.max_files:
             result.diagnostic(".", "File traversal limit reached; remaining entries were not scanned", True)
             stopped = True
+            return
+        if not options.include_tests and (is_test_file(rel) or root.name in TEST_DIRS):
+            result.files_skipped += 1
+            result.test_files_excluded += 1
             return
         if path.absolute() in options.omitted_paths:
             result.files_skipped += 1
@@ -293,7 +350,7 @@ def scan(target: Path, options: Options):
                     break
             if stopped:
                 break
-    if not result.files_scanned:
+    if not result.files_scanned and not result.test_files_excluded:
         result.diagnostic(".", "No supported files were analyzed", True)
     result.elapsed_seconds = round(time.monotonic() - started, 3)
     return finish(result, options)

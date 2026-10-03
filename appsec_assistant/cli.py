@@ -9,7 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from . import __version__
-from .models import CONFIDENCES, SEVERITIES
+from .priorities import CONFIDENCES, SEVERITIES, meets_gate
 from .reports import plain, render
 from .rules import RULES
 from .scanner import FINGERPRINT, Options, scan, scan_stdin
@@ -96,12 +96,13 @@ def parser():
     p.add_argument("--output", "-o", type=Path, help="Write report to this file (otherwise stdout)")
     p.add_argument("--stdin-name", default="input.py", help="Virtual filename for stdin language detection (default: input.py)")
     p.add_argument("--exclude", action="append", default=[], metavar="GLOB", help="Exclude a root-relative path glob; repeatable")
+    p.add_argument("--include-tests", action="store_true", help="Analyze test directories and conventional test filenames (excluded by default)")
     p.add_argument("--config", type=Path, help="Explicit JSON policy with exclusions and reasoned suppressions")
     p.add_argument("--baseline", type=Path, help="Mark matching fingerprints as existing; existing findings do not fail CI")
     p.add_argument("--write-baseline", type=Path, help="Save reported finding fingerprints for a future scan; requires a complete scan")
     p.add_argument("--min-severity", choices=SEVERITIES, default="low")
     p.add_argument("--min-confidence", choices=CONFIDENCES, default="low")
-    p.add_argument("--fail-on", choices=[*SEVERITIES, "none"], default="high", help="Fail on new findings at this severity or higher (default: high)")
+    p.add_argument("--fail-on", choices=[*SEVERITIES, "none"], default="high", help="Fail on new findings at this severity or higher, with medium/high confidence or a likely-vulnerability label (default: high)")
     p.add_argument("--max-file-bytes", type=positive, default=2_000_000)
     p.add_argument("--max-total-bytes", type=positive, default=100_000_000)
     p.add_argument("--max-files", type=positive, default=10_000, help="Maximum filesystem entries considered (default: 10000)")
@@ -134,7 +135,7 @@ def main(argv=None):
             if out.suffix.lower() not in {".txt", ".json", ".html", ".htm", ".sarif"}:
                 raise ValueError("Output filenames must end in .txt, .json, .html, .htm or .sarif")
         options = Options(
-            excludes=excludes + args.exclude, suppressions=suppressions, baseline=baseline,
+            include_tests=args.include_tests, excludes=excludes + args.exclude, suppressions=suppressions, baseline=baseline,
             max_file_bytes=args.max_file_bytes, max_total_bytes=args.max_total_bytes,
             max_files=args.max_files, max_nodes=args.max_python_nodes,
             min_severity=args.min_severity, min_confidence=args.min_confidence,
@@ -152,7 +153,7 @@ def main(argv=None):
         report = render(result, format)
         if args.output:
             atomic_write(args.output, report)
-            print(plain(f"Report: {args.output.absolute()}\n{len(result.active)} new findings; {len(result.code_map)} navigation entries; {result.files_scanned} files analyzed."), file=sys.stderr)
+            print(plain(f"Report: {args.output.absolute()}\n{result.to_dict()['summary']['new']} new finding groups ({len(result.active)} locations); {len(result.code_map)} navigation entries; {result.files_scanned} files analyzed."), file=sys.stderr)
         else:
             sys.stdout.write(report)
         if not result.complete:
@@ -160,7 +161,7 @@ def main(argv=None):
             return 2
         if args.write_baseline:
             atomic_write(args.write_baseline, json.dumps({"schema_version": 1, "fingerprints": sorted({f.fingerprint for f in result.findings})}, indent=2) + "\n")
-        if args.fail_on != "none" and any(SEVERITIES[f.severity] >= SEVERITIES[args.fail_on] for f in result.active):
+        if any(meets_gate(f, args.fail_on) for f in result.active):
             return 1
         return 0
     except BrokenPipeError:

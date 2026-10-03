@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "target": "DVWA",
+  "repository": "https://github.com/digininja/DVWA",
+  "commit": "d45ba3c4e7efa7f023f25f58ab4af9912c887057",
+  "scope": "Manually reviewed, file/CWE-level matrix for four challenge families (16 cases). Not an exhaustive DVWA audit. No target code was executed. Expected vulnerabilities describe challenge intent and source review, not exploit validation.",
+  "limitations": [
+    "PHP semantic detection is deferred. Current navigation must not be counted as vulnerability detection.",
+    "Reflected XSS assembles $html rather than calling echo/print; the current output catalog can miss that review location.",
+    "Impossible means an expected negative only for the listed challenge CWE. Sensitive API navigation remains valid."
+  ],
+  "cases": [
+    {
+      "path": "vulnerabilities/exec/source/low.php",
+      "sha256": "399a0d5dd28436a952a5bb0d14390eb421e57ab2e7add68813b6ce283cc70f28",
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "navigation_category": "command execution",
+      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists."
+    },
+    {
+      "path": "vulnerabilities/exec/source/medium.php",
+      "sha256": "c25e0a1a61a4c36eedad8c0d54178e88d030f3c2886fe34edea5ae5054c398c0",
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "navigation_category": "command execution",
+      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists."
+    },
+    {
+      "path": "vulnerabilities/exec/source/high.php",
+      "sha256": "e3b703d6180c5c1e62fd09f78036e193a16025ffe208be9d90bb19d71a08db7f",
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "navigation_category": "command execution",
+      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists."
+    },
+    {
+      "path": "vulnerabilities/exec/source/impossible.php",
+      "sha256": "26b294a69538ae5de36b8669fdaef85022814bfaa253f7678b2ac5fa295ab543",
+      "cwe": "CWE-78",
+      "expected_vulnerable": false,
+      "navigation_category": "command execution",
+      "rationale": "Octets are checked as numeric and reconstructed before command construction."
+    },
+    {
+      "path": "vulnerabilities/sqli/source/low.php",
+      "sha256": "652bb44d14a9d81c9245f05ed8440beecf7977e982e00d3ddb916126a72e85bf",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query."
+    },
+    {
+      "path": "vulnerabilities/sqli/source/medium.php",
+      "sha256": "dd81afdddf5817294f2eea11ffaf21b2aad90cb768cc3d57ef9b6d0f96020db4",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query."
+    },
+    {
+      "path": "vulnerabilities/sqli/source/high.php",
+      "sha256": "a0515122d362ebd188ad7c85a313d72faf6ae373052162fb1e324e7834648374",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query."
+    },
+    {
+      "path": "vulnerabilities/sqli/source/impossible.php",
+      "sha256": "f4dcc92946933a31b0e93362a184ff776da9736036e99bec79f119cc2128aa8c",
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "navigation_category": "database query",
+      "rationale": "Numeric validation and typed parameter binding constrain the identifier."
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/low.php",
+      "sha256": "28e34b5f7f4dd2ae1a38b1fae4c1bf67aaf3b98791c4a6c7560e322d1079f73a",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query."
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/medium.php",
+      "sha256": "6d2e04fab2e805f39629f6a8cc77e42671ebd13c0cba1bf3c00a9baa920efa4d",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query."
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/high.php",
+      "sha256": "35165a2b85a80880b566a4605d2b23af5eefa5fff12e5b13961789dc4fafdc82",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query."
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/impossible.php",
+      "sha256": "ccd72dcc781d921f3acbc02da2609018f2d604921a51e74d6b097624ddc18f83",
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "navigation_category": "database query",
+      "rationale": "Numeric validation and bound parameters constrain the identifier."
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/low.php",
+      "sha256": "fb3c6fd9937697d4473cb9a2a9267df44b7e8620b16a4189189e76455d351833",
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "navigation_category": "template/HTML output",
+      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal."
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/medium.php",
+      "sha256": "b2b44ca0f6dd017a5a81a3461668072e15b4481b0c5eebf6da42abcbc94830ad",
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "navigation_category": "template/HTML output",
+      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal."
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/high.php",
+      "sha256": "1df9d34ce72f26e3f9cdf4878a23094e194dbabda0d2091547702a51f2851612",
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "navigation_category": "template/HTML output",
+      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal."
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/impossible.php",
+      "sha256": "6cff3122f97aec856e57134f497cb79079929d7efa1aca3eb75748ea3cc28dd3",
+      "cwe": "CWE-79",
+      "expected_vulnerable": false,
+      "navigation_category": "template/HTML output",
+      "rationale": "The name is passed through htmlspecialchars before HTML assembly."
+    }
+  ],
+  "credential_checks": [
+    {
+      "path": "vulnerabilities/captcha/source/high.php",
+      "expected": false
+    },
+    {
+      "path": "vulnerabilities/captcha/source/low.php",
+      "expected": false
+    },
+    {
+      "path": "vulnerabilities/captcha/source/medium.php",
+      "expected": false
+    },
+    {
+      "path": "vulnerabilities/csrf/source/low.php",
+      "expected": false
+    },
+    {
+      "path": "vulnerabilities/csrf/source/medium.php",
+      "expected": false
+    },
+    {
+      "path": "vulnerabilities/sqli/test.php",
+      "expected": true
+    }
+  ]
+}

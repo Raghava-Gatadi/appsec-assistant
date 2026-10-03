@@ -12,3 +12,5 @@ build/
 *.pem
 *.key
 .DS_Store
+
+.ruff_cache/

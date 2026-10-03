@@ -1,0 +1,179 @@
+{
+  "counts": {
+    "positive_cases": 12,
+    "finding_matches": 0,
+    "likely_matches": 0,
+    "navigation_matches": 9,
+    "negative_cases": 4,
+    "false_positives": 0
+  },
+  "cases": [
+    {
+      "path": "vulnerabilities/exec/source/low.php",
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/exec/source/medium.php",
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/exec/source/high.php",
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/exec/source/impossible.php",
+      "cwe": "CWE-78",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli/source/low.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli/source/medium.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli/source/high.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli/source/impossible.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/low.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/medium.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/high.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/impossible.php",
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/low.php",
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/medium.php",
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/high.php",
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/impossible.php",
+      "cwe": "CWE-79",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false
+    }
+  ],
+  "credential_checks": [
+    {
+      "path": "vulnerabilities/captcha/source/high.php",
+      "expected": false,
+      "matched": true,
+      "pass": false
+    },
+    {
+      "path": "vulnerabilities/captcha/source/low.php",
+      "expected": false,
+      "matched": true,
+      "pass": false
+    },
+    {
+      "path": "vulnerabilities/captcha/source/medium.php",
+      "expected": false,
+      "matched": true,
+      "pass": false
+    },
+    {
+      "path": "vulnerabilities/csrf/source/low.php",
+      "expected": false,
+      "matched": true,
+      "pass": false
+    },
+    {
+      "path": "vulnerabilities/csrf/source/medium.php",
+      "expected": false,
+      "matched": true,
+      "pass": false
+    },
+    {
+      "path": "vulnerabilities/sqli/test.php",
+      "expected": true,
+      "matched": true,
+      "pass": true
+    }
+  ],
+  "interpretation": "Navigation coverage is not vulnerability recall. Clean impossible cases apply only to the listed CWE, not all possible defects."
+}

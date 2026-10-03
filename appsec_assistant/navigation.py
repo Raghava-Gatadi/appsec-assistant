@@ -3,9 +3,8 @@ from __future__ import annotations
 
 import ast
 import re
-from pathlib import Path
 
-from .text_analyzer import lexical_views, location
+from .text_analyzer import JS_TOKENS, blank, first_argument, lexical_views, location
 
 LANGUAGES = {".php": "php", ".java": "java", ".cs": "csharp", ".go": "go", ".rb": "ruby"}
 GUIDANCE = {
@@ -20,6 +19,7 @@ GUIDANCE = {
     "authentication/crypto": "Review algorithm selection, key management, claim validation and session lifecycle.",
     "input": "Identify the trust boundary and trace validation before sensitive operations.",
     "entry point": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+    "mitigation": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
     "function": "Navigation note: this declaration is not itself evidence of a security issue.",
 }
 
@@ -34,6 +34,7 @@ PATTERNS = {
         ("filesystem access", r"(?:^|\.)(?:open|send_file|send_from_directory|read_text|read_bytes|write_text|write_bytes|unlink|remove|extractall|extract)$"),
         ("outbound request", r"^(?:requests|httpx|urllib\.request)\.(?:get|post|put|patch|delete|request|urlopen|Request)$"),
         ("redirect", r"(?:^|\.)(?:redirect|RedirectResponse)$"),
+        ("mitigation", r"^(?:int|html\.escape|shlex\.quote|os\.path\.basename)$"),
         ("authentication/crypto", r"^(?:jwt|jose\.jwt|hashlib|hmac|cryptography|random|secrets)\."),
     ],
     "javascript/typescript": [
@@ -46,16 +47,20 @@ PATTERNS = {
         ("outbound request", r"\b(?:fetch|axios)\s*\(|\b(?:axios|https?|request)\.\s*(?:get|post|request)\s*\("),
         ("redirect", r"\.\s*redirect\s*\("),
         ("authentication/crypto", r"\b(?:jwt|crypto|bcrypt|argon2)\.\s*\w+\s*\("),
+        ("mitigation", r"\b(?:parseInt|Number)\s*\(|\bDOMPurify\.sanitize\s*\("),
         ("input", r"\b(?:req|request)\.(?:body|query|params|headers|cookies|files)\b"),
     ],
     "php": [
         ("command execution", r"\b(?:system|exec|shell_exec|passthru|popen|proc_open)\s*\("),
-        ("dynamic execution", r"\b(?:eval|assert|include|include_once|require|require_once)\s*(?:\(|\$)"),
-        ("database query", r"\b(?:mysqli_query|pg_query|mysql_query)\s*\(|->\s*(?:query|exec|prepare)\s*\("),
+        ("dynamic execution", r"\b(?:eval|assert)\s*(?:\(|\$)"),
+        ("database query", r"\b(?:mysqli_query|pg_query|mysql_query|mysqli_prepare|pg_prepare)\s*\(|->\s*(?:query|exec|prepare)\s*\("),
         ("deserialization", r"\bunserialize\s*\("),
         ("filesystem access", r"\b(?:fopen|file_get_contents|file_put_contents|readfile|unlink|move_uploaded_file)\s*\("),
         ("outbound request", r"\b(?:curl_exec|curl_setopt)\s*\("),
-        ("input", r"\$_(?:GET|POST|REQUEST|COOKIE|FILES|SERVER)\b"),
+        ("template/HTML output", r"\b(?:echo|print)\b|\bprintf\s*\(|<\?="),
+        ("authentication/crypto", r"\b(?:rand|mt_rand)\s*\("),
+        ("mitigation", r"\b(?:intval|escapeshellarg|htmlspecialchars|basename|in_array|mysqli_prepare|mysqli_stmt_bind_param|pg_prepare)\s*\(|\(\s*int\s*\)|->\s*(?:prepare|bindParam|bindValue|bind_param)\s*\("),
+        ("input", r"\$(?:_(?:GET|POST|REQUEST|COOKIE|FILES|SERVER|SESSION|ENV)|GLOBALS)\b"),
     ],
     "java": [
         ("command execution", r"\.\s*exec\s*\(|\bProcessBuilder\s*\("),
@@ -108,9 +113,23 @@ class MapBuilder:
         self.seen.add(key)
         self.items.append({"path": self.path, "line": line, "end_line": end_line or line,
                            "name": name, "category": category, "function": function,
-                           "kind": "note" if category == "function" else "review-hotspot",
+                           "kind": "note" if category in {"function", "mitigation"} else "review-hotspot",
                            "language": self.language, "review": GUIDANCE[category],
                            "engine": "python-ast" if self.language == "python" else "lexical"})
+
+    def finish(self):
+        declarations = [m for m in self.items if m["category"] == "function"]
+        for item in self.items:
+            if self.language == "php" or item["function"] in {"<module>", "<module or unresolved>"}:
+                item["function"] = f"<file: {self.path}>"
+                item["scope_start"] = 0
+            else:
+                scopes = [m for m in declarations if m["name"] == item["function"]]
+                scope = min(scopes, key=lambda m: abs(item["line"] - m["line"]), default=None)
+                # Prefer containment for repeated declaration names.
+                scope = next((m for m in reversed(scopes) if m["line"] <= item["line"] <= m["end_line"]), scope)
+                item["scope_start"] = scope["line"] if scope else 0
+        return sorted(self.items, key=lambda x: (x["line"], x["category"]))
 
 
 def python_map(tree, path):
@@ -154,7 +173,7 @@ def python_map(tree, path):
         for child in ast.iter_child_nodes(node):
             visit(child, scope)
     visit(tree)
-    return builder.items
+    return builder.finish()
 
 
 FUNCTION_PATTERNS = {
@@ -169,9 +188,9 @@ FUNCTION_PATTERNS = {
 
 def lexical_map(source, path, language):
     builder = MapBuilder(path, language)
-    _, code = lexical_views(source)
-    if language == "ruby":
-        code = re.sub(r"(?m)#[^\n]*", lambda m: " " * len(m[0]), code)
+    clean, code = lexical_views(source)
+    if language in {"ruby", "php"}:
+        code = re.sub(r"(?m)#[^\n]*", lambda m: blank(m[0]), code)
     functions = []
     stack, closing = [], {}
     for pos, char in enumerate(code):
@@ -192,9 +211,24 @@ def lexical_map(source, path, language):
             functions.append((line, end, m[1]))
             builder.add(line, m[1], "function", m[1], end)
     for category, pattern in PATTERNS.get(language, []):
-        for m in re.finditer(pattern, code):
+        for m in re.finditer(pattern, code, re.I if language == "php" and category != "input" else 0):
             line, _ = location(source, m.start())
             scope = next((n for a, b, n in sorted(functions, reverse=True) if a <= line <= b), "<module or unresolved>")
+            if language == "php" and category == "input":
+                # A direct write to a superglobal is not a read boundary.
+                tail = code[m.end():m.end() + 2000].lstrip()
+                while tail.startswith("["):
+                    depth, end = 0, None
+                    for i, char in enumerate(tail):
+                        depth += (char == "[") - (char == "]")
+                        if depth == 0:
+                            end = i + 1
+                            break
+                    if end is None:
+                        break
+                    tail = tail[end:].lstrip()
+                if re.match(r"=(?!=|>)", tail):
+                    continue
             # Only API syntax from the string-masked source appears in the map.
             name = re.sub(r"\s+", " ", m[0]).strip().rstrip("(").strip()
             builder.add(line, name, category, scope)
@@ -209,4 +243,28 @@ def lexical_map(source, path, language):
     for m in re.finditer(routes.get(language, r"(?!)"), code):
         line, _ = location(source, m.start())
         builder.add(line, re.sub(r"\s+", " ", m[0]).strip().rstrip("("), "entry point")
-    return sorted(builder.items, key=lambda x: (x["line"], x["category"]))
+    if language == "php":
+        for m in re.finditer(r"\b(?:include_once|require_once|include|require)\b", code, re.I):
+            tail = clean[m.end():].lstrip()
+            expr = first_argument(tail[1:] if tail.startswith("(") else tail, 0)
+            _, expr_code = lexical_views(expr)
+            end = expr_code.find(";")
+            expr = (expr[:end] if end >= 0 else expr).strip()
+            # A fixed quoted filename is not a dynamic include. Concatenation,
+            # variables and interpolated filenames remain navigation candidates.
+            literal = JS_TOKENS.fullmatch(expr)
+            if not literal or not expr.startswith(("'", '"')) or (expr.startswith('"') and "$" in expr):
+                builder.add(location(source, m.start())[0], m[0], "dynamic execution")
+        for m in re.finditer(r"\bheader\s*\(", code, re.I):
+            arg = first_argument(clean, m.end()).lstrip()
+            if re.match(r"[\"']\s*Location\s*:", arg, re.I):
+                builder.add(location(source, m.start())[0], "header(Location)", "redirect")
+        for m in re.finditer(r"\b(?:md5|sha1)\s*\(", code, re.I):
+            arg = first_argument(clean, m.end())
+            prefix = clean[clean.rfind("\n", 0, m.start()) + 1:m.start()]
+            if re.search(r"pass(?:word|wd)?|secret", arg + prefix, re.I):
+                builder.add(location(source, m.start())[0], m[0].rstrip("( "), "authentication/crypto")
+        inputs = [m for m in builder.items if m["category"] == "input"]
+        if inputs:
+            builder.add(min(m["line"] for m in inputs), "File reads superglobals (entry-point hint)", "entry point")
+    return builder.finish()

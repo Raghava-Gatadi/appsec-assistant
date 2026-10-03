@@ -41,7 +41,55 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "likely-vulnerability",
-      "function": "search_accounts"
+      "function": "search_accounts",
+      "scope_start": 8,
+      "rank": 92.174471,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "PY001",
+          "title": "Dynamic SQL statement",
+          "severity": "high",
+          "confidence": "high",
+          "cwe": "CWE-89",
+          "path": "demo.py",
+          "line": 11,
+          "column": 12,
+          "message": "A database-like API receives a dynamically built statement; parameter binding needs review.",
+          "remediation": "Use driver placeholders and pass values separately. Allowlist any dynamic table or column identifiers.",
+          "review": "Confirm this is a database API and determine whether any part of the statement is externally controlled.",
+          "reference": "https://cwe.mitre.org/data/definitions/89.html",
+          "fingerprint": "6c2aae87be1797c149ea6fa48f0c25cdd760ab7d3f360249ddd8dd563fde1131",
+          "engine": "python-ast",
+          "trace": [
+            {
+              "line": 9,
+              "label": "HTTP request input",
+              "kind": "external"
+            },
+            {
+              "line": 9,
+              "label": "Assigned to name",
+              "kind": "flow"
+            },
+            {
+              "line": 10,
+              "label": "Assigned to statement",
+              "kind": "flow"
+            },
+            {
+              "line": 11,
+              "label": "Security-sensitive operation",
+              "kind": "sink"
+            }
+          ],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "likely-vulnerability",
+          "function": "search_accounts",
+          "scope_start": 8
+        }
+      ]
     },
     {
       "rule_id": "PY011",
@@ -78,7 +126,50 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "likely-vulnerability",
-      "function": "preview"
+      "function": "preview",
+      "scope_start": 15,
+      "rank": 92.110327,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "PY011",
+          "title": "Dynamic template source",
+          "severity": "high",
+          "confidence": "high",
+          "cwe": "CWE-1336",
+          "path": "demo.py",
+          "line": 17,
+          "column": 12,
+          "message": "Dynamically supplied text is compiled as template source.",
+          "remediation": "Keep template source fixed and pass untrusted content only as template data.",
+          "review": "Determine whether the value is template source or an ordinary template variable.",
+          "reference": "https://cwe.mitre.org/data/definitions/1336.html",
+          "fingerprint": "951bc7075ff25144154cbdc6632f05521608b557ad32cc805a984ae6e60aa16d",
+          "engine": "python-ast",
+          "trace": [
+            {
+              "line": 16,
+              "label": "HTTP request input",
+              "kind": "external"
+            },
+            {
+              "line": 16,
+              "label": "Assigned to template",
+              "kind": "flow"
+            },
+            {
+              "line": 17,
+              "label": "Security-sensitive operation",
+              "kind": "sink"
+            }
+          ],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "likely-vulnerability",
+          "function": "preview",
+          "scope_start": 15
+        }
+      ]
     },
     {
       "rule_id": "PY006",
@@ -115,7 +206,50 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "likely-vulnerability",
-      "function": "fetch_document"
+      "function": "fetch_document",
+      "scope_start": 21,
+      "rank": 91.853752,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "PY006",
+          "title": "TLS certificate verification disabled",
+          "severity": "high",
+          "confidence": "high",
+          "cwe": "CWE-295",
+          "path": "demo.py",
+          "line": 23,
+          "column": 12,
+          "message": "Certificate verification is explicitly disabled.",
+          "remediation": "Enable certificate and hostname verification; configure a trusted CA bundle when needed.",
+          "review": "Confirm the setting is reachable in production and review the connection's trust requirements.",
+          "reference": "https://cwe.mitre.org/data/definitions/295.html",
+          "fingerprint": "d14066158634a1ce5cc065b7848ad30fc79746e84b6ac6c1fdcff8b33cb7d62e",
+          "engine": "python-ast",
+          "trace": [
+            {
+              "line": 22,
+              "label": "HTTP request input",
+              "kind": "external"
+            },
+            {
+              "line": 22,
+              "label": "Assigned to url",
+              "kind": "flow"
+            },
+            {
+              "line": 23,
+              "label": "Security-sensitive operation",
+              "kind": "sink"
+            }
+          ],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "likely-vulnerability",
+          "function": "fetch_document",
+          "scope_start": 21
+        }
+      ]
     },
     {
       "rule_id": "PY013",
@@ -152,28 +286,50 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "review-hotspot",
-      "function": "fetch_document"
-    },
-    {
-      "rule_id": "SEC001",
-      "title": "Possible hardcoded credential",
-      "severity": "high",
-      "confidence": "medium",
-      "cwe": "CWE-798",
-      "path": ".env.example",
-      "line": 4,
-      "column": 1,
-      "message": "A credential-like setting contains a literal; its value is withheld.",
-      "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
-      "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
-      "reference": "https://cwe.mitre.org/data/definitions/798.html",
-      "fingerprint": "a69999fcbffe5c9f5928fc5c285a19c2c1a91ec20be01780dd581e7679dac3ba",
-      "engine": "secret-pattern",
-      "trace": [],
-      "status": "new",
-      "suppression_reason": null,
-      "classification": "review-hotspot",
-      "function": "<module or unresolved>"
+      "function": "fetch_document",
+      "scope_start": 21,
+      "rank": 58.627325,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "PY013",
+          "title": "Input influences an outbound URL",
+          "severity": "high",
+          "confidence": "high",
+          "cwe": "CWE-918",
+          "path": "demo.py",
+          "line": 23,
+          "column": 12,
+          "message": "Input contributes to an outbound request URL.",
+          "remediation": "Allowlist destinations and schemes, validate resolved addresses and redirects, and enforce network egress restrictions.",
+          "review": "Confirm external control and check whether access to internal services or credentials is possible.",
+          "reference": "https://cwe.mitre.org/data/definitions/918.html",
+          "fingerprint": "d86d96f71bd0c9de84cbfffd61d6de58a0cf57168394a56233d3532b478ba471",
+          "engine": "python-ast",
+          "trace": [
+            {
+              "line": 22,
+              "label": "HTTP request input",
+              "kind": "external"
+            },
+            {
+              "line": 22,
+              "label": "Assigned to url",
+              "kind": "flow"
+            },
+            {
+              "line": 23,
+              "label": "Security-sensitive operation",
+              "kind": "sink"
+            }
+          ],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "fetch_document",
+          "scope_start": 21
+        }
+      ]
     },
     {
       "rule_id": "PY002",
@@ -205,7 +361,93 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "review-hotspot",
-      "function": "run_maintenance"
+      "function": "run_maintenance",
+      "scope_start": 26,
+      "rank": 50.609365,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "PY002",
+          "title": "Shell command construction",
+          "severity": "high",
+          "confidence": "medium",
+          "cwe": "CWE-78",
+          "path": "demo.py",
+          "line": 28,
+          "column": 12,
+          "message": "A command is passed through a shell. Input flow reaches this operation.",
+          "remediation": "Use an argument list with shell=False, a fixed executable and validated arguments. Avoid invoking a shell.",
+          "review": "Trace each value into the command; fixed commands and trusted maintenance scripts may be acceptable.",
+          "reference": "https://cwe.mitre.org/data/definitions/78.html",
+          "fingerprint": "81eec15584503cc82351f4361f7f6abc022df829270bdeb12cefc600d38eec05",
+          "engine": "python-ast",
+          "trace": [
+            {
+              "line": 26,
+              "label": "Parameter command (trust unknown)",
+              "kind": "parameter"
+            },
+            {
+              "line": 28,
+              "label": "Security-sensitive operation",
+              "kind": "sink"
+            }
+          ],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "run_maintenance",
+          "scope_start": 26
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC001",
+      "title": "Possible hardcoded credential",
+      "severity": "high",
+      "confidence": "medium",
+      "cwe": "CWE-798",
+      "path": ".env.example",
+      "line": 4,
+      "column": 1,
+      "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+      "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+      "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+      "reference": "https://cwe.mitre.org/data/definitions/798.html",
+      "fingerprint": "a69999fcbffe5c9f5928fc5c285a19c2c1a91ec20be01780dd581e7679dac3ba",
+      "engine": "secret-pattern",
+      "trace": [],
+      "status": "new",
+      "suppression_reason": null,
+      "classification": "review-hotspot",
+      "function": "<file: .env.example>",
+      "scope_start": 0,
+      "rank": 50.416934,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "SEC001",
+          "title": "Possible hardcoded credential",
+          "severity": "high",
+          "confidence": "medium",
+          "cwe": "CWE-798",
+          "path": ".env.example",
+          "line": 4,
+          "column": 1,
+          "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+          "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+          "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+          "reference": "https://cwe.mitre.org/data/definitions/798.html",
+          "fingerprint": "a69999fcbffe5c9f5928fc5c285a19c2c1a91ec20be01780dd581e7679dac3ba",
+          "engine": "secret-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: .env.example>",
+          "scope_start": 0
+        }
+      ]
     },
     {
       "rule_id": "JS002",
@@ -226,28 +468,34 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "review-hotspot",
-      "function": "executeMaintenance"
-    },
-    {
-      "rule_id": "JS005",
-      "title": "Potential SQL string construction",
-      "severity": "high",
-      "confidence": "low",
-      "cwe": "CWE-89",
-      "path": "frontend.tsx",
-      "line": 13,
-      "column": 5,
-      "message": "A database-like call appears to build SQL using interpolation or concatenation.",
-      "remediation": "Use parameterized queries with values passed separately; allowlist dynamic identifiers.",
-      "review": "This heuristic examines a local call window. Confirm the database API, query construction and input trust.",
-      "reference": "https://cwe.mitre.org/data/definitions/89.html",
-      "fingerprint": "287bd48c646403ad66f75fed45c1e24bc7bd99f26a68c91fb70d7b0ed823e881",
-      "engine": "text-pattern",
-      "trace": [],
-      "status": "new",
-      "suppression_reason": null,
-      "classification": "review-hotspot",
-      "function": "<module or unresolved>"
+      "function": "executeMaintenance",
+      "scope_start": 8,
+      "rank": 49.967928,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "JS002",
+          "title": "Potential shell execution",
+          "severity": "high",
+          "confidence": "medium",
+          "cwe": "CWE-78",
+          "path": "frontend.tsx",
+          "line": 9,
+          "column": 3,
+          "message": "A child_process shell execution function is called.",
+          "remediation": "Use execFile/spawn with shell disabled, a fixed executable and validated arguments.",
+          "review": "Confirm this is Node child_process execution, then trace command input; similarly named APIs may be unrelated.",
+          "reference": "https://cwe.mitre.org/data/definitions/78.html",
+          "fingerprint": "2a80d936cf298b3183a4dae983d95533910f82ba0b8b17888e1f10e107a49cc3",
+          "engine": "text-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "executeMaintenance",
+          "scope_start": 8
+        }
+      ]
     },
     {
       "rule_id": "CFG001",
@@ -268,7 +516,34 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "review-hotspot",
-      "function": "<module or unresolved>"
+      "function": "<file: .env.example>",
+      "scope_start": 0,
+      "rank": 45.028865,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "CFG001",
+          "title": "Debug configuration enabled",
+          "severity": "medium",
+          "confidence": "medium",
+          "cwe": "CWE-489",
+          "path": ".env.example",
+          "line": 2,
+          "column": 1,
+          "message": "A configuration flag selects an insecure production default.",
+          "remediation": "Disable debug output and detailed error pages in production configuration.",
+          "review": "Check environment overrides and whether this file is used by a deployed application.",
+          "reference": "https://cwe.mitre.org/data/definitions/489.html",
+          "fingerprint": "943bdcc8156df55ad64c544eb1653cc618e87885dd4b4c18bf3115678859e480",
+          "engine": "config-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: .env.example>",
+          "scope_start": 0
+        }
+      ]
     },
     {
       "rule_id": "CFG002",
@@ -289,7 +564,82 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "review-hotspot",
-      "function": "<module or unresolved>"
+      "function": "<file: .env.example>",
+      "scope_start": 0,
+      "rank": 45.028865,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "CFG002",
+          "title": "Secure cookie flag disabled",
+          "severity": "medium",
+          "confidence": "medium",
+          "cwe": "CWE-614",
+          "path": ".env.example",
+          "line": 3,
+          "column": 1,
+          "message": "A configuration flag selects an insecure production default.",
+          "remediation": "Enable Secure on authentication/session cookies and serve the application over HTTPS.",
+          "review": "Confirm the cookie's sensitivity and effective production settings.",
+          "reference": "https://cwe.mitre.org/data/definitions/614.html",
+          "fingerprint": "4be3833bcf6de211a6167bb0516fb55ccc433d99383030ade8f03859fa0aa8f0",
+          "engine": "config-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: .env.example>",
+          "scope_start": 0
+        }
+      ]
+    },
+    {
+      "rule_id": "JS005",
+      "title": "Potential SQL string construction",
+      "severity": "high",
+      "confidence": "low",
+      "cwe": "CWE-89",
+      "path": "frontend.tsx",
+      "line": 13,
+      "column": 5,
+      "message": "A database-like call appears to build SQL using interpolation or concatenation.",
+      "remediation": "Use parameterized queries with values passed separately; allowlist dynamic identifiers.",
+      "review": "This heuristic examines a local call window. Confirm the database API, query construction and input trust.",
+      "reference": "https://cwe.mitre.org/data/definitions/89.html",
+      "fingerprint": "287bd48c646403ad66f75fed45c1e24bc7bd99f26a68c91fb70d7b0ed823e881",
+      "engine": "text-pattern",
+      "trace": [],
+      "status": "new",
+      "suppression_reason": null,
+      "classification": "review-hotspot",
+      "function": "<file: frontend.tsx>",
+      "scope_start": 0,
+      "rank": 42.142399,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "JS005",
+          "title": "Potential SQL string construction",
+          "severity": "high",
+          "confidence": "low",
+          "cwe": "CWE-89",
+          "path": "frontend.tsx",
+          "line": 13,
+          "column": 5,
+          "message": "A database-like call appears to build SQL using interpolation or concatenation.",
+          "remediation": "Use parameterized queries with values passed separately; allowlist dynamic identifiers.",
+          "review": "This heuristic examines a local call window. Confirm the database API, query construction and input trust.",
+          "reference": "https://cwe.mitre.org/data/definitions/89.html",
+          "fingerprint": "287bd48c646403ad66f75fed45c1e24bc7bd99f26a68c91fb70d7b0ed823e881",
+          "engine": "text-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: frontend.tsx>",
+          "scope_start": 0
+        }
+      ]
     },
     {
       "rule_id": "JS003",
@@ -310,7 +660,34 @@
       "status": "new",
       "suppression_reason": null,
       "classification": "review-hotspot",
-      "function": "renderPreview"
+      "function": "renderPreview",
+      "scope_start": 4,
+      "rank": 39.512508,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "JS003",
+          "title": "Raw HTML insertion",
+          "severity": "medium",
+          "confidence": "low",
+          "cwe": "CWE-79",
+          "path": "frontend.tsx",
+          "line": 5,
+          "column": 9,
+          "message": "A DOM API inserts raw HTML; trace and review the assigned value.",
+          "remediation": "Use textContent for text. Sanitize supported HTML with a maintained sanitizer and consider Trusted Types.",
+          "review": "Determine whether the inserted value is untrusted and whether a context-appropriate sanitizer is applied.",
+          "reference": "https://cwe.mitre.org/data/definitions/79.html",
+          "fingerprint": "e286fb7d80a18547133e4b50e611b741033ab1d19d205be5a04d83efc098f38d",
+          "engine": "text-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "renderPreview",
+          "scope_start": 4
+        }
+      ]
     }
   ],
   "diagnostics": [],
@@ -331,11 +708,12 @@
       "end_line": 3,
       "name": "[HttpGet",
       "category": "entry point",
-      "function": "<module>",
+      "function": "<file: Accounts.cs>",
       "kind": "review-hotspot",
       "language": "csharp",
       "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "Accounts.cs",
@@ -347,7 +725,8 @@
       "kind": "note",
       "language": "csharp",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "Accounts.cs",
@@ -359,7 +738,8 @@
       "kind": "review-hotspot",
       "language": "csharp",
       "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "Accounts.java",
@@ -367,11 +747,12 @@
       "end_line": 3,
       "name": "@GetMapping",
       "category": "entry point",
-      "function": "<module>",
+      "function": "<file: Accounts.java>",
       "kind": "review-hotspot",
       "language": "java",
       "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "Accounts.java",
@@ -383,7 +764,8 @@
       "kind": "note",
       "language": "java",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "Accounts.java",
@@ -395,19 +777,8 @@
       "kind": "review-hotspot",
       "language": "java",
       "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
-      "engine": "lexical"
-    },
-    {
-      "path": "demo.py",
-      "line": 8,
-      "end_line": 11,
-      "name": "search_accounts",
-      "category": "function",
-      "function": "search_accounts",
-      "kind": "note",
-      "language": "python",
-      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "python-ast"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "demo.py",
@@ -419,7 +790,21 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 8
+    },
+    {
+      "path": "demo.py",
+      "line": 8,
+      "end_line": 11,
+      "name": "search_accounts",
+      "category": "function",
+      "function": "search_accounts",
+      "kind": "note",
+      "language": "python",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "python-ast",
+      "scope_start": 8
     },
     {
       "path": "demo.py",
@@ -431,7 +816,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Identify the trust boundary and trace validation before sensitive operations.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 8
     },
     {
       "path": "demo.py",
@@ -443,19 +829,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
-      "engine": "python-ast"
-    },
-    {
-      "path": "demo.py",
-      "line": 15,
-      "end_line": 17,
-      "name": "preview",
-      "category": "function",
-      "function": "preview",
-      "kind": "note",
-      "language": "python",
-      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 8
     },
     {
       "path": "demo.py",
@@ -467,7 +842,21 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 15
+    },
+    {
+      "path": "demo.py",
+      "line": 15,
+      "end_line": 17,
+      "name": "preview",
+      "category": "function",
+      "function": "preview",
+      "kind": "note",
+      "language": "python",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "python-ast",
+      "scope_start": 15
     },
     {
       "path": "demo.py",
@@ -479,7 +868,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Identify the trust boundary and trace validation before sensitive operations.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 15
     },
     {
       "path": "demo.py",
@@ -491,19 +881,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Distinguish template source from data and check contextual output escaping.",
-      "engine": "python-ast"
-    },
-    {
-      "path": "demo.py",
-      "line": 21,
-      "end_line": 23,
-      "name": "fetch_document",
-      "category": "function",
-      "function": "fetch_document",
-      "kind": "note",
-      "language": "python",
-      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 15
     },
     {
       "path": "demo.py",
@@ -515,7 +894,21 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 21
+    },
+    {
+      "path": "demo.py",
+      "line": 21,
+      "end_line": 23,
+      "name": "fetch_document",
+      "category": "function",
+      "function": "fetch_document",
+      "kind": "note",
+      "language": "python",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "python-ast",
+      "scope_start": 21
     },
     {
       "path": "demo.py",
@@ -527,7 +920,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Identify the trust boundary and trace validation before sensitive operations.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 21
     },
     {
       "path": "demo.py",
@@ -539,7 +933,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Check destination trust, redirects, resolved addresses and network egress policy.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 21
     },
     {
       "path": "demo.py",
@@ -551,7 +946,8 @@
       "kind": "note",
       "language": "python",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 26
     },
     {
       "path": "demo.py",
@@ -563,7 +959,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Check who controls the program, command text and arguments; prefer fixed programs with structured arguments.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 26
     },
     {
       "path": "demo.py",
@@ -575,7 +972,8 @@
       "kind": "note",
       "language": "python",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 31
     },
     {
       "path": "demo.py",
@@ -587,7 +985,8 @@
       "kind": "review-hotspot",
       "language": "python",
       "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
-      "engine": "python-ast"
+      "engine": "python-ast",
+      "scope_start": 31
     },
     {
       "path": "files.go",
@@ -599,7 +998,8 @@
       "kind": "note",
       "language": "go",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "files.go",
@@ -611,7 +1011,8 @@
       "kind": "review-hotspot",
       "language": "go",
       "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "files.php",
@@ -619,11 +1020,25 @@
       "end_line": 6,
       "name": "readDocument",
       "category": "function",
-      "function": "readDocument",
+      "function": "<file: files.php>",
       "kind": "note",
       "language": "php",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "files.php",
+      "line": 4,
+      "end_line": 4,
+      "name": "File reads superglobals (entry-point hint)",
+      "category": "entry point",
+      "function": "<file: files.php>",
+      "kind": "review-hotspot",
+      "language": "php",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "files.php",
@@ -631,11 +1046,12 @@
       "end_line": 4,
       "name": "$_GET",
       "category": "input",
-      "function": "readDocument",
+      "function": "<file: files.php>",
       "kind": "review-hotspot",
       "language": "php",
       "review": "Identify the trust boundary and trace validation before sensitive operations.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "files.php",
@@ -643,11 +1059,12 @@
       "end_line": 5,
       "name": "file_get_contents",
       "category": "filesystem access",
-      "function": "readDocument",
+      "function": "<file: files.php>",
       "kind": "review-hotspot",
       "language": "php",
       "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "files.rb",
@@ -659,7 +1076,8 @@
       "kind": "note",
       "language": "ruby",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 2
     },
     {
       "path": "files.rb",
@@ -667,11 +1085,12 @@
       "end_line": 3,
       "name": "File.read",
       "category": "filesystem access",
-      "function": "<module or unresolved>",
+      "function": "<file: files.rb>",
       "kind": "review-hotspot",
       "language": "ruby",
       "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "frontend.tsx",
@@ -683,7 +1102,8 @@
       "kind": "note",
       "language": "javascript/typescript",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "frontend.tsx",
@@ -695,7 +1115,8 @@
       "kind": "review-hotspot",
       "language": "javascript/typescript",
       "review": "Distinguish template source from data and check contextual output escaping.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 4
     },
     {
       "path": "frontend.tsx",
@@ -707,7 +1128,8 @@
       "kind": "note",
       "language": "javascript/typescript",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 8
     },
     {
       "path": "frontend.tsx",
@@ -715,11 +1137,12 @@
       "end_line": 12,
       "name": "app.get",
       "category": "entry point",
-      "function": "<module>",
+      "function": "<file: frontend.tsx>",
       "kind": "review-hotspot",
       "language": "javascript/typescript",
       "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "frontend.tsx",
@@ -727,11 +1150,12 @@
       "end_line": 13,
       "name": ".query",
       "category": "database query",
-      "function": "<module or unresolved>",
+      "function": "<file: frontend.tsx>",
       "kind": "review-hotspot",
       "language": "javascript/typescript",
       "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 0
     },
     {
       "path": "frontend.tsx",
@@ -743,7 +1167,8 @@
       "kind": "note",
       "language": "javascript/typescript",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
-      "engine": "lexical"
+      "engine": "lexical",
+      "scope_start": 16
     }
   ],
   "file_inventory": [
@@ -805,10 +1230,19 @@
   },
   "files_scanned": 9,
   "files_skipped": 0,
+  "test_files_excluded": 0,
   "complete": true,
-  "elapsed_seconds": 0.006,
+  "elapsed_seconds": 0.008,
   "filtered_findings": 0,
   "policy": {
+    "include_tests": false,
+    "test_directories": [
+      "__tests__",
+      "spec",
+      "test",
+      "tests"
+    ],
+    "ci_gate": "new; severity at fail-on threshold; likely-vulnerability or confidence >= medium",
     "min_severity": "low",
     "min_confidence": "low",
     "excludes": [
@@ -835,13 +1269,15 @@
     "max_files": 10000,
     "max_python_nodes": 100000
   },
-  "schema_version": 1,
+  "schema_version": 2,
   "tool": {
     "name": "AppSec Assistant",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "summary": {
     "new": 11,
+    "occurrences": 11,
+    "new_occurrences": 11,
     "existing": 0,
     "suppressed": 0,
     "by_severity": {
@@ -852,9 +1288,9 @@
     },
     "likely_vulnerabilities": 3,
     "review_findings": 8,
-    "navigation_hotspots": 22,
+    "navigation_hotspots": 23,
     "functions": 13,
-    "entry_points": 6
+    "entry_points": 7
   },
   "limitations": [
     "Findings are review candidates, not proof of exploitability. No findings does not mean the application is secure.",
@@ -877,6 +1313,7 @@
     {
       "path": "demo.py",
       "function": "search_accounts",
+      "scope_start": 8,
       "line": 7,
       "categories": [
         "database query",
@@ -886,12 +1323,13 @@
       "findings": [
         "PY001"
       ],
-      "priority": 40,
+      "rank": 92.174471,
       "reason": "Review rule findings: PY001"
     },
     {
       "path": "demo.py",
       "function": "preview",
+      "scope_start": 15,
       "line": 14,
       "categories": [
         "entry point",
@@ -901,12 +1339,13 @@
       "findings": [
         "PY011"
       ],
-      "priority": 40,
+      "rank": 92.110327,
       "reason": "Review rule findings: PY011"
     },
     {
       "path": "demo.py",
       "function": "fetch_document",
+      "scope_start": 21,
       "line": 20,
       "categories": [
         "entry point",
@@ -917,12 +1356,13 @@
         "PY006",
         "PY013"
       ],
-      "priority": 40,
+      "rank": 91.853752,
       "reason": "Review rule findings: PY006, PY013"
     },
     {
       "path": "demo.py",
       "function": "run_maintenance",
+      "scope_start": 26,
       "line": 28,
       "categories": [
         "command execution"
@@ -930,25 +1370,13 @@
       "findings": [
         "PY002"
       ],
-      "priority": 34,
+      "rank": 50.609365,
       "reason": "Review rule findings: PY002"
     },
     {
-      "path": "frontend.tsx",
-      "function": "<module or unresolved>",
-      "line": 13,
-      "categories": [
-        "database query"
-      ],
-      "findings": [
-        "JS005"
-      ],
-      "priority": 33,
-      "reason": "Review rule findings: JS005"
-    },
-    {
       "path": ".env.example",
-      "function": "<module or unresolved>",
+      "function": "<file: .env.example>",
+      "scope_start": 0,
       "line": 4,
       "categories": [],
       "findings": [
@@ -956,23 +1384,90 @@
         "CFG001",
         "CFG002"
       ],
-      "priority": 32,
+      "rank": 50.416934,
       "reason": "Review rule findings: CFG001, CFG002, SEC001"
     },
     {
       "path": "frontend.tsx",
       "function": "executeMaintenance",
+      "scope_start": 8,
       "line": 9,
       "categories": [],
       "findings": [
         "JS002"
       ],
-      "priority": 32,
+      "rank": 49.967928,
       "reason": "Review rule findings: JS002"
     },
     {
       "path": "frontend.tsx",
+      "function": "<file: frontend.tsx>",
+      "scope_start": 0,
+      "line": 12,
+      "categories": [
+        "database query",
+        "entry point"
+      ],
+      "findings": [
+        "JS005"
+      ],
+      "rank": 42.142399,
+      "reason": "Review rule findings: JS005"
+    },
+    {
+      "path": "files.php",
+      "function": "<file: files.php>",
+      "scope_start": 0,
+      "line": 4,
+      "categories": [
+        "entry point",
+        "filesystem access",
+        "input"
+      ],
+      "findings": [],
+      "rank": 42.014112,
+      "reason": "Input/entry point and sensitive operations share this scope; a data-flow connection is not established."
+    },
+    {
+      "path": "Accounts.cs",
+      "function": "Search",
+      "scope_start": 4,
+      "line": 5,
+      "categories": [
+        "database query"
+      ],
+      "findings": [],
+      "rank": 41.500962,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "Accounts.java",
+      "function": "search",
+      "scope_start": 4,
+      "line": 5,
+      "categories": [
+        "database query"
+      ],
+      "findings": [],
+      "rank": 41.500962,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "demo.py",
+      "function": "safe_lookup",
+      "scope_start": 31,
+      "line": 33,
+      "categories": [
+        "database query"
+      ],
+      "findings": [],
+      "rank": 41.500962,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "frontend.tsx",
       "function": "renderPreview",
+      "scope_start": 4,
       "line": 5,
       "categories": [
         "template/HTML output"
@@ -980,108 +1475,58 @@
       "findings": [
         "JS003"
       ],
-      "priority": 23,
+      "rank": 41.436818,
       "reason": "Review rule findings: JS003"
-    },
-    {
-      "path": "files.php",
-      "function": "readDocument",
-      "line": 4,
-      "categories": [
-        "filesystem access",
-        "input"
-      ],
-      "findings": [],
-      "priority": 7,
-      "reason": "Input/entry point and sensitive operations share this scope; a data-flow connection is not established."
-    },
-    {
-      "path": "Accounts.cs",
-      "function": "<module>",
-      "line": 3,
-      "categories": [
-        "entry point"
-      ],
-      "findings": [],
-      "priority": 5,
-      "reason": "Review input validation, authentication and authorization at this boundary."
-    },
-    {
-      "path": "Accounts.java",
-      "function": "<module>",
-      "line": 3,
-      "categories": [
-        "entry point"
-      ],
-      "findings": [],
-      "priority": 5,
-      "reason": "Review input validation, authentication and authorization at this boundary."
-    },
-    {
-      "path": "frontend.tsx",
-      "function": "<module>",
-      "line": 12,
-      "categories": [
-        "entry point"
-      ],
-      "findings": [],
-      "priority": 5,
-      "reason": "Review input validation, authentication and authorization at this boundary."
-    },
-    {
-      "path": "Accounts.cs",
-      "function": "Search",
-      "line": 5,
-      "categories": [
-        "database query"
-      ],
-      "findings": [],
-      "priority": 2,
-      "reason": "Security-sensitive operations require a trust-boundary review."
-    },
-    {
-      "path": "Accounts.java",
-      "function": "search",
-      "line": 5,
-      "categories": [
-        "database query"
-      ],
-      "findings": [],
-      "priority": 2,
-      "reason": "Security-sensitive operations require a trust-boundary review."
-    },
-    {
-      "path": "demo.py",
-      "function": "safe_lookup",
-      "line": 33,
-      "categories": [
-        "database query"
-      ],
-      "findings": [],
-      "priority": 2,
-      "reason": "Security-sensitive operations require a trust-boundary review."
     },
     {
       "path": "files.go",
       "function": "readDocument",
+      "scope_start": 4,
       "line": 5,
       "categories": [
         "filesystem access"
       ],
       "findings": [],
-      "priority": 2,
+      "rank": 41.372675,
       "reason": "Security-sensitive operations require a trust-boundary review."
     },
     {
       "path": "files.rb",
-      "function": "<module or unresolved>",
+      "function": "<file: files.rb>",
+      "scope_start": 0,
       "line": 3,
       "categories": [
         "filesystem access"
       ],
       "findings": [],
-      "priority": 2,
+      "rank": 41.372675,
       "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "Accounts.cs",
+      "function": "<file: Accounts.cs>",
+      "scope_start": 0,
+      "line": 3,
+      "categories": [
+        "entry point"
+      ],
+      "findings": [],
+      "rank": 38.550353,
+      "reason": "Review input validation, authentication and authorization at this boundary."
+    },
+    {
+      "path": "Accounts.java",
+      "function": "<file: Accounts.java>",
+      "scope_start": 0,
+      "line": 3,
+      "categories": [
+        "entry point"
+      ],
+      "findings": [],
+      "rank": 38.550353,
+      "reason": "Review input validation, authentication and authorization at this boundary."
     }
-  ]
+  ],
+  "review_queue_total": 16,
+  "review_queue_omitted": 0
 }

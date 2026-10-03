@@ -101,7 +101,6 @@ class Analyzer(ast.NodeVisitor):
         if isinstance(node, ast.NamedExpr):
             return self.value(node.value)
         if isinstance(node, ast.Call):
-            name = self.name(node.func)
             # Numeric conversion removes string syntax but does not establish
             # authorization or a safe URL/path. Drop taint only for SQL/shell use
             # by retaining the flow; conservative review is preferable here.
@@ -153,7 +152,7 @@ class Analyzer(ast.NodeVisitor):
             for part in target.elts:
                 self.bind(part, value)
         name = target_name(target)
-        if value.known and credential_literal(name, value.literal):
+        if isinstance(origin, ast.Constant) and value.known and credential_literal(name, value.literal):
             self.emit("SEC001", target, "A credential-like field contains a string literal; its value is withheld.", confidence="medium")
         if value.known:
             flags = {"DEBUG": (True, "CFG001"), "SESSION_COOKIE_SECURE": (False, "CFG002"),
@@ -201,7 +200,7 @@ class Analyzer(ast.NodeVisitor):
         for key, value in zip(node.keys, node.values):
             if isinstance(key, ast.Constant) and isinstance(key.value, str):
                 val = self.value(value)
-                if val.known and credential_literal(key.value, val.literal):
+                if isinstance(value, ast.Constant) and val.known and credential_literal(key.value, val.literal):
                     self.emit("SEC001", value, "A credential-like dictionary field contains a literal; its value is withheld.", confidence="medium")
         self.generic_visit(node)
 

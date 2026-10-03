@@ -1,0 +1,60 @@
+{
+  "scanner_version": "0.1.1",
+  "dvwa_commit": "d45ba3c4e7efa7f023f25f58ab4af9912c887057",
+  "clean_checkout": true,
+  "scan_policy": {
+    "include_tests": false,
+    "test_directories": [
+      "__tests__",
+      "spec",
+      "test",
+      "tests"
+    ],
+    "ci_gate": "new; severity at fail-on threshold; likely-vulnerability or confidence >= medium",
+    "min_severity": "low",
+    "min_confidence": "low",
+    "excludes": [
+      ".git",
+      ".hg",
+      ".mypy_cache",
+      ".next",
+      ".pytest_cache",
+      ".svn",
+      ".tox",
+      ".venv",
+      "__pycache__",
+      "build",
+      "coverage",
+      "dist",
+      "env",
+      "node_modules",
+      "venv"
+    ],
+    "baseline_fingerprints": 0,
+    "suppression_rules": 0,
+    "max_file_bytes": 2000000,
+    "max_total_bytes": 100000000,
+    "max_files": 10000,
+    "max_python_nodes": 100000
+  },
+  "python_version": "3.13.9",
+  "scanner_files_sha256": {
+    "appsec_assistant/__init__.py": "7bb549d65a7d83eada6000a374954e51b4847633c88eb6e909673c4a438a7489",
+    "appsec_assistant/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "appsec_assistant/cli.py": "aac0b6fe7b203668558fc109953bc52b54cb5bfb5c2c14e87a29496a57a41da6",
+    "appsec_assistant/models.py": "96d6629cbfeb8c2988fde1780fb753b7b6e82a69bf462d3d4de6d3f134a1f7d2",
+    "appsec_assistant/navigation.py": "5f97f873f77fb4d7103c7980674ad4d45d2939563a4d6f7dd9736a3964c2020a",
+    "appsec_assistant/priorities.py": "13f7c6ddde46e4c39ce752f4d71575880c0e0b20f108fd2efff29f2ab2284846",
+    "appsec_assistant/python_analyzer.py": "3a08e934c212d1ff88b78999824f068a5fd98c14c7e27223219e8ff2afa70fb5",
+    "appsec_assistant/reports.py": "d2af77c7196ae41d551c36ef7791b5a2779c42a6994fa56d9c3041a64ab1be26",
+    "appsec_assistant/rules.py": "b8c4e599978303e8fe6bddf7c592564e68c78560397970a3f2ff8789f23dc2a0",
+    "appsec_assistant/scanner.py": "fcbdcf645a696528ff5707a78257ef85a4ab4d85bfa57eef5036c78407b7fd7b",
+    "appsec_assistant/text_analyzer.py": "c0996dae31eb8caf5eaab8d843bbe73e5858d403f37cd4ea9e2e3c8f5fd61cef"
+  },
+  "files_sha256": {
+    "report.json": "6c7f8ab35ebddc33af434b885fb81a181d6058e003b61bf446617123d022ee28",
+    "score.json": "02297dca58fab7b4cbdda3b75320427c4cfd2abcab86869301334e4f0dfb7b7f",
+    "report.sarif": "489b2ba2bfc158384803c8cc5b0b5d5f404ea264d2b9372225e78c50720fda8f",
+    "report.html": "9675c297624d9ecc6fbb0a774af0e1f7de40d418e2c5808b7a073cdb9e900210"
+  }
+}

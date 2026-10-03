@@ -10,7 +10,10 @@ from .rules import RULES
 
 # Preserve offsets and newlines so report locations still point into the source.
 JS_TOKENS = re.compile(r'''//[^\n]*|/\*[\s\S]*?\*/|'(?:\\[\s\S]|[^'\\])*'|"(?:\\[\s\S]|[^"\\])*"|`(?:\\[\s\S]|[^`\\])*`''')
-ASSIGNMENT = re.compile(r'''(?i)(?<![\w.-])["']?([a-z_][a-z0-9_.-]{0,120})["']?\s*[:=]\s*(["'])([^\r\n"']{8,500})\2''')
+# Assignment operators must be outside comments and literals. This stops SQL
+# fragments such as "UPDATE users SET password = '...'" becoming credentials.
+SECRET_TOKENS = re.compile(JS_TOKENS.pattern + r"|\#[^\n]*")
+ASSIGNMENT = re.compile(r'''(?i)(?<![\w.-])(?:["'](?P<quoted>[a-z_][a-z0-9_.-]{0,120})["']|(?P<bare>[a-z_][a-z0-9_.-]{0,120}))\s*\]?\s*(?P<operator>=>|:=|=(?!=)|:)\s*(?P<quote>["'])(?P<value>(?:\\.|[^\r\n"'\\]){8,500})(?P=quote)''')
 UNQUOTED = re.compile(r"(?im)^[ \t]*(?:export[ \t]+)?([A-Z_][A-Z0-9_]{0,120})[ \t]*=[ \t]*([^\s#\"']{8,500})[ \t]*(?:#.*)?$")
 TOKEN_PATTERNS = [
     re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b"),
@@ -51,11 +54,29 @@ def secrets(source: str, out: Collector, python=False):
         for m in pattern.finditer(source):
             add(out, "SEC003", source, m.start(), "A string resembles a provider credential; its value is withheld.", "medium", "secret-pattern")
     if not python:
-        for pattern in (ASSIGNMENT, UNQUOTED):
-            for m in pattern.finditer(source):
-                value = m[3] if pattern is ASSIGNMENT else m[2]
-                if credential_literal(m[1], value):
-                    add(out, "SEC001", source, m.start(), "A credential-like setting contains a literal; its value is withheld.", "medium", "secret-pattern")
+        clean = SECRET_TOKENS.sub(lambda m: blank(m[0]) if m[0].startswith(("//", "/*", "#")) else m[0], source)
+        code = SECRET_TOKENS.sub(lambda m: blank(m[0]), source)
+        for m in ASSIGNMENT.finditer(clean):
+            operator = m.start("operator")
+            if code[operator].isspace():
+                continue
+            # A single literal must be the complete RHS, not a concatenation,
+            # interpolated expression, comparison or function argument.
+            tail = clean[m.end():]
+            same_line = tail.split("\n", 1)[0].lstrip(" \t\r")
+            if same_line and same_line[0] not in ";,})]" and not same_line.startswith("?>"):
+                continue
+            value = m["value"]
+            if "${" in value or "#{" in value or (m["quote"] == '"' and re.search(r"\$[A-Za-z_{]", value)):
+                continue
+            if credential_literal(m["quoted"] or m["bare"], value):
+                add(out, "SEC001", source, m.start(), "A credential-like setting has a direct literal assignment; its value is withheld.", "medium", "secret-pattern")
+        # Unquoted credentials are supported only in line-oriented config files.
+        name = out.path.lower()
+        if PurePath(name).name.startswith(".env") or any(name.endswith(ext) for ext in (".ini", ".cfg", ".conf", ".properties")):
+            for m in UNQUOTED.finditer(clean):
+                if credential_literal(m[1], m[2]) and not any(c in m[2] for c in "$(){}"):
+                    add(out, "SEC001", source, m.start(), "A credential-like setting has a direct literal assignment; its value is withheld.", "medium", "secret-pattern")
 
 
 def first_argument(source, start):
