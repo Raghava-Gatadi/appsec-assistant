@@ -8,8 +8,13 @@ CATEGORY_WEIGHTS = {
     "database query": 7, "template/HTML output": 6, "authentication/crypto": 6,
     "credentials": 6, "filesystem access": 5, "outbound request": 4,
     "redirect": 3, "configuration": 2, "entry point": 1,
-    "input": 0, "function": 0, "mitigation": 0,
+    "input": 0, "state": 0, "function": 0, "mitigation": 0,
 }
+# Categories that describe how data arrives, not an operation to review.
+# Lines within which request input and an operation count as close together.
+NEAR_LINES = 10
+SOURCE_CATEGORIES = {"input", "entry point"}
+NON_OPERATION_CATEGORIES = SOURCE_CATEGORIES | {"state", "function", "mitigation"}
 RULE_CATEGORIES = {
     "PY001": "database query", "JS005": "database query",
     "PY002": "command execution", "JS002": "command execution",
@@ -57,10 +62,25 @@ def finding_key(finding):
     return (-finding_rank(finding), finding.path, finding.line, finding.column, finding.rule_id)
 
 
-def navigation_rank(category, has_input=False):
+def scope_evidence(has_input, has_operation, mitigated, distance, near=10):
+    """Evidence level for a navigation scope (0-3).
+
+    0 no request input and operation together; 1 together but a mitigation API is
+    present in the same scope; 2 together with no mitigation seen; 3 as 2 and the
+    input is within `near` lines of an operation. A mitigation lowers rank but never
+    removes the scope: it is not proof of safety.
+    """
+    if not (has_input and has_operation):
+        return 0
+    if mitigated:
+        return 1
+    return 3 if distance is not None and distance <= near else 2
+
+
+def navigation_rank(category, evidence=0):
     weight = CATEGORY_WEIGHTS.get(category, 0)
     severity = "high" if weight >= 4 else "medium" if weight else "low"
-    return score("review-hotspot", severity, "low", int(has_input), category)
+    return score("review-hotspot", severity, "low", int(evidence), category)
 
 
 def meets_gate(finding, threshold="high"):

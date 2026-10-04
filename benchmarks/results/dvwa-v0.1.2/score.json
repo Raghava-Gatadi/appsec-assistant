@@ -1,0 +1,253 @@
+{
+  "target": "dvwa",
+  "role": "dev",
+  "counts": {
+    "positive_cases": 12,
+    "finding_matches": 0,
+    "likely_matches": 0,
+    "navigation_matches": 9,
+    "navigation_localized": 9,
+    "negative_cases": 4,
+    "false_positives": 0
+  },
+  "queue": {
+    "k": 20,
+    "available": true,
+    "positives": 12,
+    "positives_in_top_k": 6,
+    "recall_at_k": 0.5,
+    "labeled_positive_entries_in_top_k": 6,
+    "labeled_negative_entries_in_top_k": 1,
+    "labeled_precision_at_k": 0.857,
+    "unlabeled_entries_in_top_k": 13,
+    "pairwise_ordering": {
+      "pairs": 18,
+      "positive_first": 9,
+      "ties": 9,
+      "score": 0.75,
+      "note": "A positive ranked above a same-CWE negative; ranks outside the top k count as tied. Cases marked queue_comparable=false are skipped."
+    },
+    "note": "Entries are labeled per (path, function) when a case names a function, otherwise per file. Precision counts labeled entries only; unlabeled entries are unknown, not false."
+  },
+  "findings": {
+    "reported": false,
+    "reason": "The scanner emitted no findings for the listed CWEs, so finding precision and recall are not reported. A clean negative case says nothing when nothing could be flagged."
+  },
+  "cases": [
+    {
+      "path": "vulnerabilities/exec/source/low.php",
+      "function": null,
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 4
+    },
+    {
+      "path": "vulnerabilities/exec/source/medium.php",
+      "function": null,
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 15
+    },
+    {
+      "path": "vulnerabilities/exec/source/high.php",
+      "function": null,
+      "cwe": "CWE-78",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 16
+    },
+    {
+      "path": "vulnerabilities/exec/source/impossible.php",
+      "function": null,
+      "cwe": "CWE-78",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 20
+    },
+    {
+      "path": "vulnerabilities/sqli/source/low.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 7
+    },
+    {
+      "path": "vulnerabilities/sqli/source/medium.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 40
+    },
+    {
+      "path": "vulnerabilities/sqli/source/high.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 84
+    },
+    {
+      "path": "vulnerabilities/sqli/source/impossible.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 41
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/low.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 10
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/medium.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 44
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/high.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 9
+    },
+    {
+      "path": "vulnerabilities/sqli_blind/source/impossible.php",
+      "function": null,
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 42
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/low.php",
+      "function": null,
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false,
+      "navigation_localized": false,
+      "queue_rank": 167
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/medium.php",
+      "function": null,
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false,
+      "navigation_localized": false,
+      "queue_rank": 168
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/high.php",
+      "function": null,
+      "cwe": "CWE-79",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false,
+      "navigation_localized": false,
+      "queue_rank": 165
+    },
+    {
+      "path": "vulnerabilities/xss_r/source/impossible.php",
+      "function": null,
+      "cwe": "CWE-79",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false,
+      "navigation_localized": false,
+      "queue_rank": 166
+    }
+  ],
+  "credential_checks": [
+    {
+      "path": "vulnerabilities/captcha/source/high.php",
+      "expected": false,
+      "matched": false,
+      "pass": true
+    },
+    {
+      "path": "vulnerabilities/captcha/source/low.php",
+      "expected": false,
+      "matched": false,
+      "pass": true
+    },
+    {
+      "path": "vulnerabilities/captcha/source/medium.php",
+      "expected": false,
+      "matched": false,
+      "pass": true
+    },
+    {
+      "path": "vulnerabilities/csrf/source/low.php",
+      "expected": false,
+      "matched": false,
+      "pass": true
+    },
+    {
+      "path": "vulnerabilities/csrf/source/medium.php",
+      "expected": false,
+      "matched": false,
+      "pass": true
+    },
+    {
+      "path": "vulnerabilities/sqli/test.php",
+      "expected": true,
+      "matched": true,
+      "pass": true
+    }
+  ],
+  "interpretation": "Navigation and queue placement are triage aids, not vulnerability recall. Negative cases apply only to the listed CWE, not all possible defects."
+}

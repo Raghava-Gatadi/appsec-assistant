@@ -163,12 +163,20 @@ htmlspecialchars($value);''', 'clean.php')
         self.assertTrue(any(m['category'] == 'dynamic execution' for m in check('<?php include "dir/" . $file;', 'app.php').code_map))
 
     def test_superglobal_reads_and_writes(self):
-        for name in ('_GET', '_POST', '_REQUEST', '_COOKIE', '_FILES', '_SERVER', '_SESSION', '_ENV', 'GLOBALS'):
+        # Request superglobals create entry-point hints; server-side state never does.
+        for name in ('_GET', '_POST', '_REQUEST', '_COOKIE', '_FILES'):
             with self.subTest(name=name):
                 read = check(f'<?php $x = ${name}["key"];', 'app.php')
                 self.assertTrue(any(m['category'] == 'entry point' for m in read.code_map))
                 write = check(f'<?php ${name}["key"] = 1;', 'app.php')
                 self.assertFalse(any(m['category'] == 'entry point' for m in write.code_map))
+        for name in ('_SESSION', '_ENV', '_SERVER', 'GLOBALS'):
+            with self.subTest(name=name):
+                read = check(f'<?php $x = ${name}["key"];', 'app.php')
+                self.assertFalse(any(m['category'] == 'entry point' for m in read.code_map))
+                self.assertTrue(any(m['category'] == 'state' for m in read.code_map))
+                write = check(f'<?php ${name}["key"] = 1;', 'app.php')
+                self.assertFalse(write.code_map)
         self.assertFalse(check('<?php $x = "$_POST[anything]";', 'app.php').code_map)
 
     def test_cross_language_mitigations_are_notes(self):
@@ -209,7 +217,7 @@ htmlspecialchars($value);''', 'clean.php')
         html = render(result, 'html')
         self.assertIn('<details id="map-inputs">', html)
         self.assertNotIn('<details id="map-inputs" open', html)
-        self.assertIn('Input locations (2)', html)
+        self.assertIn('Input and state locations (2)', html)
         self.assertEqual(len(result.to_dict()['code_map']), 2)
         self.assertEqual(html.count('Identify the trust boundary'), 1)
 

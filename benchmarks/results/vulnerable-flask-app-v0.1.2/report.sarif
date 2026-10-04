@@ -1,0 +1,2421 @@
+{
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "AppSec Assistant",
+          "version": "0.1.2",
+          "rules": [
+            {
+              "id": "PY001",
+              "name": "PY001",
+              "shortDescription": {
+                "text": "Dynamic SQL statement"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/89.html",
+              "help": {
+                "text": "Use driver placeholders and pass values separately. Allowlist any dynamic table or column identifiers. Confirm this is a database API and determine whether any part of the statement is externally controlled."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-89"
+                ]
+              }
+            },
+            {
+              "id": "PY005",
+              "name": "PY005",
+              "shortDescription": {
+                "text": "Unsafe YAML loader"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/502.html",
+              "help": {
+                "text": "Use yaml.safe_load or an explicitly selected SafeLoader/CSafeLoader. Check the installed PyYAML version and loader. Some modern versions reject a missing Loader instead of loading."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-502"
+                ]
+              }
+            },
+            {
+              "id": "PY007",
+              "name": "PY007",
+              "shortDescription": {
+                "text": "Weak hash algorithm"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/327.html",
+              "help": {
+                "text": "Use a modern hash for integrity; use a dedicated password KDF such as Argon2id for passwords. MD5/SHA-1 can be acceptable for non-security checksums. Identify the actual security use."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-327"
+                ]
+              }
+            },
+            {
+              "id": "PY011",
+              "name": "PY011",
+              "shortDescription": {
+                "text": "Dynamic template source"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/1336.html",
+              "help": {
+                "text": "Keep template source fixed and pass untrusted content only as template data. Determine whether the value is template source or an ordinary template variable."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-1336"
+                ]
+              }
+            },
+            {
+              "id": "PY014",
+              "name": "PY014",
+              "shortDescription": {
+                "text": "Input influences a filesystem path"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/22.html",
+              "help": {
+                "text": "Resolve paths under a fixed allowed directory, enforce containment and consider symlink races; prefer opaque file IDs. Check the operation, allowed base directory, authorization and any validation before filesystem access."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-22"
+                ]
+              }
+            },
+            {
+              "id": "PY016",
+              "name": "PY016",
+              "shortDescription": {
+                "text": "JWT signature verification disabled"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/347.html",
+              "help": {
+                "text": "Verify the signature using a trusted key and fixed permitted algorithms; validate issuer, audience and lifetime. Confirm decoded claims are not trusted for authentication or authorization without verification."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-347"
+                ]
+              }
+            },
+            {
+              "id": "SEC001",
+              "name": "SEC001",
+              "shortDescription": {
+                "text": "Possible hardcoded credential"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/798.html",
+              "help": {
+                "text": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use. The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-798"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "columnKind": "unicodeCodePoints",
+      "results": [
+        {
+          "ruleId": "PY005",
+          "ruleIndex": 1,
+          "level": "error",
+          "message": {
+            "text": "YAML is loaded without an explicitly safe loader. Remediation: Use yaml.safe_load or an explicitly selected SafeLoader/CSafeLoader."
+          },
+          "rank": 92.238614,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 329,
+                  "startColumn": 17
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "3da502dc811d525cc20ddcbcebc094c6e8aef5e78f1d0d26a1e8bbf7cba833bf"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Check the installed PyYAML version and loader. Some modern versions reject a missing Loader instead of loading.",
+            "classification": "likely-vulnerability",
+            "function": "yaml_hammer",
+            "occurrenceFingerprints": [
+              "3da502dc811d525cc20ddcbcebc094c6e8aef5e78f1d0d26a1e8bbf7cba833bf"
+            ]
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 318,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 318,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to f"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 320,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to fname"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 321,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to fname"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 323,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to file_path"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 326,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to yfile"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 327,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to y"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 329,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "PY001",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "A database-like API receives a dynamically built statement; parameter binding needs review. Remediation: Use driver placeholders and pass values separately. Allowlist any dynamic table or column identifiers."
+          },
+          "rank": 92.174471,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 265,
+                  "startColumn": 36
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "0840e650c034b1a4298202c33eed3a14b79db3d98d8e287991999a1567b0426f"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Confirm this is a database API and determine whether any part of the statement is externally controlled.",
+            "classification": "likely-vulnerability",
+            "function": "search_customer",
+            "occurrenceFingerprints": [
+              "0840e650c034b1a4298202c33eed3a14b79db3d98d8e287991999a1567b0426f"
+            ]
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 259,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 259,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to search_term"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 261,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to str_query"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 265,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "PY016",
+          "ruleIndex": 5,
+          "level": "error",
+          "message": {
+            "text": "Token decoding disables signature verification. Remediation: Verify the signature using a trusted key and fixed permitted algorithms; validate issuer, audience and lifetime."
+          },
+          "rank": 91.46889,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 97,
+                  "startColumn": 15
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "5b1cc6162dca180f9e447e8677f7df0da608abe7357ecd3487138a9c29696679"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Confirm decoded claims are not trusted for authentication or authorization without verification.",
+            "classification": "likely-vulnerability",
+            "function": "insecure_verify",
+            "occurrenceFingerprints": [
+              "5b1cc6162dca180f9e447e8677f7df0da608abe7357ecd3487138a9c29696679"
+            ]
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 96,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Parameter token (trust unknown)"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 97,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "PY014",
+          "ruleIndex": 4,
+          "level": "error",
+          "message": {
+            "text": "Input contributes to a filesystem path; containment requires review. Remediation: Resolve paths under a fixed allowed directory, enforce containment and consider symlink races; prefer opaque file IDs."
+          },
+          "rank": 58.691469,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 326,
+                  "startColumn": 14
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "44c244ea1a460708a259fb2a9c0da3d51d72589e2674a2d653535c3905ba4aa1"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "high",
+            "engine": "python-ast",
+            "review": "Check the operation, allowed base directory, authorization and any validation before filesystem access.",
+            "classification": "review-hotspot",
+            "function": "yaml_hammer",
+            "occurrenceFingerprints": [
+              "44c244ea1a460708a259fb2a9c0da3d51d72589e2674a2d653535c3905ba4aa1"
+            ]
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 318,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 318,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to f"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 320,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to fname"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 321,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to fname"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 323,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to file_path"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 326,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SEC001",
+          "ruleIndex": 6,
+          "level": "error",
+          "message": {
+            "text": "A credential-like field contains a string literal; its value is withheld. Remediation: Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use."
+          },
+          "rank": 50.416934,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 1
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "7b1bb670a65c6e646e3c3f1528f81a212aba90ea1c9e8970d60b58b51f0ebc47"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "medium",
+            "engine": "python-ast",
+            "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+            "classification": "review-hotspot",
+            "function": "<file: app/app.py>",
+            "occurrenceFingerprints": [
+              "7b1bb670a65c6e646e3c3f1528f81a212aba90ea1c9e8970d60b58b51f0ebc47",
+              "30bd17a473fc3bd99b5142f2c4b3e2ebd9de8b0eb66a62e6723b31eb169dbe14"
+            ]
+          }
+        },
+        {
+          "ruleId": "SEC001",
+          "ruleIndex": 6,
+          "level": "error",
+          "message": {
+            "text": "A credential-like field contains a string literal; its value is withheld. Remediation: Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use."
+          },
+          "rank": 50.416934,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 9
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "3b1fbbae2ac5781f72c014cda0775d90dd5beaf1a26aa89214353fa3bed22fe5"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "medium",
+            "engine": "python-ast",
+            "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+            "classification": "review-hotspot",
+            "function": "setup_users",
+            "occurrenceFingerprints": [
+              "3b1fbbae2ac5781f72c014cda0775d90dd5beaf1a26aa89214353fa3bed22fe5"
+            ]
+          }
+        },
+        {
+          "ruleId": "PY007",
+          "ruleIndex": 2,
+          "level": "warning",
+          "message": {
+            "text": "A legacy hash is used without an explicit non-security annotation. Remediation: Use a modern hash for integrity; use a dedicated password KDF such as Argon2id for passwords."
+          },
+          "rank": 45.926876,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 141,
+                  "startColumn": 25
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "426d757ff34ae0250b5a6b3014708e8ba991b2fcbf7014bd3abe8f928cafc18b"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "medium",
+            "confidence": "medium",
+            "engine": "python-ast",
+            "review": "MD5/SHA-1 can be acceptable for non-security checksums. Identify the actual security use.",
+            "classification": "review-hotspot",
+            "function": "reg_customer",
+            "occurrenceFingerprints": [
+              "426d757ff34ae0250b5a6b3014708e8ba991b2fcbf7014bd3abe8f928cafc18b"
+            ]
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 140,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "HTTP request input"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 140,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Assigned to password"
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "app/app.py",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 141,
+                            "startColumn": 1
+                          }
+                        },
+                        "message": {
+                          "text": "Security-sensitive operation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "PY011",
+          "ruleIndex": 3,
+          "level": "error",
+          "message": {
+            "text": "Dynamically supplied text is compiled as template source. Remediation: Keep template source fixed and pass untrusted content only as template data."
+          },
+          "rank": 42.719692,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 114,
+                  "startColumn": 12
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "a9211e5be9018deb4cea5f901deeb5fe02beb7a11fb90260f4e72d6b271ebb88"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "low",
+            "engine": "python-ast",
+            "review": "Determine whether the value is template source or an ordinary template variable.",
+            "classification": "review-hotspot",
+            "function": "pnf",
+            "occurrenceFingerprints": [
+              "a9211e5be9018deb4cea5f901deeb5fe02beb7a11fb90260f4e72d6b271ebb88"
+            ]
+          }
+        },
+        {
+          "ruleId": "PY011",
+          "ruleIndex": 3,
+          "level": "error",
+          "message": {
+            "text": "Dynamically supplied text is compiled as template source. Remediation: Keep template source fixed and pass untrusted content only as template data."
+          },
+          "rank": 42.719692,
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/app.py"
+                },
+                "region": {
+                  "startLine": 281,
+                  "startColumn": 28
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "appsecAssistant/v1": "f7b8eb994302698a521e85bf785c6d3a9334c1e99c26032335f8a829cfc28c43"
+          },
+          "baselineState": "new",
+          "properties": {
+            "severity": "high",
+            "confidence": "low",
+            "engine": "python-ast",
+            "review": "Determine whether the value is template source or an ordinary template variable.",
+            "classification": "review-hotspot",
+            "function": "search_customer",
+            "occurrenceFingerprints": [
+              "f7b8eb994302698a521e85bf785c6d3a9334c1e99c26032335f8a829cfc28c43"
+            ]
+          }
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "toolExecutionNotifications": [
+            {
+              "level": "note",
+              "message": {
+                "text": ".git: Directory excluded or symlink not followed"
+              }
+            },
+            {
+              "level": "note",
+              "message": {
+                "text": ".gitignore: Unsupported extension; file was not analyzed"
+              }
+            },
+            {
+              "level": "note",
+              "message": {
+                "text": ".python-version: Unsupported extension; file was not analyzed"
+              }
+            },
+            {
+              "level": "note",
+              "message": {
+                "text": "README.md: Unsupported extension; file was not analyzed"
+              }
+            },
+            {
+              "level": "note",
+              "message": {
+                "text": "app/test.db: Unsupported extension; file was not analyzed"
+              }
+            },
+            {
+              "level": "note",
+              "message": {
+                "text": ".: 1 test files excluded; use --include-tests to analyze them"
+              }
+            },
+            {
+              "level": "note",
+              "message": {
+                "text": ".: 1 vendored, generated or minified files excluded (1 minified or obfuscated file); use --include-vendored to analyze them"
+              }
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "coverage": {
+          "configuration/secrets": 11,
+          "python": 2
+        },
+        "limitations": [
+          "Findings are review candidates, not proof of exploitability. No findings does not mean the application is secure.",
+          "Python analysis is bounded and intraprocedural. It does not resolve calls across functions or files, or prove sanitizers correct.",
+          "JavaScript/TypeScript and configuration checks use lexical heuristics, not a full parser or data-flow engine.",
+          "PHP, Java, C#, Go and Ruby receive navigation hotspots only. Callable identity, reachability and function scope may be unresolved.",
+          "Unsupported languages receive limited secret checks only. Dependency, vendored, minified and generated code is excluded by default.",
+          "No live CVE lookup, dependency resolution, runtime testing, authorization verification or automatic exploitation is performed."
+        ],
+        "policy": {
+          "include_tests": false,
+          "test_directories": [
+            "__tests__",
+            "spec",
+            "test",
+            "tests"
+          ],
+          "include_vendored": false,
+          "vendor_directories": [
+            "bower_components",
+            "jspm_packages",
+            "site-packages",
+            "third-party",
+            "third_party",
+            "thirdparty",
+            "vendor",
+            "vendors"
+          ],
+          "ci_gate": "new; severity at fail-on threshold; likely-vulnerability or confidence >= medium",
+          "min_severity": "low",
+          "min_confidence": "low",
+          "excludes": [
+            ".git",
+            ".hg",
+            ".mypy_cache",
+            ".next",
+            ".pytest_cache",
+            ".svn",
+            ".tox",
+            ".venv",
+            "__pycache__",
+            "build",
+            "coverage",
+            "dist",
+            "env",
+            "node_modules",
+            "venv"
+          ],
+          "baseline_fingerprints": 0,
+          "suppression_rules": 0,
+          "max_file_bytes": 2000000,
+          "max_total_bytes": 100000000,
+          "max_files": 10000,
+          "max_python_nodes": 100000
+        },
+        "filteredFindings": 0,
+        "manualReview": [
+          "Authorization: verify object ownership, tenant isolation and role checks on every sensitive operation.",
+          "Authentication: review account recovery, MFA, session rotation, token expiry and revocation.",
+          "Business logic: review payment amounts, state transitions, concurrency and abuse limits.",
+          "Web controls: review CSRF, CORS, cookie settings, security headers and output encoding by context.",
+          "Files and network: verify upload limits, destination allowlists, path containment and egress policy.",
+          "Dependencies: use a maintained advisory scanner against resolved lockfiles; inventory here is not a CVE audit.",
+          "Deployment: review production configuration, IAM permissions, secret rotation and audit logging."
+        ],
+        "codeMap": [
+          {
+            "path": "app/app.py",
+            "line": 21,
+            "end_line": 21,
+            "name": "os.environ",
+            "category": "state",
+            "function": "<file: app/app.py>",
+            "kind": "note",
+            "language": "python",
+            "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+            "engine": "python-ast",
+            "scope_start": 0
+          },
+          {
+            "path": "app/app.py",
+            "line": 39,
+            "end_line": 40,
+            "name": "User.__repr__",
+            "category": "function",
+            "function": "User.__repr__",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 39
+          },
+          {
+            "path": "app/app.py",
+            "line": 52,
+            "end_line": 53,
+            "name": "Customer.__repr__",
+            "category": "function",
+            "function": "Customer.__repr__",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 52
+          },
+          {
+            "path": "app/app.py",
+            "line": 56,
+            "end_line": 77,
+            "name": "setup_users",
+            "category": "function",
+            "function": "setup_users",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 56
+          },
+          {
+            "path": "app/app.py",
+            "line": 80,
+            "end_line": 82,
+            "name": "get_exp_date",
+            "category": "function",
+            "function": "get_exp_date",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 80
+          },
+          {
+            "path": "app/app.py",
+            "line": 84,
+            "end_line": 94,
+            "name": "verify_jwt",
+            "category": "function",
+            "function": "verify_jwt",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 84
+          },
+          {
+            "path": "app/app.py",
+            "line": 86,
+            "end_line": 86,
+            "name": "jwt.decode",
+            "category": "authentication/crypto",
+            "function": "verify_jwt",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review algorithm selection, key management, claim validation and session lifecycle.",
+            "engine": "python-ast",
+            "scope_start": 84
+          },
+          {
+            "path": "app/app.py",
+            "line": 96,
+            "end_line": 99,
+            "name": "insecure_verify",
+            "category": "function",
+            "function": "insecure_verify",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 96
+          },
+          {
+            "path": "app/app.py",
+            "line": 97,
+            "end_line": 97,
+            "name": "jwt.decode",
+            "category": "authentication/crypto",
+            "function": "insecure_verify",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review algorithm selection, key management, claim validation and session lifecycle.",
+            "engine": "python-ast",
+            "scope_start": 96
+          },
+          {
+            "path": "app/app.py",
+            "line": 102,
+            "end_line": 114,
+            "name": "pnf",
+            "category": "function",
+            "function": "pnf",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 102
+          },
+          {
+            "path": "app/app.py",
+            "line": 114,
+            "end_line": 114,
+            "name": "flask.render_template_string",
+            "category": "template/HTML output",
+            "function": "pnf",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Distinguish template source from data and check contextual output escaping.",
+            "engine": "python-ast",
+            "scope_start": 102
+          },
+          {
+            "path": "app/app.py",
+            "line": 116,
+            "end_line": 119,
+            "name": "has_no_empty_params",
+            "category": "function",
+            "function": "has_no_empty_params",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 116
+          },
+          {
+            "path": "app/app.py",
+            "line": 121,
+            "end_line": 121,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "sitemap",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 122
+          },
+          {
+            "path": "app/app.py",
+            "line": 122,
+            "end_line": 131,
+            "name": "sitemap",
+            "category": "function",
+            "function": "sitemap",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 122
+          },
+          {
+            "path": "app/app.py",
+            "line": 134,
+            "end_line": 134,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "reg_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 135
+          },
+          {
+            "path": "app/app.py",
+            "line": 135,
+            "end_line": 148,
+            "name": "reg_customer",
+            "category": "function",
+            "function": "reg_customer",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 135
+          },
+          {
+            "path": "app/app.py",
+            "line": 137,
+            "end_line": 137,
+            "name": "flask.request.json",
+            "category": "input",
+            "function": "reg_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 135
+          },
+          {
+            "path": "app/app.py",
+            "line": 141,
+            "end_line": 141,
+            "name": "hashlib.md5",
+            "category": "authentication/crypto",
+            "function": "reg_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review algorithm selection, key management, claim validation and session lifecycle.",
+            "engine": "python-ast",
+            "scope_start": 135
+          },
+          {
+            "path": "app/app.py",
+            "line": 150,
+            "end_line": 150,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "reg_user",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 151
+          },
+          {
+            "path": "app/app.py",
+            "line": 151,
+            "end_line": 167,
+            "name": "reg_user",
+            "category": "function",
+            "function": "reg_user",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 151
+          },
+          {
+            "path": "app/app.py",
+            "line": 153,
+            "end_line": 153,
+            "name": "flask.request.json",
+            "category": "input",
+            "function": "reg_user",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 151
+          },
+          {
+            "path": "app/app.py",
+            "line": 170,
+            "end_line": 170,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "login",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 171
+          },
+          {
+            "path": "app/app.py",
+            "line": 171,
+            "end_line": 194,
+            "name": "login",
+            "category": "function",
+            "function": "login",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 171
+          },
+          {
+            "path": "app/app.py",
+            "line": 178,
+            "end_line": 178,
+            "name": "flask.request.json",
+            "category": "input",
+            "function": "login",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 171
+          },
+          {
+            "path": "app/app.py",
+            "line": 184,
+            "end_line": 184,
+            "name": "jwt.encode",
+            "category": "authentication/crypto",
+            "function": "login",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review algorithm selection, key management, claim validation and session lifecycle.",
+            "engine": "python-ast",
+            "scope_start": 171
+          },
+          {
+            "path": "app/app.py",
+            "line": 196,
+            "end_line": 196,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "fetch_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 197
+          },
+          {
+            "path": "app/app.py",
+            "line": 197,
+            "end_line": 218,
+            "name": "fetch_customer",
+            "category": "function",
+            "function": "fetch_customer",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 197
+          },
+          {
+            "path": "app/app.py",
+            "line": 198,
+            "end_line": 198,
+            "name": "flask.request.headers",
+            "category": "input",
+            "function": "fetch_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 197
+          },
+          {
+            "path": "app/app.py",
+            "line": 205,
+            "end_line": 205,
+            "name": "flask.request.json",
+            "category": "input",
+            "function": "fetch_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 197
+          },
+          {
+            "path": "app/app.py",
+            "line": 221,
+            "end_line": 221,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "get_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 222
+          },
+          {
+            "path": "app/app.py",
+            "line": 222,
+            "end_line": 241,
+            "name": "get_customer",
+            "category": "function",
+            "function": "get_customer",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 222
+          },
+          {
+            "path": "app/app.py",
+            "line": 223,
+            "end_line": 223,
+            "name": "flask.request.headers",
+            "category": "input",
+            "function": "get_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 222
+          },
+          {
+            "path": "app/app.py",
+            "line": 246,
+            "end_line": 246,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "search_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 247
+          },
+          {
+            "path": "app/app.py",
+            "line": 247,
+            "end_line": 281,
+            "name": "search_customer",
+            "category": "function",
+            "function": "search_customer",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 247
+          },
+          {
+            "path": "app/app.py",
+            "line": 248,
+            "end_line": 248,
+            "name": "flask.request.headers",
+            "category": "input",
+            "function": "search_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 247
+          },
+          {
+            "path": "app/app.py",
+            "line": 255,
+            "end_line": 255,
+            "name": "flask.request.json",
+            "category": "input",
+            "function": "search_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Identify the trust boundary and trace validation before sensitive operations.",
+            "engine": "python-ast",
+            "scope_start": 247
+          },
+          {
+            "path": "app/app.py",
+            "line": 265,
+            "end_line": 265,
+            "name": "db.engine.execute",
+            "category": "database query",
+            "function": "search_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+            "engine": "python-ast",
+            "scope_start": 247
+          },
+          {
+            "path": "app/app.py",
+            "line": 281,
+            "end_line": 281,
+            "name": "flask.render_template_string",
+            "category": "template/HTML output",
+            "function": "search_customer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Distinguish template source from data and check contextual output escaping.",
+            "engine": "python-ast",
+            "scope_start": 247
+          },
+          {
+            "path": "app/app.py",
+            "line": 284,
+            "end_line": 284,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "index",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 285
+          },
+          {
+            "path": "app/app.py",
+            "line": 285,
+            "end_line": 287,
+            "name": "index",
+            "category": "function",
+            "function": "index",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 285
+          },
+          {
+            "path": "app/app.py",
+            "line": 290,
+            "end_line": 290,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "hello",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 291
+          },
+          {
+            "path": "app/app.py",
+            "line": 291,
+            "end_line": 308,
+            "name": "hello",
+            "category": "function",
+            "function": "hello",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 291
+          },
+          {
+            "path": "app/app.py",
+            "line": 295,
+            "end_line": 295,
+            "name": "random.randint",
+            "category": "authentication/crypto",
+            "function": "hello",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review algorithm selection, key management, claim validation and session lifecycle.",
+            "engine": "python-ast",
+            "scope_start": 291
+          },
+          {
+            "path": "app/app.py",
+            "line": 296,
+            "end_line": 296,
+            "name": "werkzeug.utils.secure_filename",
+            "category": "mitigation",
+            "function": "hello",
+            "kind": "note",
+            "language": "python",
+            "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+            "engine": "python-ast",
+            "scope_start": 291
+          },
+          {
+            "path": "app/app.py",
+            "line": 310,
+            "end_line": 310,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "yaml_upload",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 311
+          },
+          {
+            "path": "app/app.py",
+            "line": 311,
+            "end_line": 313,
+            "name": "yaml_upload",
+            "category": "function",
+            "function": "yaml_upload",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 311
+          },
+          {
+            "path": "app/app.py",
+            "line": 315,
+            "end_line": 315,
+            "name": "app.route",
+            "category": "entry point",
+            "function": "yaml_hammer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+            "engine": "python-ast",
+            "scope_start": 316
+          },
+          {
+            "path": "app/app.py",
+            "line": 316,
+            "end_line": 331,
+            "name": "yaml_hammer",
+            "category": "function",
+            "function": "yaml_hammer",
+            "kind": "note",
+            "language": "python",
+            "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+            "engine": "python-ast",
+            "scope_start": 316
+          },
+          {
+            "path": "app/app.py",
+            "line": 319,
+            "end_line": 319,
+            "name": "random.randint",
+            "category": "authentication/crypto",
+            "function": "yaml_hammer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Review algorithm selection, key management, claim validation and session lifecycle.",
+            "engine": "python-ast",
+            "scope_start": 316
+          },
+          {
+            "path": "app/app.py",
+            "line": 320,
+            "end_line": 320,
+            "name": "werkzeug.utils.secure_filename",
+            "category": "mitigation",
+            "function": "yaml_hammer",
+            "kind": "note",
+            "language": "python",
+            "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+            "engine": "python-ast",
+            "scope_start": 316
+          },
+          {
+            "path": "app/app.py",
+            "line": 326,
+            "end_line": 326,
+            "name": "open",
+            "category": "filesystem access",
+            "function": "yaml_hammer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
+            "engine": "python-ast",
+            "scope_start": 316
+          },
+          {
+            "path": "app/app.py",
+            "line": 329,
+            "end_line": 329,
+            "name": "yaml.load",
+            "category": "deserialization",
+            "function": "yaml_hammer",
+            "kind": "review-hotspot",
+            "language": "python",
+            "review": "Establish the origin and integrity of serialized data and prefer data-only formats.",
+            "engine": "python-ast",
+            "scope_start": 316
+          }
+        ],
+        "reviewQueue": [
+          {
+            "path": "app/app.py",
+            "function": "yaml_hammer",
+            "scope_start": 316,
+            "line": 315,
+            "categories": [
+              "authentication/crypto",
+              "deserialization",
+              "entry point",
+              "filesystem access"
+            ],
+            "findings": [
+              "PY005",
+              "PY014"
+            ],
+            "rank": 92.238614,
+            "source_lines": [
+              315
+            ],
+            "operation_lines": [
+              319,
+              326,
+              329
+            ],
+            "mitigation_lines": [
+              320
+            ],
+            "evidence": 1,
+            "distance": 4,
+            "mitigated": true,
+            "operation_weight": 8,
+            "reason": "Review rule findings: PY005, PY014"
+          },
+          {
+            "path": "app/app.py",
+            "function": "search_customer",
+            "scope_start": 247,
+            "line": 246,
+            "categories": [
+              "database query",
+              "entry point",
+              "input",
+              "template/HTML output"
+            ],
+            "findings": [
+              "PY001",
+              "PY011"
+            ],
+            "rank": 92.174471,
+            "source_lines": [
+              246,
+              248,
+              255
+            ],
+            "operation_lines": [
+              265,
+              281
+            ],
+            "mitigation_lines": [],
+            "evidence": 3,
+            "distance": 10,
+            "mitigated": false,
+            "operation_weight": 7,
+            "reason": "Review rule findings: PY001, PY011"
+          },
+          {
+            "path": "app/app.py",
+            "function": "insecure_verify",
+            "scope_start": 96,
+            "line": 97,
+            "categories": [
+              "authentication/crypto"
+            ],
+            "findings": [
+              "PY016"
+            ],
+            "rank": 91.46889,
+            "source_lines": [],
+            "operation_lines": [
+              97
+            ],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 6,
+            "reason": "Review rule findings: PY016"
+          },
+          {
+            "path": "app/app.py",
+            "function": "<file: app/app.py>",
+            "scope_start": 0,
+            "line": 27,
+            "categories": [],
+            "findings": [
+              "SEC001",
+              "SEC001"
+            ],
+            "rank": 50.416934,
+            "source_lines": [],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review rule findings: SEC001"
+          },
+          {
+            "path": "app/app.py",
+            "function": "setup_users",
+            "scope_start": 56,
+            "line": 63,
+            "categories": [],
+            "findings": [
+              "SEC001"
+            ],
+            "rank": 50.416934,
+            "source_lines": [],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review rule findings: SEC001"
+          },
+          {
+            "path": "app/app.py",
+            "function": "reg_customer",
+            "scope_start": 135,
+            "line": 134,
+            "categories": [
+              "authentication/crypto",
+              "entry point",
+              "input"
+            ],
+            "findings": [
+              "PY007"
+            ],
+            "rank": 45.926876,
+            "source_lines": [
+              134,
+              137
+            ],
+            "operation_lines": [
+              141
+            ],
+            "mitigation_lines": [],
+            "evidence": 3,
+            "distance": 4,
+            "mitigated": false,
+            "operation_weight": 6,
+            "reason": "Review rule findings: PY007"
+          },
+          {
+            "path": "app/app.py",
+            "function": "login",
+            "scope_start": 171,
+            "line": 170,
+            "categories": [
+              "authentication/crypto",
+              "entry point",
+              "input"
+            ],
+            "findings": [],
+            "rank": 43.361129,
+            "source_lines": [
+              170,
+              178
+            ],
+            "operation_lines": [
+              184
+            ],
+            "mitigation_lines": [],
+            "evidence": 3,
+            "distance": 6,
+            "mitigated": false,
+            "operation_weight": 6,
+            "reason": "Request input or an entry point and authentication/crypto share this scope (closest 6 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
+          },
+          {
+            "path": "app/app.py",
+            "function": "pnf",
+            "scope_start": 102,
+            "line": 114,
+            "categories": [
+              "template/HTML output"
+            ],
+            "findings": [
+              "PY011"
+            ],
+            "rank": 42.719692,
+            "source_lines": [],
+            "operation_lines": [
+              114
+            ],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 6,
+            "reason": "Review rule findings: PY011"
+          },
+          {
+            "path": "app/app.py",
+            "function": "hello",
+            "scope_start": 291,
+            "line": 290,
+            "categories": [
+              "authentication/crypto",
+              "entry point"
+            ],
+            "findings": [],
+            "rank": 42.078255,
+            "source_lines": [
+              290
+            ],
+            "operation_lines": [
+              295
+            ],
+            "mitigation_lines": [
+              296
+            ],
+            "evidence": 1,
+            "distance": 5,
+            "mitigated": true,
+            "operation_weight": 6,
+            "reason": "Request input or an entry point and authentication/crypto share this scope (closest 5 line(s) apart); a mitigation API is also present, which lowers priority but does not show safety; a data-flow connection is not established."
+          },
+          {
+            "path": "app/app.py",
+            "function": "verify_jwt",
+            "scope_start": 84,
+            "line": 86,
+            "categories": [
+              "authentication/crypto"
+            ],
+            "findings": [],
+            "rank": 41.436818,
+            "source_lines": [],
+            "operation_lines": [
+              86
+            ],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 6,
+            "reason": "Security-sensitive operations require a trust-boundary review."
+          },
+          {
+            "path": "app/app.py",
+            "function": "sitemap",
+            "scope_start": 122,
+            "line": 121,
+            "categories": [
+              "entry point"
+            ],
+            "findings": [],
+            "rank": 38.550353,
+            "source_lines": [
+              121
+            ],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "app/app.py",
+            "function": "reg_user",
+            "scope_start": 151,
+            "line": 150,
+            "categories": [
+              "entry point",
+              "input"
+            ],
+            "findings": [],
+            "rank": 38.550353,
+            "source_lines": [
+              150,
+              153
+            ],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "app/app.py",
+            "function": "fetch_customer",
+            "scope_start": 197,
+            "line": 196,
+            "categories": [
+              "entry point",
+              "input"
+            ],
+            "findings": [],
+            "rank": 38.550353,
+            "source_lines": [
+              196,
+              198,
+              205
+            ],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "app/app.py",
+            "function": "get_customer",
+            "scope_start": 222,
+            "line": 221,
+            "categories": [
+              "entry point",
+              "input"
+            ],
+            "findings": [],
+            "rank": 38.550353,
+            "source_lines": [
+              221,
+              223
+            ],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "app/app.py",
+            "function": "index",
+            "scope_start": 285,
+            "line": 284,
+            "categories": [
+              "entry point"
+            ],
+            "findings": [],
+            "rank": 38.550353,
+            "source_lines": [
+              284
+            ],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          },
+          {
+            "path": "app/app.py",
+            "function": "yaml_upload",
+            "scope_start": 311,
+            "line": 310,
+            "categories": [
+              "entry point"
+            ],
+            "findings": [],
+            "rank": 38.550353,
+            "source_lines": [
+              310
+            ],
+            "operation_lines": [],
+            "mitigation_lines": [],
+            "evidence": 0,
+            "distance": null,
+            "mitigated": false,
+            "operation_weight": 0,
+            "reason": "Review input validation, authentication and authorization at this boundary."
+          }
+        ],
+        "fileInventory": [
+          {
+            "path": "Dockerfile",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": ".github/workflows/zap_test.yml",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": ".vscode/settings.json",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "app/__init__.py",
+            "language": "python",
+            "analysis": "AST + local data flow"
+          },
+          {
+            "path": "app/app.py",
+            "language": "python",
+            "analysis": "AST + local data flow"
+          },
+          {
+            "path": "app/requirements.txt",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "app/Files/test.txt",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "app/templates/index.html",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "app/templates/layout.html",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "app/templates/test.html",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "app/templates/view.html",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "app/templates/yaml_test.html",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          },
+          {
+            "path": "old-workflows/semgrep.yml",
+            "language": "configuration/secrets",
+            "analysis": "configuration/secrets"
+          }
+        ],
+        "dependencyInventory": [
+          {
+            "ecosystem": "PyPI",
+            "name": "backports-abc",
+            "specifier": "==0.5",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "certifi",
+            "specifier": "==2017.4.17",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "chardet",
+            "specifier": "==3.0.4",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "click",
+            "specifier": "==6.7",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "Faker",
+            "specifier": "==0.7.17",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "Flask",
+            "specifier": "==0.12.2",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "Flask-SQLAlchemy",
+            "specifier": "==2.2",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "gevent",
+            "specifier": "==1.2.2",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "greenlet",
+            "specifier": "==0.4.12",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "grequests",
+            "specifier": "==0.3.0",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "idna",
+            "specifier": "==2.5",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "ipaddress",
+            "specifier": "==1.0.18",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "itsdangerous",
+            "specifier": "==0.24",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "Jinja2",
+            "specifier": "==2.9.6",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "lxml",
+            "specifier": "==4.2.1",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "MarkupSafe",
+            "specifier": "==1.0",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "MySQL-python",
+            "specifier": "==1.2.5",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "PyJWT",
+            "specifier": "==1.5.2",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "python-dateutil",
+            "specifier": "==2.6.0",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "python-docx",
+            "specifier": "==0.8.5",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "PyYAML",
+            "specifier": "==3.12",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "requests",
+            "specifier": "==2.18.1",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "singledispatch",
+            "specifier": "==3.4.0.3",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "six",
+            "specifier": "==1.10.0",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "SQLAlchemy",
+            "specifier": "==1.1.11",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "tornado",
+            "specifier": "==4.5.1",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "urllib3",
+            "specifier": "==1.21.1",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          },
+          {
+            "ecosystem": "PyPI",
+            "name": "Werkzeug",
+            "specifier": "==0.14.1",
+            "group": "runtime",
+            "path": "app/requirements.txt",
+            "advisory_status": "not checked"
+          }
+        ]
+      }
+    }
+  ]
+}

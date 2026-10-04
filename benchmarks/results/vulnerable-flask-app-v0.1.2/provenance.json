@@ -1,0 +1,73 @@
+{
+  "scanner_version": "0.1.2",
+  "target": "vulnerable-flask-app",
+  "target_role": "held-out",
+  "target_commit": "b6a4f97afd466e83e1f60781494252dec1c37039",
+  "clean_checkout": true,
+  "scan_policy": {
+    "include_tests": false,
+    "test_directories": [
+      "__tests__",
+      "spec",
+      "test",
+      "tests"
+    ],
+    "include_vendored": false,
+    "vendor_directories": [
+      "bower_components",
+      "jspm_packages",
+      "site-packages",
+      "third-party",
+      "third_party",
+      "thirdparty",
+      "vendor",
+      "vendors"
+    ],
+    "ci_gate": "new; severity at fail-on threshold; likely-vulnerability or confidence >= medium",
+    "min_severity": "low",
+    "min_confidence": "low",
+    "excludes": [
+      ".git",
+      ".hg",
+      ".mypy_cache",
+      ".next",
+      ".pytest_cache",
+      ".svn",
+      ".tox",
+      ".venv",
+      "__pycache__",
+      "build",
+      "coverage",
+      "dist",
+      "env",
+      "node_modules",
+      "venv"
+    ],
+    "baseline_fingerprints": 0,
+    "suppression_rules": 0,
+    "max_file_bytes": 2000000,
+    "max_total_bytes": 100000000,
+    "max_files": 10000,
+    "max_python_nodes": 100000
+  },
+  "python_version": "3.12.3",
+  "scanner_files_sha256": {
+    "appsec_assistant/__init__.py": "da74fa8df5dedfaa9d4516a9362649f3c29b1f770cda9c2526e7d0b49e2e2129",
+    "appsec_assistant/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "appsec_assistant/cli.py": "ba4acb8094ffc01b076ebcd41a81ce6544bf3708c8e657ebbbce5080c23223d4",
+    "appsec_assistant/models.py": "e99aa821b0bf677b186c545461752c8ef14899f276ec532f70db92af7677d837",
+    "appsec_assistant/navigation.py": "93b2ed3c0008bc71b7de0a439de627d3b5e5fbfcf99f7a4ff4f65eae6ac9328b",
+    "appsec_assistant/priorities.py": "044c538e2099daa554030e63cd5747f99001df397f6d4e0cf1c4b56b7ccf7520",
+    "appsec_assistant/python_analyzer.py": "3a08e934c212d1ff88b78999824f068a5fd98c14c7e27223219e8ff2afa70fb5",
+    "appsec_assistant/reports.py": "1affc3609d3a54b35bcd028a4bec53d4d7dd5ad06bae3fc2c1a9ca4bb4023bd3",
+    "appsec_assistant/rules.py": "b8c4e599978303e8fe6bddf7c592564e68c78560397970a3f2ff8789f23dc2a0",
+    "appsec_assistant/scanner.py": "b73f260752d9aeb8c57ff7c23911f7682198b7a21c557d5085878c176c9864c8",
+    "appsec_assistant/text_analyzer.py": "c0996dae31eb8caf5eaab8d843bbe73e5858d403f37cd4ea9e2e3c8f5fd61cef"
+  },
+  "files_sha256": {
+    "report.html": "518361ef4b5ecc09eef12610a6f6b87818eadb57abeeb0fb6c33a3a37f0e9119",
+    "report.json": "771c280829e8c51af1c635b7f328be42420d21f7b891f615d72c0d12eec3155e",
+    "score.json": "95350e7809e998708ad41251242160026db6b16d82118c41b5be4c30a483864a",
+    "report.sarif": "efea47efd6063bd67abe100f81e271817558f21a35e82c907138461322bb3bda"
+  }
+}

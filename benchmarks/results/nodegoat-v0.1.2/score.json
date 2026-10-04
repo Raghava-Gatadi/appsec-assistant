@@ -1,0 +1,86 @@
+{
+  "target": "nodegoat",
+  "role": "held-out",
+  "counts": {
+    "positive_cases": 3,
+    "finding_matches": 1,
+    "likely_matches": 0,
+    "navigation_matches": 2,
+    "navigation_localized": 2,
+    "negative_cases": 1,
+    "false_positives": 0
+  },
+  "queue": {
+    "k": 20,
+    "available": true,
+    "positives": 3,
+    "positives_in_top_k": 2,
+    "recall_at_k": 0.667,
+    "labeled_positive_entries_in_top_k": 2,
+    "labeled_negative_entries_in_top_k": 0,
+    "labeled_precision_at_k": 1.0,
+    "unlabeled_entries_in_top_k": 16,
+    "pairwise_ordering": {
+      "pairs": 0,
+      "positive_first": 0,
+      "ties": 0,
+      "score": null,
+      "note": "A positive ranked above a same-CWE negative; ranks outside the top k count as tied. Cases marked queue_comparable=false are skipped."
+    },
+    "note": "Entries are labeled per (path, function) when a case names a function, otherwise per file. Precision counts labeled entries only; unlabeled entries are unknown, not false."
+  },
+  "findings": {
+    "reported": true,
+    "recall": 0.333,
+    "precision": 1.0,
+    "false_positive_rate": 0.0
+  },
+  "cases": [
+    {
+      "path": "app/routes/contributions.js",
+      "function": null,
+      "cwe": "CWE-95",
+      "expected_vulnerable": true,
+      "finding_match": true,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 5
+    },
+    {
+      "path": "app/routes/index.js",
+      "function": null,
+      "cwe": "CWE-601",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 17
+    },
+    {
+      "path": "app/routes/session.js",
+      "function": null,
+      "cwe": "CWE-601",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 2
+    },
+    {
+      "path": "app/data/allocations-dao.js",
+      "function": null,
+      "cwe": "CWE-943",
+      "expected_vulnerable": true,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false,
+      "navigation_localized": false,
+      "queue_rank": null
+    }
+  ],
+  "credential_checks": [],
+  "interpretation": "Navigation and queue placement are triage aids, not vulnerability recall. Negative cases apply only to the listed CWE, not all possible defects."
+}

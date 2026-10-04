@@ -1,0 +1,69 @@
+{
+  "schema_version": 2,
+  "name": "vulnerable-flask-app",
+  "role": "held-out",
+  "display_name": "Vulnerable-Flask-App",
+  "repository": "https://github.com/we45/Vulnerable-Flask-App",
+  "commit": "b6a4f97afd466e83e1f60781494252dec1c37039",
+  "languages": [
+    "python"
+  ],
+  "scope": "Five manually reviewed function-level cases in app/app.py. Not an audit of the application. No target code was executed.",
+  "limitations": [
+    "Role 'held-out': do not tune scanner rules against this target; use it only to measure generalization.",
+    "Function-level cases share one file, so queue matching uses the function name."
+  ],
+  "cases": [
+    {
+      "path": "app/app.py",
+      "function": "search_customer",
+      "line": 265,
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "A request-supplied search term is %-formatted into SQL text and passed to db.engine.execute.",
+      "sha256": "42f7b3909fca2e040a4428b54bd18a4745def719a445b834c98bf54e4dcbb1c2"
+    },
+    {
+      "path": "app/app.py",
+      "function": "login",
+      "line": 180,
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "navigation_category": "database query",
+      "rationale": "Credentials are matched through the ORM filter_by API, not SQL text.",
+      "sha256": "42f7b3909fca2e040a4428b54bd18a4745def719a445b834c98bf54e4dcbb1c2"
+    },
+    {
+      "path": "app/app.py",
+      "function": "yaml_hammer",
+      "line": 329,
+      "cwe": "CWE-502",
+      "expected_vulnerable": true,
+      "navigation_category": "deserialization",
+      "rationale": "An uploaded file is parsed with yaml.load without a safe loader.",
+      "sha256": "42f7b3909fca2e040a4428b54bd18a4745def719a445b834c98bf54e4dcbb1c2"
+    },
+    {
+      "path": "app/app.py",
+      "function": "insecure_verify",
+      "line": 97,
+      "cwe": "CWE-347",
+      "expected_vulnerable": true,
+      "navigation_category": "authentication/crypto",
+      "rationale": "jwt.decode is called with verify=False, so signature and claims are not checked.",
+      "sha256": "42f7b3909fca2e040a4428b54bd18a4745def719a445b834c98bf54e4dcbb1c2"
+    },
+    {
+      "path": "app/app.py",
+      "function": "verify_jwt",
+      "line": 86,
+      "cwe": "CWE-347",
+      "expected_vulnerable": false,
+      "navigation_category": "authentication/crypto",
+      "rationale": "jwt.decode verifies the signature with a pinned algorithm and issuer.",
+      "sha256": "42f7b3909fca2e040a4428b54bd18a4745def719a445b834c98bf54e4dcbb1c2"
+    }
+  ],
+  "credential_checks": []
+}

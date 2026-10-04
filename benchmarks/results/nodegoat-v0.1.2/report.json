@@ -1,0 +1,3380 @@
+{
+  "target": "NodeGoat",
+  "findings": [
+    {
+      "rule_id": "SEC002",
+      "title": "Private key material marker",
+      "severity": "high",
+      "confidence": "high",
+      "cwe": "CWE-321",
+      "path": "artifacts/cert/server.key",
+      "line": 1,
+      "column": 1,
+      "message": "A private key header is present; key material is withheld.",
+      "remediation": "Remove private keys from source control, rotate exposed keys and store replacements in managed secret storage.",
+      "review": "Confirm the marker belongs to actual private key material; public keys and test fixtures require different handling.",
+      "reference": "https://cwe.mitre.org/data/definitions/321.html",
+      "fingerprint": "0c0f61ad18bcd3675ec7e7e26ced46222a38e4b08b017be9191e04768611c066",
+      "engine": "secret-pattern",
+      "trace": [],
+      "status": "new",
+      "suppression_reason": null,
+      "classification": "review-hotspot",
+      "function": "<file: artifacts/cert/server.key>",
+      "scope_start": 0,
+      "rank": 58.114176,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "SEC002",
+          "title": "Private key material marker",
+          "severity": "high",
+          "confidence": "high",
+          "cwe": "CWE-321",
+          "path": "artifacts/cert/server.key",
+          "line": 1,
+          "column": 1,
+          "message": "A private key header is present; key material is withheld.",
+          "remediation": "Remove private keys from source control, rotate exposed keys and store replacements in managed secret storage.",
+          "review": "Confirm the marker belongs to actual private key material; public keys and test fixtures require different handling.",
+          "reference": "https://cwe.mitre.org/data/definitions/321.html",
+          "fingerprint": "0c0f61ad18bcd3675ec7e7e26ced46222a38e4b08b017be9191e04768611c066",
+          "engine": "secret-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: artifacts/cert/server.key>",
+          "scope_start": 0
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC001",
+      "title": "Possible hardcoded credential",
+      "severity": "high",
+      "confidence": "medium",
+      "cwe": "CWE-798",
+      "path": "app/routes/session.js",
+      "line": 61,
+      "column": 19,
+      "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+      "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+      "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+      "reference": "https://cwe.mitre.org/data/definitions/798.html",
+      "fingerprint": "848c5e16881626e11f0967ff12919d39c73e76cea5ba6580444073a8d56ee591",
+      "engine": "secret-pattern",
+      "trace": [],
+      "status": "new",
+      "suppression_reason": null,
+      "classification": "review-hotspot",
+      "function": "SessionHandler",
+      "scope_start": 8,
+      "rank": 50.416934,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "SEC001",
+          "title": "Possible hardcoded credential",
+          "severity": "high",
+          "confidence": "medium",
+          "cwe": "CWE-798",
+          "path": "app/routes/session.js",
+          "line": 61,
+          "column": 19,
+          "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+          "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+          "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+          "reference": "https://cwe.mitre.org/data/definitions/798.html",
+          "fingerprint": "848c5e16881626e11f0967ff12919d39c73e76cea5ba6580444073a8d56ee591",
+          "engine": "secret-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "SessionHandler",
+          "scope_start": 8
+        }
+      ]
+    },
+    {
+      "rule_id": "SEC001",
+      "title": "Possible hardcoded credential",
+      "severity": "high",
+      "confidence": "medium",
+      "cwe": "CWE-798",
+      "path": "artifacts/db-reset.js",
+      "line": 18,
+      "column": 9,
+      "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+      "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+      "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+      "reference": "https://cwe.mitre.org/data/definitions/798.html",
+      "fingerprint": "6918d213cc8a2ac5acf1a517cae82ffa3793a3eea2885bb6055aae1e5fccd734",
+      "engine": "secret-pattern",
+      "trace": [],
+      "status": "new",
+      "suppression_reason": null,
+      "classification": "review-hotspot",
+      "function": "<file: artifacts/db-reset.js>",
+      "scope_start": 0,
+      "rank": 50.416934,
+      "occurrence_count": 3,
+      "locations": [
+        {
+          "rule_id": "SEC001",
+          "title": "Possible hardcoded credential",
+          "severity": "high",
+          "confidence": "medium",
+          "cwe": "CWE-798",
+          "path": "artifacts/db-reset.js",
+          "line": 18,
+          "column": 9,
+          "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+          "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+          "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+          "reference": "https://cwe.mitre.org/data/definitions/798.html",
+          "fingerprint": "6918d213cc8a2ac5acf1a517cae82ffa3793a3eea2885bb6055aae1e5fccd734",
+          "engine": "secret-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: artifacts/db-reset.js>",
+          "scope_start": 0
+        },
+        {
+          "rule_id": "SEC001",
+          "title": "Possible hardcoded credential",
+          "severity": "high",
+          "confidence": "medium",
+          "cwe": "CWE-798",
+          "path": "artifacts/db-reset.js",
+          "line": 27,
+          "column": 9,
+          "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+          "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+          "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+          "reference": "https://cwe.mitre.org/data/definitions/798.html",
+          "fingerprint": "c2fda57e1c194594c90a193db6dc5da333e859c5962f50a3bcc4bdf476553763",
+          "engine": "secret-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: artifacts/db-reset.js>",
+          "scope_start": 0
+        },
+        {
+          "rule_id": "SEC001",
+          "title": "Possible hardcoded credential",
+          "severity": "high",
+          "confidence": "medium",
+          "cwe": "CWE-798",
+          "path": "artifacts/db-reset.js",
+          "line": 35,
+          "column": 9,
+          "message": "A credential-like setting has a direct literal assignment; its value is withheld.",
+          "remediation": "Move credentials to a secret manager or runtime environment. Rotate any real exposed credential and review its use.",
+          "review": "The value is withheld. Confirm it is a live credential rather than an example, public identifier or test fixture.",
+          "reference": "https://cwe.mitre.org/data/definitions/798.html",
+          "fingerprint": "5b00edff6c97411b9f9729feddf585971bd7ae408b9d9f725afa43d57a8f62f6",
+          "engine": "secret-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: artifacts/db-reset.js>",
+          "scope_start": 0
+        }
+      ]
+    },
+    {
+      "rule_id": "CFG001",
+      "title": "Debug configuration enabled",
+      "severity": "medium",
+      "confidence": "medium",
+      "cwe": "CWE-489",
+      "path": "nodemon.json",
+      "line": 6,
+      "column": 1,
+      "message": "A configuration flag selects an insecure production default.",
+      "remediation": "Disable debug output and detailed error pages in production configuration.",
+      "review": "Check environment overrides and whether this file is used by a deployed application.",
+      "reference": "https://cwe.mitre.org/data/definitions/489.html",
+      "fingerprint": "8162baa003b51781154fc086ae451d0e44b392bbc4c773d4cf1dd655a7be547a",
+      "engine": "config-pattern",
+      "trace": [],
+      "status": "new",
+      "suppression_reason": null,
+      "classification": "review-hotspot",
+      "function": "<file: nodemon.json>",
+      "scope_start": 0,
+      "rank": 45.028865,
+      "occurrence_count": 1,
+      "locations": [
+        {
+          "rule_id": "CFG001",
+          "title": "Debug configuration enabled",
+          "severity": "medium",
+          "confidence": "medium",
+          "cwe": "CWE-489",
+          "path": "nodemon.json",
+          "line": 6,
+          "column": 1,
+          "message": "A configuration flag selects an insecure production default.",
+          "remediation": "Disable debug output and detailed error pages in production configuration.",
+          "review": "Check environment overrides and whether this file is used by a deployed application.",
+          "reference": "https://cwe.mitre.org/data/definitions/489.html",
+          "fingerprint": "8162baa003b51781154fc086ae451d0e44b392bbc4c773d4cf1dd655a7be547a",
+          "engine": "config-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "<file: nodemon.json>",
+          "scope_start": 0
+        }
+      ]
+    },
+    {
+      "rule_id": "JS001",
+      "title": "Dynamic JavaScript execution",
+      "severity": "high",
+      "confidence": "low",
+      "cwe": "CWE-95",
+      "path": "app/routes/contributions.js",
+      "line": 32,
+      "column": 24,
+      "message": "Code-like text is passed to a dynamic execution API.",
+      "remediation": "Replace eval or Function construction with explicit dispatch or JSON parsing and schema validation.",
+      "review": "This lexical match does not prove the callable's identity or input trust; trace the evaluated value.",
+      "reference": "https://cwe.mitre.org/data/definitions/95.html",
+      "fingerprint": "54bf4a28ef4d312e5f58d230d5a6f246255dcae4d6b37010c609438fd66fe0d9",
+      "engine": "text-pattern",
+      "trace": [],
+      "status": "new",
+      "suppression_reason": null,
+      "classification": "review-hotspot",
+      "function": "ContributionsHandler",
+      "scope_start": 7,
+      "rank": 42.270686,
+      "occurrence_count": 3,
+      "locations": [
+        {
+          "rule_id": "JS001",
+          "title": "Dynamic JavaScript execution",
+          "severity": "high",
+          "confidence": "low",
+          "cwe": "CWE-95",
+          "path": "app/routes/contributions.js",
+          "line": 32,
+          "column": 24,
+          "message": "Code-like text is passed to a dynamic execution API.",
+          "remediation": "Replace eval or Function construction with explicit dispatch or JSON parsing and schema validation.",
+          "review": "This lexical match does not prove the callable's identity or input trust; trace the evaluated value.",
+          "reference": "https://cwe.mitre.org/data/definitions/95.html",
+          "fingerprint": "54bf4a28ef4d312e5f58d230d5a6f246255dcae4d6b37010c609438fd66fe0d9",
+          "engine": "text-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "ContributionsHandler",
+          "scope_start": 7
+        },
+        {
+          "rule_id": "JS001",
+          "title": "Dynamic JavaScript execution",
+          "severity": "high",
+          "confidence": "low",
+          "cwe": "CWE-95",
+          "path": "app/routes/contributions.js",
+          "line": 33,
+          "column": 26,
+          "message": "Code-like text is passed to a dynamic execution API.",
+          "remediation": "Replace eval or Function construction with explicit dispatch or JSON parsing and schema validation.",
+          "review": "This lexical match does not prove the callable's identity or input trust; trace the evaluated value.",
+          "reference": "https://cwe.mitre.org/data/definitions/95.html",
+          "fingerprint": "3298985d8f8b3c2c5a68f0098541dddc0afc5a8caabea42206845e67f868e6ad",
+          "engine": "text-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "ContributionsHandler",
+          "scope_start": 7
+        },
+        {
+          "rule_id": "JS001",
+          "title": "Dynamic JavaScript execution",
+          "severity": "high",
+          "confidence": "low",
+          "cwe": "CWE-95",
+          "path": "app/routes/contributions.js",
+          "line": 34,
+          "column": 22,
+          "message": "Code-like text is passed to a dynamic execution API.",
+          "remediation": "Replace eval or Function construction with explicit dispatch or JSON parsing and schema validation.",
+          "review": "This lexical match does not prove the callable's identity or input trust; trace the evaluated value.",
+          "reference": "https://cwe.mitre.org/data/definitions/95.html",
+          "fingerprint": "51552bd211f2ed94bfbf76efd8a43e991cee156d52ab938040d831163a07670f",
+          "engine": "text-pattern",
+          "trace": [],
+          "status": "new",
+          "suppression_reason": null,
+          "classification": "review-hotspot",
+          "function": "ContributionsHandler",
+          "scope_start": 7
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "path": ".git",
+      "reason": "Directory excluded or symlink not followed",
+      "incomplete": false
+    },
+    {
+      "path": ".dockerignore",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": ".gitignore",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": ".jshintignore",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": ".jshintrc",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "LICENSE",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "Procfile",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "README.md",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/favicon.ico",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/images/nodegoat_logo.png",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/images/owasplogo.png",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/bootstrap/bootstrap-tour.css",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/bootstrap/bootstrap.css",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/theme/sb-admin.css",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/theme/font-awesome/css/font-awesome.min.css",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/theme/font-awesome/fonts/FontAwesome.otf",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/theme/font-awesome/fonts/fontawesome-webfont.eot",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/theme/font-awesome/fonts/fontawesome-webfont.svg",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/theme/font-awesome/fonts/fontawesome-webfont.ttf",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "app/assets/vendor/theme/font-awesome/fonts/fontawesome-webfont.woff",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "artifacts/cert/server.crt",
+      "reason": "Unsupported extension; file was not analyzed",
+      "incomplete": false
+    },
+    {
+      "path": "config/env",
+      "reason": "Directory excluded or symlink not followed",
+      "incomplete": false
+    },
+    {
+      "path": ".",
+      "reason": "21 test files excluded; use --include-tests to analyze them",
+      "incomplete": false
+    },
+    {
+      "path": ".",
+      "reason": "6 vendored, generated or minified files excluded (6 vendored directory); use --include-vendored to analyze them",
+      "incomplete": false
+    }
+  ],
+  "inventory": [
+    {
+      "ecosystem": "npm",
+      "name": "bcrypt-nodejs",
+      "specifier": "0.0.3",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "body-parser",
+      "specifier": "^1.15.1",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "consolidate",
+      "specifier": "^0.14.1",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "csurf",
+      "specifier": "^1.8.3",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "dont-sniff-mimetype",
+      "specifier": "^1.0.0",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "express",
+      "specifier": "^4.13.4",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "express-session",
+      "specifier": "^1.13.0",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "forever",
+      "specifier": "^2.0.0",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "helmet",
+      "specifier": "^2.0.0",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "marked",
+      "specifier": "0.3.5",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "mongodb",
+      "specifier": "^2.1.18",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "needle",
+      "specifier": "2.2.4",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "node-esapi",
+      "specifier": "0.0.1",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "serve-favicon",
+      "specifier": "^2.3.0",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "swig",
+      "specifier": "^1.4.2",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "underscore",
+      "specifier": "^1.8.3",
+      "group": "dependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "async",
+      "specifier": "^2.0.0-rc.4",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cross-env",
+      "specifier": "^7.0.2",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cypress",
+      "specifier": "^3.3.1",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt",
+      "specifier": "^1.0.3",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-cli",
+      "specifier": "^1.2.0",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-concurrent",
+      "specifier": "^2.3.0",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-contrib-jshint",
+      "specifier": "^3.0.0",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-contrib-watch",
+      "specifier": "^1.0.0",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-env",
+      "specifier": "[specifier withheld]",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-if",
+      "specifier": "[specifier withheld]",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-jsbeautifier",
+      "specifier": "^0.2.12",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-mocha-test",
+      "specifier": "^0.12.7",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-npm-install",
+      "specifier": "^0.3.0",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "grunt-retire",
+      "specifier": "^0.3.12",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "jshint",
+      "specifier": "2.12.0",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "mocha",
+      "specifier": "^2.4.5",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "nodemon",
+      "specifier": "^1.19.1",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "selenium-webdriver",
+      "specifier": "^2.53.2",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "should",
+      "specifier": "^8.3.1",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "zaproxy",
+      "specifier": "^0.2.0",
+      "group": "devDependencies",
+      "path": "package.json",
+      "advisory_status": "not checked"
+    }
+  ],
+  "code_map": [
+    {
+      "path": "Gruntfile.js",
+      "line": 159,
+      "end_line": 159,
+      "name": "process.env",
+      "category": "state",
+      "function": "<file: Gruntfile.js>",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "Gruntfile.js",
+      "line": 165,
+      "end_line": 165,
+      "name": "exec",
+      "category": "command execution",
+      "function": "<file: Gruntfile.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check who controls the program, command text and arguments; prefer fixed programs with structured arguments.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "server.js",
+      "line": 68,
+      "end_line": 68,
+      "name": "app.use",
+      "category": "entry point",
+      "function": "<file: server.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "server.js",
+      "line": 71,
+      "end_line": 71,
+      "name": "app.use",
+      "category": "entry point",
+      "function": "<file: server.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "server.js",
+      "line": 72,
+      "end_line": 72,
+      "name": "app.use",
+      "category": "entry point",
+      "function": "<file: server.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "server.js",
+      "line": 78,
+      "end_line": 78,
+      "name": "app.use",
+      "category": "entry point",
+      "function": "<file: server.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "server.js",
+      "line": 121,
+      "end_line": 121,
+      "name": "app.use",
+      "category": "entry point",
+      "function": "<file: server.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "app/data/allocations-dao.js",
+      "line": 19,
+      "end_line": 19,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "<file: app/data/allocations-dao.js>",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "app/data/allocations-dao.js",
+      "line": 58,
+      "end_line": 58,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "<file: app/data/allocations-dao.js>",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "app/data/allocations-dao.js",
+      "line": 60,
+      "end_line": 84,
+      "name": "searchCriteria",
+      "category": "function",
+      "function": "searchCriteria",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 60
+    },
+    {
+      "path": "app/data/benefits-dao.js",
+      "line": 2,
+      "end_line": 41,
+      "name": "BenefitsDAO",
+      "category": "function",
+      "function": "BenefitsDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/benefits-dao.js",
+      "line": 25,
+      "end_line": 25,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "BenefitsDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/contributions-dao.js",
+      "line": 4,
+      "end_line": 84,
+      "name": "ContributionsDAO",
+      "category": "function",
+      "function": "ContributionsDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/data/contributions-dao.js",
+      "line": 18,
+      "end_line": 18,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "ContributionsDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/data/contributions-dao.js",
+      "line": 57,
+      "end_line": 57,
+      "name": ".findOne",
+      "category": "database query",
+      "function": "ContributionsDAO",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/data/memos-dao.js",
+      "line": 2,
+      "end_line": 37,
+      "name": "MemosDAO",
+      "category": "function",
+      "function": "MemosDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/profile-dao.js",
+      "line": 2,
+      "end_line": 111,
+      "name": "ProfileDAO",
+      "category": "function",
+      "function": "ProfileDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/profile-dao.js",
+      "line": 79,
+      "end_line": 79,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "ProfileDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/profile-dao.js",
+      "line": 95,
+      "end_line": 95,
+      "name": ".findOne",
+      "category": "database query",
+      "function": "ProfileDAO",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/profile-dao.js",
+      "line": 96,
+      "end_line": 96,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "ProfileDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/research-dao.js",
+      "line": 2,
+      "end_line": 25,
+      "name": "ResearchDAO",
+      "category": "function",
+      "function": "ResearchDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 2
+    },
+    {
+      "path": "app/data/research-dao.js",
+      "line": 15,
+      "end_line": 23,
+      "name": "searchCriteria",
+      "category": "function",
+      "function": "searchCriteria",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 15
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "line": 4,
+      "end_line": 121,
+      "name": "UserDAO",
+      "category": "function",
+      "function": "UserDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "line": 60,
+      "end_line": 67,
+      "name": "comparePassword",
+      "category": "function",
+      "function": "comparePassword",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 60
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "line": 70,
+      "end_line": 89,
+      "name": "validateUserDoc",
+      "category": "function",
+      "function": "validateUserDoc",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 70
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "line": 91,
+      "end_line": 91,
+      "name": ".findOne",
+      "category": "database query",
+      "function": "UserDAO",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "line": 98,
+      "end_line": 98,
+      "name": ".findOne",
+      "category": "database query",
+      "function": "UserDAO",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "line": 99,
+      "end_line": 99,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "UserDAO",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "line": 104,
+      "end_line": 104,
+      "name": ".findOne",
+      "category": "database query",
+      "function": "UserDAO",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Verify parameter binding and trace any constructed query fragments or identifiers.",
+      "engine": "lexical",
+      "scope_start": 4
+    },
+    {
+      "path": "app/routes/allocations.js",
+      "line": 6,
+      "end_line": 32,
+      "name": "AllocationsHandler",
+      "category": "function",
+      "function": "AllocationsHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/allocations.js",
+      "line": 18,
+      "end_line": 18,
+      "name": "Reads request input (entry-point hint)",
+      "category": "entry point",
+      "function": "AllocationsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/allocations.js",
+      "line": 18,
+      "end_line": 18,
+      "name": "req.params",
+      "category": "input",
+      "function": "AllocationsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/allocations.js",
+      "line": 21,
+      "end_line": 21,
+      "name": "req.query",
+      "category": "input",
+      "function": "AllocationsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/allocations.js",
+      "line": 25,
+      "end_line": 25,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "AllocationsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/benefits.js",
+      "line": 8,
+      "end_line": 55,
+      "name": "BenefitsHandler",
+      "category": "function",
+      "function": "BenefitsHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/benefits.js",
+      "line": 19,
+      "end_line": 19,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "BenefitsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/benefits.js",
+      "line": 33,
+      "end_line": 33,
+      "name": "Reads request input (entry-point hint)",
+      "category": "entry point",
+      "function": "BenefitsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/benefits.js",
+      "line": 33,
+      "end_line": 33,
+      "name": "req.body",
+      "category": "input",
+      "function": "BenefitsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/benefits.js",
+      "line": 51,
+      "end_line": 51,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "BenefitsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 7,
+      "end_line": 78,
+      "name": "ContributionsHandler",
+      "category": "function",
+      "function": "ContributionsHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 15,
+      "end_line": 15,
+      "name": "req.session",
+      "category": "state",
+      "function": "ContributionsHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 21,
+      "end_line": 21,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 32,
+      "end_line": 32,
+      "name": "eval",
+      "category": "dynamic execution",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Determine whether external input can become executable code or an expression.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 32,
+      "end_line": 32,
+      "name": "Reads request input (entry-point hint)",
+      "category": "entry point",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 32,
+      "end_line": 32,
+      "name": "req.body",
+      "category": "input",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 33,
+      "end_line": 33,
+      "name": "eval",
+      "category": "dynamic execution",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Determine whether external input can become executable code or an expression.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 33,
+      "end_line": 33,
+      "name": "req.body",
+      "category": "input",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 34,
+      "end_line": 34,
+      "name": "eval",
+      "category": "dynamic execution",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Determine whether external input can become executable code or an expression.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 34,
+      "end_line": 34,
+      "name": "req.body",
+      "category": "input",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 44,
+      "end_line": 44,
+      "name": "req.session",
+      "category": "state",
+      "function": "ContributionsHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 50,
+      "end_line": 50,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 58,
+      "end_line": 58,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "line": 70,
+      "end_line": 70,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ContributionsHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/error.js",
+      "line": 3,
+      "end_line": 13,
+      "name": "errorHandler",
+      "category": "function",
+      "function": "errorHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 3
+    },
+    {
+      "path": "app/routes/error.js",
+      "line": 10,
+      "end_line": 10,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "errorHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 3
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 11,
+      "end_line": 83,
+      "name": "index",
+      "category": "function",
+      "function": "index",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 30,
+      "end_line": 30,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 33,
+      "end_line": 33,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 34,
+      "end_line": 34,
+      "name": "app.post",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 37,
+      "end_line": 37,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 38,
+      "end_line": 38,
+      "name": "app.post",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 41,
+      "end_line": 41,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 44,
+      "end_line": 44,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 47,
+      "end_line": 47,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 48,
+      "end_line": 48,
+      "name": "app.post",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 51,
+      "end_line": 51,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 52,
+      "end_line": 52,
+      "name": "app.post",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 55,
+      "end_line": 55,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 56,
+      "end_line": 56,
+      "name": "app.post",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 63,
+      "end_line": 63,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 66,
+      "end_line": 66,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 67,
+      "end_line": 67,
+      "name": "app.post",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 70,
+      "end_line": 70,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 72,
+      "end_line": 72,
+      "name": "req.query",
+      "category": "input",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 72,
+      "end_line": 72,
+      "name": ".redirect",
+      "category": "redirect",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check allowed destinations and URL normalization.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 76,
+      "end_line": 76,
+      "name": "app.get",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 79,
+      "end_line": 79,
+      "name": "app.use",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 82,
+      "end_line": 82,
+      "name": "app.use",
+      "category": "entry point",
+      "function": "index",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 11
+    },
+    {
+      "path": "app/routes/memos.js",
+      "line": 6,
+      "end_line": 35,
+      "name": "MemosHandler",
+      "category": "function",
+      "function": "MemosHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/memos.js",
+      "line": 13,
+      "end_line": 13,
+      "name": "Reads request input (entry-point hint)",
+      "category": "entry point",
+      "function": "MemosHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/memos.js",
+      "line": 13,
+      "end_line": 13,
+      "name": "req.body",
+      "category": "input",
+      "function": "MemosHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/memos.js",
+      "line": 23,
+      "end_line": 23,
+      "name": "req.session",
+      "category": "state",
+      "function": "MemosHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/memos.js",
+      "line": 27,
+      "end_line": 27,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "MemosHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 6
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 8,
+      "end_line": 109,
+      "name": "ProfileHandler",
+      "category": "function",
+      "function": "ProfileHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 16,
+      "end_line": 16,
+      "name": "req.session",
+      "category": "state",
+      "function": "ProfileHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 20,
+      "end_line": 20,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "ProfileHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 33,
+      "end_line": 33,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ProfileHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 50,
+      "end_line": 50,
+      "name": "Reads request input (entry-point hint)",
+      "category": "entry point",
+      "function": "ProfileHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 50,
+      "end_line": 50,
+      "name": "req.body",
+      "category": "input",
+      "function": "ProfileHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 65,
+      "end_line": 65,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ProfileHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 80,
+      "end_line": 80,
+      "name": "req.session",
+      "category": "state",
+      "function": "ProfileHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 83,
+      "end_line": 83,
+      "name": "parseInt",
+      "category": "mitigation",
+      "function": "ProfileHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "A potentially protective API or check is present. Verify its arguments, context and connection to the sensitive operation; this is not a safe verdict.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/profile.js",
+      "line": 100,
+      "end_line": 100,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ProfileHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/research.js",
+      "line": 7,
+      "end_line": 36,
+      "name": "ResearchHandler",
+      "category": "function",
+      "function": "ResearchHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/research.js",
+      "line": 14,
+      "end_line": 14,
+      "name": "Reads request input (entry-point hint)",
+      "category": "entry point",
+      "function": "ResearchHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/research.js",
+      "line": 14,
+      "end_line": 14,
+      "name": "req.query",
+      "category": "input",
+      "function": "ResearchHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/research.js",
+      "line": 15,
+      "end_line": 15,
+      "name": "req.query",
+      "category": "input",
+      "function": "ResearchHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/research.js",
+      "line": 31,
+      "end_line": 31,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "ResearchHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 7
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 8,
+      "end_line": 275,
+      "name": "SessionHandler",
+      "category": "function",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 14,
+      "end_line": 23,
+      "name": "prepareUserData",
+      "category": "function",
+      "function": "prepareUserData",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 14
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 26,
+      "end_line": 26,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 27,
+      "end_line": 27,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 28,
+      "end_line": 28,
+      "name": ".redirect",
+      "category": "redirect",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check allowed destinations and URL normalization.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 32,
+      "end_line": 32,
+      "name": ".redirect",
+      "category": "redirect",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check allowed destinations and URL normalization.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 37,
+      "end_line": 37,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 41,
+      "end_line": 41,
+      "name": ".redirect",
+      "category": "redirect",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check allowed destinations and URL normalization.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 45,
+      "end_line": 45,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 57,
+      "end_line": 57,
+      "name": "Reads request input (entry-point hint)",
+      "category": "entry point",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 57,
+      "end_line": 57,
+      "name": "req.body",
+      "category": "input",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 82,
+      "end_line": 82,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 91,
+      "end_line": 91,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 116,
+      "end_line": 116,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 117,
+      "end_line": 117,
+      "name": ".redirect",
+      "category": "redirect",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check allowed destinations and URL normalization.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 122,
+      "end_line": 122,
+      "name": ".redirect",
+      "category": "redirect",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check allowed destinations and URL normalization.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 122,
+      "end_line": 122,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 126,
+      "end_line": 126,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 138,
+      "end_line": 187,
+      "name": "validateSignup",
+      "category": "function",
+      "function": "validateSignup",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 138
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 198,
+      "end_line": 198,
+      "name": "req.body",
+      "category": "input",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Identify the trust boundary and trace validation before sensitive operations.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 214,
+      "end_line": 214,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 234,
+      "end_line": 234,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 235,
+      "end_line": 235,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 239,
+      "end_line": 239,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 249,
+      "end_line": 249,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 259,
+      "end_line": 259,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 261,
+      "end_line": 261,
+      "name": ".redirect",
+      "category": "redirect",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Check allowed destinations and URL normalization.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 264,
+      "end_line": 264,
+      "name": "req.session",
+      "category": "state",
+      "function": "SessionHandler",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 269,
+      "end_line": 269,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "SessionHandler",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 8
+    },
+    {
+      "path": "app/routes/tutorial.js",
+      "line": 8,
+      "end_line": 8,
+      "name": "router.get",
+      "category": "entry point",
+      "function": "<file: app/routes/tutorial.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "app/routes/tutorial.js",
+      "line": 10,
+      "end_line": 10,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "<file: app/routes/tutorial.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "app/routes/tutorial.js",
+      "line": 31,
+      "end_line": 31,
+      "name": "router.get",
+      "category": "entry point",
+      "function": "<file: app/routes/tutorial.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "app/routes/tutorial.js",
+      "line": 33,
+      "end_line": 33,
+      "name": ".render",
+      "category": "template/HTML output",
+      "function": "<file: app/routes/tutorial.js>",
+      "kind": "review-hotspot",
+      "language": "javascript/typescript",
+      "review": "Distinguish template source from data and check contextual output escaping.",
+      "engine": "lexical",
+      "scope_start": 0
+    },
+    {
+      "path": "artifacts/db-reset.js",
+      "line": 39,
+      "end_line": 48,
+      "name": "tryDropCollection",
+      "category": "function",
+      "function": "tryDropCollection",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 39
+    },
+    {
+      "path": "artifacts/db-reset.js",
+      "line": 50,
+      "end_line": 59,
+      "name": "parseResponse",
+      "category": "function",
+      "function": "parseResponse",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Navigation note: this declaration is not itself evidence of a security issue.",
+      "engine": "lexical",
+      "scope_start": 50
+    },
+    {
+      "path": "config/config.js",
+      "line": 5,
+      "end_line": 5,
+      "name": "process.env",
+      "category": "state",
+      "function": "<file: config/config.js>",
+      "kind": "note",
+      "language": "javascript/typescript",
+      "review": "Server-side or process state (session, environment, framework globals). Not request-controlled by itself; check where it is populated.",
+      "engine": "lexical",
+      "scope_start": 0
+    }
+  ],
+  "file_inventory": [
+    {
+      "path": ".travis.yml",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "Dockerfile",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "Gruntfile.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app.json",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "cypress.json",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "docker-compose.yml",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "nodemon.json",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "package-lock.json",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "package.json",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "server.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": ".github/workflows/e2e-test.yml",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": ".github/workflows/lint.yml",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/assets/js/chart/chart-data-morris.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/assets/js/tour/redirects-steps.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/data/allocations-dao.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/data/benefits-dao.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/data/contributions-dao.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/data/memos-dao.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/data/profile-dao.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/data/research-dao.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/allocations.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/benefits.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/error.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/index.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/memos.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/profile.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/research.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/session.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/routes/tutorial.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "app/views/allocations.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/benefits.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/contributions.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/dashboard.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/error-template.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/layout.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/login.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/memos.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/profile.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/research.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/signup.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a1.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a10.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a2.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a3.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a4.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a5.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a6.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a7.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a8.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/a9.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/layout.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/redos.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "app/views/tutorial/ssrf.html",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "artifacts/db-reset.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    },
+    {
+      "path": "artifacts/cert/server.key",
+      "language": "configuration/secrets",
+      "analysis": "configuration/secrets"
+    },
+    {
+      "path": "config/config.js",
+      "language": "javascript/typescript",
+      "analysis": "lexical rules + navigation"
+    }
+  ],
+  "coverage": {
+    "configuration/secrets": 35,
+    "javascript/typescript": 23
+  },
+  "files_scanned": 58,
+  "files_skipped": 49,
+  "test_files_excluded": 21,
+  "vendored_files_excluded": 6,
+  "vendored_breakdown": {
+    "vendored directory": 6
+  },
+  "complete": true,
+  "elapsed_seconds": 0.91,
+  "filtered_findings": 0,
+  "policy": {
+    "include_tests": false,
+    "test_directories": [
+      "__tests__",
+      "spec",
+      "test",
+      "tests"
+    ],
+    "include_vendored": false,
+    "vendor_directories": [
+      "bower_components",
+      "jspm_packages",
+      "site-packages",
+      "third-party",
+      "third_party",
+      "thirdparty",
+      "vendor",
+      "vendors"
+    ],
+    "ci_gate": "new; severity at fail-on threshold; likely-vulnerability or confidence >= medium",
+    "min_severity": "low",
+    "min_confidence": "low",
+    "excludes": [
+      ".git",
+      ".hg",
+      ".mypy_cache",
+      ".next",
+      ".pytest_cache",
+      ".svn",
+      ".tox",
+      ".venv",
+      "__pycache__",
+      "build",
+      "coverage",
+      "dist",
+      "env",
+      "node_modules",
+      "venv"
+    ],
+    "baseline_fingerprints": 0,
+    "suppression_rules": 0,
+    "max_file_bytes": 2000000,
+    "max_total_bytes": 100000000,
+    "max_files": 10000,
+    "max_python_nodes": 100000
+  },
+  "schema_version": 2,
+  "tool": {
+    "name": "AppSec Assistant",
+    "version": "0.1.2"
+  },
+  "summary": {
+    "new": 5,
+    "occurrences": 9,
+    "new_occurrences": 9,
+    "existing": 0,
+    "suppressed": 0,
+    "by_severity": {
+      "critical": 0,
+      "high": 4,
+      "medium": 1,
+      "low": 0
+    },
+    "likely_vulnerabilities": 0,
+    "review_findings": 5,
+    "review_findings_medium_plus": 4,
+    "low_confidence_hotspots": 1,
+    "navigation_hotspots": 86,
+    "vendored_files_excluded": 6,
+    "functions": 23,
+    "entry_points": 34
+  },
+  "limitations": [
+    "Findings are review candidates, not proof of exploitability. No findings does not mean the application is secure.",
+    "Python analysis is bounded and intraprocedural. It does not resolve calls across functions or files, or prove sanitizers correct.",
+    "JavaScript/TypeScript and configuration checks use lexical heuristics, not a full parser or data-flow engine.",
+    "PHP, Java, C#, Go and Ruby receive navigation hotspots only. Callable identity, reachability and function scope may be unresolved.",
+    "Unsupported languages receive limited secret checks only. Dependency, vendored, minified and generated code is excluded by default.",
+    "No live CVE lookup, dependency resolution, runtime testing, authorization verification or automatic exploitation is performed."
+  ],
+  "manual_review": [
+    "Authorization: verify object ownership, tenant isolation and role checks on every sensitive operation.",
+    "Authentication: review account recovery, MFA, session rotation, token expiry and revocation.",
+    "Business logic: review payment amounts, state transitions, concurrency and abuse limits.",
+    "Web controls: review CSRF, CORS, cookie settings, security headers and output encoding by context.",
+    "Files and network: verify upload limits, destination allowlists, path containment and egress policy.",
+    "Dependencies: use a maintained advisory scanner against resolved lockfiles; inventory here is not a CVE audit.",
+    "Deployment: review production configuration, IAM permissions, secret rotation and audit logging."
+  ],
+  "review_queue": [
+    {
+      "path": "artifacts/cert/server.key",
+      "function": "<file: artifacts/cert/server.key>",
+      "scope_start": 0,
+      "line": 1,
+      "categories": [],
+      "findings": [
+        "SEC002"
+      ],
+      "rank": 58.114176,
+      "source_lines": [],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
+      "reason": "Review rule findings: SEC002"
+    },
+    {
+      "path": "app/routes/session.js",
+      "function": "SessionHandler",
+      "scope_start": 8,
+      "line": 28,
+      "categories": [
+        "entry point",
+        "input",
+        "redirect",
+        "template/HTML output"
+      ],
+      "findings": [
+        "SEC001"
+      ],
+      "rank": 50.416934,
+      "source_lines": [
+        57,
+        198
+      ],
+      "operation_lines": [
+        28,
+        32,
+        41,
+        45,
+        82,
+        91,
+        117,
+        122,
+        126,
+        214,
+        239,
+        249,
+        261,
+        269
+      ],
+      "mitigation_lines": [],
+      "evidence": 2,
+      "distance": 12,
+      "mitigated": false,
+      "operation_weight": 6,
+      "reason": "Review rule findings: SEC001"
+    },
+    {
+      "path": "artifacts/db-reset.js",
+      "function": "<file: artifacts/db-reset.js>",
+      "scope_start": 0,
+      "line": 18,
+      "categories": [],
+      "findings": [
+        "SEC001",
+        "SEC001",
+        "SEC001"
+      ],
+      "rank": 50.416934,
+      "source_lines": [],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
+      "reason": "Review rule findings: SEC001"
+    },
+    {
+      "path": "nodemon.json",
+      "function": "<file: nodemon.json>",
+      "scope_start": 0,
+      "line": 6,
+      "categories": [],
+      "findings": [
+        "CFG001"
+      ],
+      "rank": 45.028865,
+      "source_lines": [],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
+      "reason": "Review rule findings: CFG001"
+    },
+    {
+      "path": "app/routes/contributions.js",
+      "function": "ContributionsHandler",
+      "scope_start": 7,
+      "line": 21,
+      "categories": [
+        "dynamic execution",
+        "entry point",
+        "input",
+        "template/HTML output"
+      ],
+      "findings": [
+        "JS001",
+        "JS001",
+        "JS001"
+      ],
+      "rank": 43.55356,
+      "source_lines": [
+        32,
+        33,
+        34
+      ],
+      "operation_lines": [
+        21,
+        32,
+        33,
+        34,
+        50,
+        58,
+        70
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 0,
+      "mitigated": false,
+      "operation_weight": 9,
+      "reason": "Review rule findings: JS001"
+    },
+    {
+      "path": "app/routes/tutorial.js",
+      "function": "<file: app/routes/tutorial.js>",
+      "scope_start": 0,
+      "line": 8,
+      "categories": [
+        "entry point",
+        "template/HTML output"
+      ],
+      "findings": [],
+      "rank": 43.361129,
+      "source_lines": [
+        8,
+        31
+      ],
+      "operation_lines": [
+        10,
+        33
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 2,
+      "mitigated": false,
+      "operation_weight": 6,
+      "reason": "Request input or an entry point and template/HTML output share this scope (closest 2 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
+    },
+    {
+      "path": "app/routes/allocations.js",
+      "function": "AllocationsHandler",
+      "scope_start": 6,
+      "line": 18,
+      "categories": [
+        "entry point",
+        "input",
+        "template/HTML output"
+      ],
+      "findings": [],
+      "rank": 43.361129,
+      "source_lines": [
+        18,
+        21
+      ],
+      "operation_lines": [
+        25
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 4,
+      "mitigated": false,
+      "operation_weight": 6,
+      "reason": "Request input or an entry point and template/HTML output share this scope (closest 4 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
+    },
+    {
+      "path": "app/routes/benefits.js",
+      "function": "BenefitsHandler",
+      "scope_start": 8,
+      "line": 19,
+      "categories": [
+        "entry point",
+        "input",
+        "template/HTML output"
+      ],
+      "findings": [],
+      "rank": 42.719692,
+      "source_lines": [
+        33
+      ],
+      "operation_lines": [
+        19,
+        51
+      ],
+      "mitigation_lines": [],
+      "evidence": 2,
+      "distance": 14,
+      "mitigated": false,
+      "operation_weight": 6,
+      "reason": "Request input or an entry point and template/HTML output share this scope (closest 14 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
+    },
+    {
+      "path": "app/routes/memos.js",
+      "function": "MemosHandler",
+      "scope_start": 6,
+      "line": 13,
+      "categories": [
+        "entry point",
+        "input",
+        "template/HTML output"
+      ],
+      "findings": [],
+      "rank": 42.719692,
+      "source_lines": [
+        13
+      ],
+      "operation_lines": [
+        27
+      ],
+      "mitigation_lines": [],
+      "evidence": 2,
+      "distance": 14,
+      "mitigated": false,
+      "operation_weight": 6,
+      "reason": "Request input or an entry point and template/HTML output share this scope (closest 14 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
+    },
+    {
+      "path": "app/routes/research.js",
+      "function": "ResearchHandler",
+      "scope_start": 7,
+      "line": 14,
+      "categories": [
+        "entry point",
+        "input",
+        "template/HTML output"
+      ],
+      "findings": [],
+      "rank": 42.719692,
+      "source_lines": [
+        14,
+        15
+      ],
+      "operation_lines": [
+        31
+      ],
+      "mitigation_lines": [],
+      "evidence": 2,
+      "distance": 16,
+      "mitigated": false,
+      "operation_weight": 6,
+      "reason": "Request input or an entry point and template/HTML output share this scope (closest 16 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
+    },
+    {
+      "path": "app/routes/profile.js",
+      "function": "ProfileHandler",
+      "scope_start": 8,
+      "line": 33,
+      "categories": [
+        "entry point",
+        "input",
+        "template/HTML output"
+      ],
+      "findings": [],
+      "rank": 42.078255,
+      "source_lines": [
+        50
+      ],
+      "operation_lines": [
+        33,
+        65,
+        100
+      ],
+      "mitigation_lines": [
+        20,
+        83
+      ],
+      "evidence": 1,
+      "distance": 15,
+      "mitigated": true,
+      "operation_weight": 6,
+      "reason": "Request input or an entry point and template/HTML output share this scope (closest 15 line(s) apart); a mitigation API is also present, which lowers priority but does not show safety; a data-flow connection is not established."
+    },
+    {
+      "path": "Gruntfile.js",
+      "function": "<file: Gruntfile.js>",
+      "scope_start": 0,
+      "line": 165,
+      "categories": [
+        "command execution"
+      ],
+      "findings": [],
+      "rank": 41.62925,
+      "source_lines": [],
+      "operation_lines": [
+        165
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 9,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "app/data/contributions-dao.js",
+      "function": "ContributionsDAO",
+      "scope_start": 4,
+      "line": 57,
+      "categories": [
+        "database query"
+      ],
+      "findings": [],
+      "rank": 41.500962,
+      "source_lines": [],
+      "operation_lines": [
+        57
+      ],
+      "mitigation_lines": [
+        18
+      ],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": true,
+      "operation_weight": 7,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "app/data/profile-dao.js",
+      "function": "ProfileDAO",
+      "scope_start": 2,
+      "line": 95,
+      "categories": [
+        "database query"
+      ],
+      "findings": [],
+      "rank": 41.500962,
+      "source_lines": [],
+      "operation_lines": [
+        95
+      ],
+      "mitigation_lines": [
+        79,
+        96
+      ],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": true,
+      "operation_weight": 7,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "app/data/user-dao.js",
+      "function": "UserDAO",
+      "scope_start": 4,
+      "line": 91,
+      "categories": [
+        "database query"
+      ],
+      "findings": [],
+      "rank": 41.500962,
+      "source_lines": [],
+      "operation_lines": [
+        91,
+        98,
+        104
+      ],
+      "mitigation_lines": [
+        99
+      ],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": true,
+      "operation_weight": 7,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "app/routes/error.js",
+      "function": "errorHandler",
+      "scope_start": 3,
+      "line": 10,
+      "categories": [
+        "template/HTML output"
+      ],
+      "findings": [],
+      "rank": 41.436818,
+      "source_lines": [],
+      "operation_lines": [
+        10
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 6,
+      "reason": "Security-sensitive operations require a trust-boundary review."
+    },
+    {
+      "path": "app/routes/index.js",
+      "function": "index",
+      "scope_start": 11,
+      "line": 30,
+      "categories": [
+        "entry point",
+        "input",
+        "redirect"
+      ],
+      "findings": [],
+      "rank": 40.602951,
+      "source_lines": [
+        30,
+        33,
+        34,
+        37,
+        38,
+        41,
+        44,
+        47,
+        48,
+        51,
+        52,
+        55,
+        56,
+        63,
+        66,
+        67,
+        70,
+        72,
+        76,
+        79,
+        82
+      ],
+      "operation_lines": [
+        72
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 0,
+      "mitigated": false,
+      "operation_weight": 3,
+      "reason": "Request input or an entry point and redirect share this scope (closest 0 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
+    },
+    {
+      "path": "server.js",
+      "function": "<file: server.js>",
+      "scope_start": 0,
+      "line": 68,
+      "categories": [
+        "entry point"
+      ],
+      "findings": [],
+      "rank": 38.550353,
+      "source_lines": [
+        68,
+        71,
+        72,
+        78,
+        121
+      ],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
+      "reason": "Review input validation, authentication and authorization at this boundary."
+    }
+  ],
+  "review_queue_total": 18,
+  "review_queue_omitted": 0
+}

@@ -1,13 +1,19 @@
 {
-  "schema_version": 1,
-  "target": "DVWA",
+  "schema_version": 2,
+  "name": "dvwa",
+  "role": "dev",
+  "display_name": "DVWA",
   "repository": "https://github.com/digininja/DVWA",
   "commit": "d45ba3c4e7efa7f023f25f58ab4af9912c887057",
+  "languages": [
+    "php"
+  ],
   "scope": "Manually reviewed, file/CWE-level matrix for four challenge families (16 cases). Not an exhaustive DVWA audit. No target code was executed. Expected vulnerabilities describe challenge intent and source review, not exploit validation.",
   "limitations": [
-    "PHP semantic detection is deferred. Current navigation must not be counted as vulnerability detection.",
-    "Reflected XSS assembles $html rather than calling echo/print; the current output catalog can miss that review location.",
-    "Impossible means an expected negative only for the listed challenge CWE. Sensitive API navigation remains valid."
+    "Expected sink lines were located by reading the pinned source (grep for the sink call), independently of scanner output.",
+    "Reflected XSS assembles an $html variable rather than calling an output API, so its sink is not in the catalog. These cases are known misses, not tuning targets.",
+    "Impossible means an expected negative only for the listed challenge CWE. Sensitive API navigation remains valid.",
+    "Role 'dev': scanner rules may be tuned against this target. Report numbers from held-out targets for generalization."
   ],
   "cases": [
     {
@@ -16,7 +22,8 @@
       "cwe": "CWE-78",
       "expected_vulnerable": true,
       "navigation_category": "command execution",
-      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists."
+      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists.",
+      "line": 10
     },
     {
       "path": "vulnerabilities/exec/source/medium.php",
@@ -24,7 +31,8 @@
       "cwe": "CWE-78",
       "expected_vulnerable": true,
       "navigation_category": "command execution",
-      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists."
+      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists.",
+      "line": 19
     },
     {
       "path": "vulnerabilities/exec/source/high.php",
@@ -32,7 +40,8 @@
       "cwe": "CWE-78",
       "expected_vulnerable": true,
       "navigation_category": "command execution",
-      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists."
+      "rationale": "Request-derived target is concatenated into shell command text; medium/high use replacement lists.",
+      "line": 26
     },
     {
       "path": "vulnerabilities/exec/source/impossible.php",
@@ -40,7 +49,8 @@
       "cwe": "CWE-78",
       "expected_vulnerable": false,
       "navigation_category": "command execution",
-      "rationale": "Octets are checked as numeric and reconstructed before command construction."
+      "rationale": "Octets are checked as numeric and reconstructed before command construction.",
+      "line": 22
     },
     {
       "path": "vulnerabilities/sqli/source/low.php",
@@ -48,7 +58,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": true,
       "navigation_category": "database query",
-      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query."
+      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query.",
+      "line": 11
     },
     {
       "path": "vulnerabilities/sqli/source/medium.php",
@@ -56,7 +67,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": true,
       "navigation_category": "database query",
-      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query."
+      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query.",
+      "line": 12
     },
     {
       "path": "vulnerabilities/sqli/source/high.php",
@@ -64,7 +76,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": true,
       "navigation_category": "database query",
-      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query."
+      "rationale": "Request/session-derived identifier is inserted in SQL; escaping or row limits do not parameterize the query.",
+      "line": 11
     },
     {
       "path": "vulnerabilities/sqli/source/impossible.php",
@@ -72,7 +85,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": false,
       "navigation_category": "database query",
-      "rationale": "Numeric validation and typed parameter binding constrain the identifier."
+      "rationale": "Numeric validation and typed parameter binding constrain the identifier.",
+      "line": 16
     },
     {
       "path": "vulnerabilities/sqli_blind/source/low.php",
@@ -80,7 +94,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": true,
       "navigation_category": "database query",
-      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query."
+      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query.",
+      "line": 13
     },
     {
       "path": "vulnerabilities/sqli_blind/source/medium.php",
@@ -88,7 +103,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": true,
       "navigation_category": "database query",
-      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query."
+      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query.",
+      "line": 15
     },
     {
       "path": "vulnerabilities/sqli_blind/source/high.php",
@@ -96,7 +112,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": true,
       "navigation_category": "database query",
-      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query."
+      "rationale": "Request/cookie-derived identifier is inserted in SQL; error suppression does not parameterize the query.",
+      "line": 13
     },
     {
       "path": "vulnerabilities/sqli_blind/source/impossible.php",
@@ -104,7 +121,8 @@
       "cwe": "CWE-89",
       "expected_vulnerable": false,
       "navigation_category": "database query",
-      "rationale": "Numeric validation and bound parameters constrain the identifier."
+      "rationale": "Numeric validation and bound parameters constrain the identifier.",
+      "line": 17
     },
     {
       "path": "vulnerabilities/xss_r/source/low.php",
@@ -112,7 +130,8 @@
       "cwe": "CWE-79",
       "expected_vulnerable": true,
       "navigation_category": "template/HTML output",
-      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal."
+      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal.",
+      "line": 8
     },
     {
       "path": "vulnerabilities/xss_r/source/medium.php",
@@ -120,7 +139,8 @@
       "cwe": "CWE-79",
       "expected_vulnerable": true,
       "navigation_category": "template/HTML output",
-      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal."
+      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal.",
+      "line": 11
     },
     {
       "path": "vulnerabilities/xss_r/source/high.php",
@@ -128,7 +148,8 @@
       "cwe": "CWE-79",
       "expected_vulnerable": true,
       "navigation_category": "template/HTML output",
-      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal."
+      "rationale": "Request-derived name is appended to HTML; medium/high use incomplete pattern removal.",
+      "line": 11
     },
     {
       "path": "vulnerabilities/xss_r/source/impossible.php",
@@ -136,7 +157,8 @@
       "cwe": "CWE-79",
       "expected_vulnerable": false,
       "navigation_category": "template/HTML output",
-      "rationale": "The name is passed through htmlspecialchars before HTML assembly."
+      "rationale": "The name is passed through htmlspecialchars before HTML assembly.",
+      "line": 12
     }
   ],
   "credential_checks": [

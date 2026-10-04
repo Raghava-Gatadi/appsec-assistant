@@ -1,0 +1,97 @@
+{
+  "target": "vulnerable-flask-app",
+  "role": "held-out",
+  "counts": {
+    "positive_cases": 3,
+    "finding_matches": 3,
+    "likely_matches": 3,
+    "navigation_matches": 3,
+    "navigation_localized": 3,
+    "negative_cases": 2,
+    "false_positives": 0
+  },
+  "queue": {
+    "k": 20,
+    "available": true,
+    "positives": 3,
+    "positives_in_top_k": 3,
+    "recall_at_k": 1.0,
+    "labeled_positive_entries_in_top_k": 3,
+    "labeled_negative_entries_in_top_k": 2,
+    "labeled_precision_at_k": 0.6,
+    "unlabeled_entries_in_top_k": 11,
+    "pairwise_ordering": {
+      "pairs": 2,
+      "positive_first": 2,
+      "ties": 0,
+      "score": 1.0,
+      "note": "A positive ranked above a same-CWE negative; ranks outside the top k count as tied. Cases marked queue_comparable=false are skipped."
+    },
+    "note": "Entries are labeled per (path, function) when a case names a function, otherwise per file. Precision counts labeled entries only; unlabeled entries are unknown, not false."
+  },
+  "findings": {
+    "reported": true,
+    "recall": 1.0,
+    "precision": 1.0,
+    "false_positive_rate": 0.0
+  },
+  "cases": [
+    {
+      "path": "app/app.py",
+      "function": "search_customer",
+      "cwe": "CWE-89",
+      "expected_vulnerable": true,
+      "finding_match": true,
+      "likely_match": true,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 2
+    },
+    {
+      "path": "app/app.py",
+      "function": "login",
+      "cwe": "CWE-89",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": false,
+      "navigation_localized": false,
+      "queue_rank": 7
+    },
+    {
+      "path": "app/app.py",
+      "function": "yaml_hammer",
+      "cwe": "CWE-502",
+      "expected_vulnerable": true,
+      "finding_match": true,
+      "likely_match": true,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 1
+    },
+    {
+      "path": "app/app.py",
+      "function": "insecure_verify",
+      "cwe": "CWE-347",
+      "expected_vulnerable": true,
+      "finding_match": true,
+      "likely_match": true,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 3
+    },
+    {
+      "path": "app/app.py",
+      "function": "verify_jwt",
+      "cwe": "CWE-347",
+      "expected_vulnerable": false,
+      "finding_match": false,
+      "likely_match": false,
+      "navigation_present": true,
+      "navigation_localized": true,
+      "queue_rank": 10
+    }
+  ],
+  "credential_checks": [],
+  "interpretation": "Navigation and queue placement are triage aids, not vulnerability recall. Negative cases apply only to the listed CWE, not all possible defects."
+}

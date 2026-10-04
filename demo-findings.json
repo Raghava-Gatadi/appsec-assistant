@@ -1020,25 +1020,25 @@
       "end_line": 6,
       "name": "readDocument",
       "category": "function",
-      "function": "<file: files.php>",
+      "function": "readDocument",
       "kind": "note",
       "language": "php",
       "review": "Navigation note: this declaration is not itself evidence of a security issue.",
       "engine": "lexical",
-      "scope_start": 0
+      "scope_start": 3
     },
     {
       "path": "files.php",
       "line": 4,
       "end_line": 4,
-      "name": "File reads superglobals (entry-point hint)",
+      "name": "Reads request input (entry-point hint)",
       "category": "entry point",
-      "function": "<file: files.php>",
+      "function": "readDocument",
       "kind": "review-hotspot",
       "language": "php",
       "review": "Review authentication, authorization, validation and state-changing behavior reachable from this entry point.",
       "engine": "lexical",
-      "scope_start": 0
+      "scope_start": 3
     },
     {
       "path": "files.php",
@@ -1046,12 +1046,12 @@
       "end_line": 4,
       "name": "$_GET",
       "category": "input",
-      "function": "<file: files.php>",
+      "function": "readDocument",
       "kind": "review-hotspot",
       "language": "php",
       "review": "Identify the trust boundary and trace validation before sensitive operations.",
       "engine": "lexical",
-      "scope_start": 0
+      "scope_start": 3
     },
     {
       "path": "files.php",
@@ -1059,12 +1059,12 @@
       "end_line": 5,
       "name": "file_get_contents",
       "category": "filesystem access",
-      "function": "<file: files.php>",
+      "function": "readDocument",
       "kind": "review-hotspot",
       "language": "php",
       "review": "Check allowed base directories, canonicalization, symlinks and object-level authorization.",
       "engine": "lexical",
-      "scope_start": 0
+      "scope_start": 3
     },
     {
       "path": "files.rb",
@@ -1231,8 +1231,10 @@
   "files_scanned": 9,
   "files_skipped": 0,
   "test_files_excluded": 0,
+  "vendored_files_excluded": 0,
+  "vendored_breakdown": {},
   "complete": true,
-  "elapsed_seconds": 0.008,
+  "elapsed_seconds": 0.025,
   "filtered_findings": 0,
   "policy": {
     "include_tests": false,
@@ -1241,6 +1243,17 @@
       "spec",
       "test",
       "tests"
+    ],
+    "include_vendored": false,
+    "vendor_directories": [
+      "bower_components",
+      "jspm_packages",
+      "site-packages",
+      "third-party",
+      "third_party",
+      "thirdparty",
+      "vendor",
+      "vendors"
     ],
     "ci_gate": "new; severity at fail-on threshold; likely-vulnerability or confidence >= medium",
     "min_severity": "low",
@@ -1272,7 +1285,7 @@
   "schema_version": 2,
   "tool": {
     "name": "AppSec Assistant",
-    "version": "0.1.1"
+    "version": "0.1.2"
   },
   "summary": {
     "new": 11,
@@ -1288,7 +1301,10 @@
     },
     "likely_vulnerabilities": 3,
     "review_findings": 8,
+    "review_findings_medium_plus": 6,
+    "low_confidence_hotspots": 2,
     "navigation_hotspots": 23,
+    "vendored_files_excluded": 0,
     "functions": 13,
     "entry_points": 7
   },
@@ -1297,7 +1313,7 @@
     "Python analysis is bounded and intraprocedural. It does not resolve calls across functions or files, or prove sanitizers correct.",
     "JavaScript/TypeScript and configuration checks use lexical heuristics, not a full parser or data-flow engine.",
     "PHP, Java, C#, Go and Ruby receive navigation hotspots only. Callable identity, reachability and function scope may be unresolved.",
-    "Unsupported languages receive limited secret checks only. Generated and dependency directories are excluded by default.",
+    "Unsupported languages receive limited secret checks only. Dependency, vendored, minified and generated code is excluded by default.",
     "No live CVE lookup, dependency resolution, runtime testing, authorization verification or automatic exploitation is performed."
   ],
   "manual_review": [
@@ -1324,6 +1340,18 @@
         "PY001"
       ],
       "rank": 92.174471,
+      "source_lines": [
+        7,
+        9
+      ],
+      "operation_lines": [
+        11
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 2,
+      "mitigated": false,
+      "operation_weight": 7,
       "reason": "Review rule findings: PY001"
     },
     {
@@ -1340,6 +1368,18 @@
         "PY011"
       ],
       "rank": 92.110327,
+      "source_lines": [
+        14,
+        16
+      ],
+      "operation_lines": [
+        17
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 1,
+      "mitigated": false,
+      "operation_weight": 6,
       "reason": "Review rule findings: PY011"
     },
     {
@@ -1357,6 +1397,18 @@
         "PY013"
       ],
       "rank": 91.853752,
+      "source_lines": [
+        20,
+        22
+      ],
+      "operation_lines": [
+        23
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 1,
+      "mitigated": false,
+      "operation_weight": 4,
       "reason": "Review rule findings: PY006, PY013"
     },
     {
@@ -1371,6 +1423,15 @@
         "PY002"
       ],
       "rank": 50.609365,
+      "source_lines": [],
+      "operation_lines": [
+        28
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 9,
       "reason": "Review rule findings: PY002"
     },
     {
@@ -1385,6 +1446,13 @@
         "CFG002"
       ],
       "rank": 50.416934,
+      "source_lines": [],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
       "reason": "Review rule findings: CFG001, CFG002, SEC001"
     },
     {
@@ -1397,6 +1465,13 @@
         "JS002"
       ],
       "rank": 49.967928,
+      "source_lines": [],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
       "reason": "Review rule findings: JS002"
     },
     {
@@ -1411,13 +1486,24 @@
       "findings": [
         "JS005"
       ],
-      "rank": 42.142399,
+      "rank": 43.425273,
+      "source_lines": [
+        12
+      ],
+      "operation_lines": [
+        13
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 1,
+      "mitigated": false,
+      "operation_weight": 7,
       "reason": "Review rule findings: JS005"
     },
     {
       "path": "files.php",
-      "function": "<file: files.php>",
-      "scope_start": 0,
+      "function": "readDocument",
+      "scope_start": 3,
       "line": 4,
       "categories": [
         "entry point",
@@ -1425,8 +1511,19 @@
         "input"
       ],
       "findings": [],
-      "rank": 42.014112,
-      "reason": "Input/entry point and sensitive operations share this scope; a data-flow connection is not established."
+      "rank": 43.296985,
+      "source_lines": [
+        4
+      ],
+      "operation_lines": [
+        5
+      ],
+      "mitigation_lines": [],
+      "evidence": 3,
+      "distance": 1,
+      "mitigated": false,
+      "operation_weight": 5,
+      "reason": "Request input or an entry point and filesystem access share this scope (closest 1 line(s) apart); no mitigation API was seen in the scope; a data-flow connection is not established."
     },
     {
       "path": "Accounts.cs",
@@ -1438,6 +1535,15 @@
       ],
       "findings": [],
       "rank": 41.500962,
+      "source_lines": [],
+      "operation_lines": [
+        5
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 7,
       "reason": "Security-sensitive operations require a trust-boundary review."
     },
     {
@@ -1450,6 +1556,15 @@
       ],
       "findings": [],
       "rank": 41.500962,
+      "source_lines": [],
+      "operation_lines": [
+        5
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 7,
       "reason": "Security-sensitive operations require a trust-boundary review."
     },
     {
@@ -1462,6 +1577,15 @@
       ],
       "findings": [],
       "rank": 41.500962,
+      "source_lines": [],
+      "operation_lines": [
+        33
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 7,
       "reason": "Security-sensitive operations require a trust-boundary review."
     },
     {
@@ -1476,6 +1600,15 @@
         "JS003"
       ],
       "rank": 41.436818,
+      "source_lines": [],
+      "operation_lines": [
+        5
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 6,
       "reason": "Review rule findings: JS003"
     },
     {
@@ -1488,6 +1621,15 @@
       ],
       "findings": [],
       "rank": 41.372675,
+      "source_lines": [],
+      "operation_lines": [
+        5
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 5,
       "reason": "Security-sensitive operations require a trust-boundary review."
     },
     {
@@ -1500,6 +1642,15 @@
       ],
       "findings": [],
       "rank": 41.372675,
+      "source_lines": [],
+      "operation_lines": [
+        3
+      ],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 5,
       "reason": "Security-sensitive operations require a trust-boundary review."
     },
     {
@@ -1512,6 +1663,15 @@
       ],
       "findings": [],
       "rank": 38.550353,
+      "source_lines": [
+        3
+      ],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
       "reason": "Review input validation, authentication and authorization at this boundary."
     },
     {
@@ -1524,6 +1684,15 @@
       ],
       "findings": [],
       "rank": 38.550353,
+      "source_lines": [
+        3
+      ],
+      "operation_lines": [],
+      "mitigation_lines": [],
+      "evidence": 0,
+      "distance": null,
+      "mitigated": false,
+      "operation_weight": 0,
       "reason": "Review input validation, authentication and authorization at this boundary."
     }
   ],

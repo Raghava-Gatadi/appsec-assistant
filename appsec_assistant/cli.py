@@ -97,6 +97,7 @@ def parser():
     p.add_argument("--stdin-name", default="input.py", help="Virtual filename for stdin language detection (default: input.py)")
     p.add_argument("--exclude", action="append", default=[], metavar="GLOB", help="Exclude a root-relative path glob; repeatable")
     p.add_argument("--include-tests", action="store_true", help="Analyze test directories and conventional test filenames (excluded by default)")
+    p.add_argument("--include-vendored", action="store_true", help="Analyze vendored directories, minified/bundled files and generated files (excluded by default)")
     p.add_argument("--config", type=Path, help="Explicit JSON policy with exclusions and reasoned suppressions")
     p.add_argument("--baseline", type=Path, help="Mark matching fingerprints as existing; existing findings do not fail CI")
     p.add_argument("--write-baseline", type=Path, help="Save reported finding fingerprints for a future scan; requires a complete scan")
@@ -135,7 +136,7 @@ def main(argv=None):
             if out.suffix.lower() not in {".txt", ".json", ".html", ".htm", ".sarif"}:
                 raise ValueError("Output filenames must end in .txt, .json, .html, .htm or .sarif")
         options = Options(
-            include_tests=args.include_tests, excludes=excludes + args.exclude, suppressions=suppressions, baseline=baseline,
+            include_tests=args.include_tests, include_vendored=args.include_vendored, excludes=excludes + args.exclude, suppressions=suppressions, baseline=baseline,
             max_file_bytes=args.max_file_bytes, max_total_bytes=args.max_total_bytes,
             max_files=args.max_files, max_nodes=args.max_python_nodes,
             min_severity=args.min_severity, min_confidence=args.min_confidence,

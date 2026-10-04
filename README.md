@@ -1,6 +1,6 @@
 # AppSec Assistant
 
-Version **0.1.1** · [Changelog](CHANGELOG.md) · [Validation](VALIDATION.md)
+Version **0.1.2** · [Changelog](CHANGELOG.md) · [Validation](VALIDATION.md)
 
 A local, offline Python tool for the **first pass of a source security review**. Give it a folder; it discovers supported files, maps entry points and sensitive APIs, and produces a prioritized reading list with rule findings and remediation guidance.
 
@@ -54,20 +54,28 @@ Findings sort by label, then severity × confidence, then evidence strength, the
 
 One shared 0–100 **triage rank** drives finding order, each scope's strongest review item, and SARIF `rank`. Navigation-only items have low confidence; input in the same scope strengthens a review starting point but does not establish data flow. The rank is neither CVSS nor an exploitability probability.
 
+The **"Where to start" queue** ranks one entry per function or file scope and explains each position. Request-controlled input (or an entry point) and a sensitive operation in the same scope raise the entry; the closer they are, the higher it ranks (within 10 lines is strongest). A mitigation API in the same scope, such as an integer cast, an escaping function, an allowlist check or a bound parameter, **lowers** the entry but never removes it, because a mitigation is not proof of safety. Ties are broken by operation severity (command execution/dynamic evaluation, then deserialization, database, and so on) and then input-to-operation distance. Path and line only make true ties deterministic; there is no alphabetical tie-break. Entries beyond the first 20 are listed under "+N more scopes".
+
 Reports combine repeats of the same rule in the same file/scope. Different baseline/suppression states remain separate. **JSON report schema is now 2:** each group has `locations`, `occurrence_count` and `rank`; summary counts describe groups, while `occurrences` counts individual locations. SARIF uses multiple locations and preserves occurrence fingerprints. Baseline files remain schema 1 and retain every occurrence fingerprint.
 
 ## Language coverage
 
-| Files | Analysis |
-|---|---|
-| Python `.py`, `.pyw` | AST checks, import/call aliases, selected HTTP client instances, bounded local input propagation through assignments and branch joins; function and decorator-based route map. |
-| JavaScript / TypeScript, including JSX, TSX, MJS, CJS, MTS, CTS | Lexical checks for dynamic execution, explicit child-process imports, raw HTML, TLS bypasses and simple SQL construction; approximate function and route map. |
-| PHP, Java, C#, Go, Ruby | Lexical navigation map of sensitive APIs, selected input sources, routes and declarations; generic secret checks. **No semantic vulnerability analysis for these languages.** |
-| JSON, YAML, TOML, INI, environment files, Dockerfiles and selected other text/code formats | Limited secret and configuration checks. A file's presence in inventory does not imply complete security coverage. |
+| Tier | Files | Analysis |
+|---|---|---|
+| **Deep** | Python `.py`, `.pyw` | AST checks, import/call aliases, selected HTTP client instances, bounded local input propagation through assignments and branch joins; function and decorator-based route map. |
+| **Approximate** | JavaScript / TypeScript, including JSX, TSX, MJS, CJS, MTS, CTS | Lexical checks for dynamic execution, explicit child-process imports, raw HTML, TLS bypasses and simple SQL construction; approximate function and route map. |
+| **Navigation only** | PHP, Java, C#, Go, Ruby | Lexical map of sensitive APIs, request input, server state, routes, mitigations and declarations; generic secret checks. **No semantic vulnerability analysis for these languages.** |
+| **Configuration** | JSON, YAML, TOML, INI, environment files, Dockerfiles and selected other text/code formats | Limited secret and configuration checks. A file's presence in inventory does not imply complete security coverage. |
 
 Files ending in `.dist`, `.example`, `.sample` or `.template` are analyzed according to their underlying extension, including manifests. Report paths keep the original suffix.
 
-PHP uses a **file scope** and marks recognized superglobal reads as an entry-point hint, without proving web reachability or external control; session, environment and global state also require context. Its catalog covers shell execution, dynamic include/require, queries, deserialization, upload/file operations, outbound calls, `echo`/`print`/`printf`/`<?=`, Location headers, password-named `md5`/`sha1` use and `rand`/`mt_rand`. Fixed literal includes are omitted from dynamic-include navigation. `intval`, `(int)`, `escapeshellarg`, `htmlspecialchars`, `basename`, prepared-statement APIs and `in_array` appear as mitigation **notes**, not safe verdicts. Python and JavaScript have corresponding selected conversion/escaping notes. PHP source-to-sink detection is deferred; HTML assembled into a variable, complex syntax and mixed PHP/HTML can be missed.
+**One category vocabulary for every language.** Every code language uses the same navigation categories: command execution, dynamic execution, database query, deserialization, template/HTML output, filesystem access, outbound request, redirect, authentication/crypto, input, state and mitigation. A missing category is a documented gap in `navigation.DOCUMENTED_GAPS` (today only Go dynamic execution), and a test fails if a language silently lacks one. Language catalogs are deliberately conservative: they list review locations, including legitimate safe use.
+
+**Request input versus server state.** `input` means data a client controls (HTTP parameters, bodies, headers, cookies, uploads, selected `$_SERVER` keys such as `HTTP_*` and `QUERY_STRING`, `location.search`, `sys.argv`). `state` means session, environment and framework globals (`$_SESSION`, `$GLOBALS`, `process.env`, `os.environ`, `getSession()`, `ENV[]`). Only request input creates entry-point hints and raises ranking. State stays visible in the code map as a note. State can still carry earlier request data (for example a value stored in a session on a previous request), so a state-only scope is not a safe verdict.
+
+**Scopes and entry points.** Function or method scopes are used wherever a function can be identified, in every language; `<file>` scope applies only to code outside any function. When a file declares no routes, each scope that reads request input gets an entry-point hint (script-style PHP pages, Rails controller actions, plain handlers). Hints do not prove web reachability.
+
+PHP specifics: the catalog covers shell execution, dynamic include/require, queries, deserialization, upload/file operations, outbound calls, `echo`/`print`/`printf`/`<?=`, `header("Location: ...")`, password-named `md5`/`sha1` use and `rand`/`mt_rand`. Include and require paths built only from literals and constants (`__DIR__ . '/a.php'`, `ROOT . 'lib/a.php'`) are fixed paths and are not listed as dynamic; a variable, interpolation or function result is. PHP source-to-sink detection is deferred; HTML assembled into a variable, complex syntax and mixed PHP/HTML can be missed.
 
 There are **32 finding rules**: 17 Python, 6 JavaScript/TypeScript, 6 configuration and 3 secret rules. The navigation catalog is separate from these rules.
 
@@ -97,6 +105,9 @@ python3 scan.py /path/to/source --exclude 'vendor/**' --exclude '**/*.min.js'
 
 # Include conventional test files and test directories when wanted.
 python3 scan.py /path/to/source --include-tests
+
+# Include vendored directories, minified/bundled files and generated files (excluded by default).
+python3 scan.py /path/to/source --include-vendored
 
 # Inspect one file, or accept source from standard input.
 python3 scan.py /path/to/source/app.py
@@ -166,9 +177,10 @@ The date above demonstrates the format; choose an appropriate review date for yo
 - Binary content, invalid encoding and malformed Python are reported explicitly. Python respects source encoding declarations; other text uses UTF-8. Python syntax support follows the interpreter running the scanner.
 - Defaults: 2 MB/file, 100 MB total, 10,000 filesystem entries, 100,000 Python AST nodes and 64 directory levels. Size/parser limit hits make the scan incomplete. Limits can be adjusted with `--max-file-bytes`, `--max-total-bytes`, `--max-files` and `--max-python-nodes`.
 - Default directory exclusions: `.git`, `.hg`, `.svn`, `.venv`, `venv`, `env`, `node_modules`, `__pycache__`, `.mypy_cache`, `.pytest_cache`, `.next`, `dist`, `build`, `coverage`, `.tox`. Test exclusions also apply by default: directories `tests/`, `test/`, `__tests__/`, `spec/`; files `test_*.py`, `*_test.py`, `conftest.py`, `*_test.go`, and `*.test.{js,ts,jsx,tsx}` / `*.spec.{js,ts,jsx,tsx}`. A bare **`test.php` is included**. Use `--include-tests` to override, including for explicit file targets and stdin names. Diagnostics show **N test files excluded**. Test folders are enumerated to count skipped files (within traversal limits); contents are not read. Generated/dependency directories remain pruned, so unseen files inside them are not part of the test count.
+- **Vendored, minified and generated code is excluded by default** and reported as "N vendored, generated or minified files excluded" with reasons. Excluded: directories `vendor/`, `vendors/`, `third_party/`, `third-party/`, `thirdparty/`, `bower_components/`, `jspm_packages/`, `site-packages/` and `wwwroot/lib/`; files `*.min.js`, `*.min.css`, `*-min.js`, `*.bundle.js`, `*.chunk.js`, `*.packed.js`; JavaScript/TypeScript files over 2 KB whose average line is longer than 300 characters (minified or obfuscated); and source files declaring themselves generated in their first lines (`Code generated ... DO NOT EDIT`, `@generated`, protocol-buffer output). Lockfiles and manifests are never skipped for being "generated", because the dependency inventory reads them. Use `--include-vendored` to analyze everything.
 - Symlinks and special files are not followed. Scan a stable checkout, not a directory being actively mutated. Resource limits are safeguards, not a hardened sandbox against malicious parser inputs; use an OS sandbox for hostile repositories.
 - HTML is self-contained with escaped metadata and a restrictive content security policy. New report files use private temporary-file permissions where supported. An explicitly named output file is replaced atomically; choose a report path, not an existing project asset. Source-file targets and policy inputs are protected from overwrite.
-- This release is tested against synthetic cases and a pinned, limited DVWA matrix. It has not been benchmarked for production precision/recall and is not a replacement for maintained language-specific analyzers or a professional review.
+- This release is tested against synthetic cases and small, pinned, manually reviewed matrices for three applications in three languages (one development target, two held-out). It has not been benchmarked for production precision/recall and is not a replacement for maintained language-specific analyzers or a professional review.
 
 ## Tests
 
@@ -182,24 +194,28 @@ Tests cover every finding rule, safer alternatives, aliases, scope and branch be
 
 GitHub Actions runs lint and tests on Python 3.11–3.14. See [VALIDATION.md](VALIDATION.md) for checks actually run locally.
 
-## DVWA comparison
+## Benchmarks
 
-The `v0.1.0` tag preserves the published before-state. [benchmarks/baseline-v0.1.0](benchmarks/baseline-v0.1.0) contains the attached HTML and reproduced HTML/JSON/SARIF with provenance. [benchmarks/dvwa-expected.json](benchmarks/dvwa-expected.json) records a limited, source-reviewed file/CWE matrix. The scanner never reads this scoring key or special-cases challenge filenames.
+A triage tool is judged on how well it orders a reviewer's work, so benchmarks report **queue metrics** first: how many known-vulnerable scopes appear in the top 20 of "Where to start", and how often a vulnerable scope outranks a same-CWE safe one. Finding precision and recall are reported **only when the scanner emitted findings for the listed CWEs**; otherwise they are marked unavailable instead of shown as a vacuous zero.
+
+Targets are small JSON matrices in [benchmarks/targets](benchmarks/targets), one per application, each pinned to a commit and marked `dev` (rules may be tuned against it) or `held-out` (measure only; never tune against it). The scripts contain no application names. The scanner never reads a matrix and does not special-case application paths.
 
 ```sh
-# Use the clean DVWA commit recorded in the expected file; no target execution.
-python3 benchmarks/run.py /path/to/DVWA
-python3 benchmarks/score.py benchmarks/results-v0.1.1/report.json
+python3 benchmarks/run.py --list
+python3 benchmarks/run.py dvwa /path/to/DVWA                       # dev, PHP
+python3 benchmarks/run.py vulnerable-flask-app /path/to/checkout   # held-out, Python
+python3 benchmarks/run.py nodegoat /path/to/checkout               # held-out, JavaScript
+python3 benchmarks/score.py benchmarks/baseline-v0.1.0/report.json benchmarks/results-v0.1.1/report.json --target dvwa --table
 ```
 
-The scorer reports finding recall and navigation coverage separately. An `impossible` negative expectation applies only to its listed challenge CWE; navigation hotspots in those files are legitimate review locations. See [benchmarks/README.md](benchmarks/README.md) for measured results and limitations.
+The runner checks the pinned commit, a clean checkout and recorded source hashes before scanning. The target is only read, never started. See [benchmarks/README.md](benchmarks/README.md) for measured results and limitations.
 
 ## Extending the tool
 
 - `appsec_assistant/rules.py`: rule definitions, CWE references and review/remediation text.
 - `appsec_assistant/python_analyzer.py`: AST and local data-flow checks.
 - `appsec_assistant/text_analyzer.py`: lexical JavaScript/configuration/secret checks.
-- `appsec_assistant/navigation.py`: entry-point and sensitive-API navigation catalogs.
+- `appsec_assistant/navigation.py`: one language-neutral catalog of entry-point, sensitive-API, input, state and mitigation patterns per language.
 - `appsec_assistant/scanner.py`: traversal, coverage, inventory and scan policy.
 - `appsec_assistant/priorities.py`: shared deterministic triage rank and CI gate.
 - `appsec_assistant/reports.py`: text, JSON, HTML and SARIF output.

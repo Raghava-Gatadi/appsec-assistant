@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "name": "nodegoat",
+  "role": "held-out",
+  "display_name": "NodeGoat",
+  "repository": "https://github.com/OWASP/NodeGoat",
+  "commit": "c5cb68a7084e4ae7dcc60e6a98768720a81841e8",
+  "languages": [
+    "javascript/typescript"
+  ],
+  "scope": "Four manually reviewed file-level cases. Not an audit of the application. No target code was executed.",
+  "limitations": [
+    "Role 'held-out': do not tune scanner rules against this target; use it only to measure generalization.",
+    "The $where case uses a collection .find() call that the JavaScript database catalog does not model; it is a known miss."
+  ],
+  "cases": [
+    {
+      "path": "app/routes/contributions.js",
+      "line": 32,
+      "cwe": "CWE-95",
+      "expected_vulnerable": true,
+      "navigation_category": "dynamic execution",
+      "rationale": "Request body fields are passed to eval.",
+      "sha256": "196bdeaa22da4cfe8a851b1b932710b2fcedd21f14ed75d70b739ba759a01003"
+    },
+    {
+      "path": "app/routes/index.js",
+      "line": 72,
+      "cwe": "CWE-601",
+      "expected_vulnerable": true,
+      "navigation_category": "redirect",
+      "rationale": "The redirect target is taken directly from the query string.",
+      "sha256": "3ab970b2888bc1501515db24a83cc7851ac9c09d00948c652300401515185eb5"
+    },
+    {
+      "path": "app/routes/session.js",
+      "line": 28,
+      "cwe": "CWE-601",
+      "expected_vulnerable": false,
+      "navigation_category": "redirect",
+      "rationale": "Redirects use a fixed local path.",
+      "sha256": "e53e38b6eea76b026efaacde07f694e7a2eca005de4083fb74f9393d432a5b25",
+      "queue_comparable": false,
+      "queue_comparable_reason": "The file also contains login and database operations, so file-level queue rank cannot isolate the fixed-path redirects (CWE-601). The case still counts as a finding-level negative."
+    },
+    {
+      "path": "app/data/allocations-dao.js",
+      "line": 78,
+      "cwe": "CWE-943",
+      "expected_vulnerable": true,
+      "navigation_category": "database query",
+      "rationale": "A request-supplied threshold is interpolated into a $where JavaScript expression.",
+      "sha256": "c6aebc971ce7f9c8b2a8f0864a500497de25a3ea0318ef94ecd57cadf6e789ea"
+    }
+  ],
+  "credential_checks": []
+}
